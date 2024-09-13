@@ -6,16 +6,19 @@ interface User {
   nombres: string;
   apellidos: string;
   email: string;
+  identificacion: number;
+  estado: string;
 }
 
 export const getAllUsers = async (): Promise<User[]> => {
+  const conn: PoolConnection = await pool.getConnection();
   try {
-    const conn: PoolConnection = await pool.getConnection();
     const results: User[] = await conn.query('SELECT * FROM persona');
-    conn.release();
     return results;
   } catch (error) {
     console.log(error);
     throw 'Error al obtener los usuarios';
+  } finally {
+    conn.release();
   }
 }
