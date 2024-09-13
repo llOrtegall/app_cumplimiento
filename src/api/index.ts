@@ -1,14 +1,21 @@
-import { pool } from './config'
+import { pool } from './config';
+import { PoolConnection } from 'mariadb';
 
-export const getAllUsers = async () => {
+interface User {
+  id: number;
+  nombres: string;
+  apellidos: string;
+  email: string;
+}
+
+export const getAllUsers = async (): Promise<User[]> => {
   try {
-    const conn = await pool.getConnection()
-
-    const results = conn.execute('SELECT * FROM persona')
-
-    return results
+    const conn: PoolConnection = await pool.getConnection();
+    const results: User[] = await conn.query('SELECT * FROM persona');
+    conn.release();
+    return results;
   } catch (error) {
     console.log(error);
-    throw 'Error al obtener los usuarios'
+    throw 'Error al obtener los usuarios';
   }
 }
