@@ -15,7 +15,7 @@ function PersonasView() {
   }, []);
 
   return (
-    <section className='flex h-[98vh] overflow-y-auto m-2 rounded-md shadow-md sm:rounded-lg relative'>
+    <section className='flex h-[88vh] overflow-y-auto m-2 rounded-md shadow-md sm:rounded-lg relative'>
     <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
       <thead className='text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400 sticky top-0'>
         <tr>
