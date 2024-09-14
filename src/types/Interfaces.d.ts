@@ -10,3 +10,9 @@ export interface Empresa {
   ciudad: string
   observacion: string
 }
+
+export interface Area {
+  id: number
+  codigo: string
+  descripcion: string
+}
