@@ -1,14 +1,14 @@
 import { Link } from "react-router-dom"
 
 const LinkRoutes = [
-  { id: 1, name: 'Empresas', path: '/' },
-  { id: 2, name: 'Ciudades', path: '/' },
-  { id: 3, name: 'Dependencias', path: '/' },
-  { id: 4, name: 'Areas', path: '/' },
-  { id: 5, name: 'Cargos', path: '/' },
-  { id: 6, name: 'Grupo Turnos', path: '/' },
-  { id: 7, name: 'Turnos', path: '/' },
-  { id: 8, name: 'Grupo Turno - Turno', path: '/' }
+  { id: 1, name: 'Empresas', path: '/opciones/empresas' },
+  { id: 2, name: 'Ciudades', path: '/opciones/ciudades' },
+  { id: 3, name: 'Dependencias', path: '/opciones/dependencias' },
+  { id: 4, name: 'Areas', path: '/opciones/areas' },
+  { id: 5, name: 'Cargos', path: '/opciones/cargos' },
+  { id: 6, name: 'Grupo Turnos', path: '/opciones/grupoturno' },
+  { id: 7, name: 'Turnos', path: '/opciones/turnos' },
+  { id: 8, name: 'Grupo Turno - Turno', path: '/opciones/grupo-turno' }
 ]
 
 export const NavBarOpciones = () => {
