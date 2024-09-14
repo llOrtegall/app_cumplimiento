@@ -11,9 +11,9 @@ const LinkRoutes = [
   { id: 8, name: 'Grupo Turno - Turno', path: '/' }
 ]
 
-export const NavBarOpciones = ({ visible }: { visible: boolean }) => {
+export const NavBarOpciones = () => {
   return (
-    <div className={`z-10 ${visible ? 'visible' : 'hidden'} absolute font-normal bg-white divide-y divide-gray-100 rounded-lg shadow w-44 dark:bg-gray-700 dark:divide-gray-600`}>
+    <>
       <ul className='py-2 text-sm text-gray-700 dark:text-gray-200'>
         {LinkRoutes.map((link) => (
           <li>
@@ -23,6 +23,6 @@ export const NavBarOpciones = ({ visible }: { visible: boolean }) => {
           </li>
         ))}
       </ul>
-    </div>
+    </>
   )
 }
