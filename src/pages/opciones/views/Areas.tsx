@@ -5,12 +5,16 @@ import { type Area } from '../../../types/Interfaces';
 import { URL_API } from '../../../utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
+import { EditIcon } from '../../../components/icons/EditIcon';
+import { CloseIcon } from '../../../components/icons/CloseIcon';
 
 export default function Areas() {
   const [areas, setAreas] = useState<Area[]>([]);
   const [activeNewArea, setActiveNewArea] = useState<boolean>(false);
   const [areaToDelete, setAreaToDelete] = useState<number | null>(null);
+  const [activeUpdate, setActiveUpdate] = useState<boolean>(false);
 
+  const [id, setId] = useState<number>(0);
   const [codigo, setCodigo] = useState<string>('');
   const [nombreA, setNombreA] = useState<string>('');
 
@@ -31,11 +35,11 @@ export default function Areas() {
 
   const handleNewArea = (e: FormEvent) => {
     e.preventDefault();
-    
+
     axios.post(`${URL_API}/area`, { codigo, nombre: nombreA })
       .then(response => {
         console.log(response.data)
-        if(response.status === 201) {
+        if (response.status === 201) {
           toast.success('El área se creo correctamente', { description: 'Área creada' })
           setCodigo('')
           setNombreA('')
@@ -45,7 +49,25 @@ export default function Areas() {
       })
       .catch(error => {
         console.log(error)
-        toast.error( error.response.data.message || 'Error ', { description: 'Error al crear el área' } )
+        toast.error(error.response.data.message || 'Error ', { description: 'Error al crear el área' })
+      })
+  }
+
+  const handleUpdateArea = (ev: FormEvent) => {
+    ev.preventDefault();
+    axios.put(`${URL_API}/updatearea`, { id, codigo, nombre: nombreA })
+      .then(response => {
+        if (response.status === 200) {
+          toast.success('El área se actualizó correctamente', { description: 'Área actualizada' })
+          setCodigo('')
+          setNombreA('')
+          setActiveNewArea(false)
+          setRequest(true)
+        }
+      })
+      .catch(error => {
+        console.log(error)
+        toast.error(error.response.data.message || 'Error ', { description: 'Error al actualizar el área' })
       })
   }
 
@@ -53,7 +75,7 @@ export default function Areas() {
     if (areaToDelete !== null) {
       axios.delete(`${URL_API}/area/${areaToDelete}`)
         .then(response => {
-          if(response.status === 200) {
+          if (response.status === 200) {
             toast.success('El área se eliminó correctamente', { description: 'Área eliminada' });
             setRequest(true);
           }
@@ -77,6 +99,25 @@ export default function Areas() {
     setModalIsOpen(false);
     setAreaToDelete(null);
   };
+
+  const updateArea = (area: Area) => {
+    const { id, codigo, descripcion } = area;
+    setActiveUpdate(true);
+    setActiveNewArea(true);
+    setId(id);
+    setCodigo(codigo);
+    setNombreA(descripcion);
+
+  }
+
+  const cancelarUpdate = () => {
+    setActiveUpdate(false);
+    setActiveNewArea(false);
+    setId(0);
+    setCodigo('');
+    setNombreA('');
+  }
+
 
   return (
     <section className="p-1 flex flex-col h-[91vh] relative">
@@ -106,7 +147,7 @@ export default function Areas() {
                   {area.descripcion}
                 </td>
                 <td className='px-6 py-4 flex gap-2'>
-                  <button className='bg-yellow-300 hover:bg-yellow-400 text-black px-2 py-1 rounded-md'>Editar</button>
+                  <button className='bg-yellow-300 hover:bg-yellow-400 text-black px-2 py-1 rounded-md' onClick={() => updateArea(area)}>Editar</button>
                   <button className='bg-red-400 hover:bg-red-600 text-white px-2 py-1 rounded-md' onClick={() => openModal(area.id)}>Eliminar</button>
                 </td>
               </tr>
@@ -116,7 +157,7 @@ export default function Areas() {
       </table>
 
       <section className='mt-auto border rounded-md bg-gray-200 py-2'>
-        <form className='flex justify-end items-center relative' onSubmit={(e) => handleNewArea(e)}>
+        <form className='flex justify-end items-center relative' onSubmit={ev => activeUpdate ? handleUpdateArea(ev) : handleNewArea(ev)}>
           <div className="flex items-center mb-4 absolute left-4 top-2">
             <input checked={activeNewArea} type="checkbox" value='' onChange={() => setActiveNewArea(!activeNewArea)} className="h-5 w-5 text-blue-600 border rounded-md mr-2" />
             <label htmlFor="">Nueva área</label>
@@ -135,14 +176,29 @@ export default function Areas() {
             <input type="text" disabled={!activeNewArea} value={nombreA} onChange={(e) => setNombreA(e.target.value)}
               className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500" />
           </div>
-          <button type='submit'
-            className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 mx-4 px-4 rounded h-10 ${!activeNewArea ? 'hidden' : 'block'}`}>
-            <PlusIcon />
-          </button>
+          {
+            activeUpdate ? (
+              <>
+                <button type='submit' title='cancelar edicion' onClick={() => cancelarUpdate()}
+                  className={`bg-red-500 hover:bg-red-700 text-white font-bold py-2 mx-4 px-4 rounded h-10 ${!activeNewArea ? 'hidden' : 'block'}`}>
+                  <CloseIcon />
+                </button>
+                <button type='submit' title='editar área'
+                  className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 mx-4 px-4 rounded h-10 ${!activeNewArea ? 'hidden' : 'block'}`}>
+                  <EditIcon />
+                </button>
+              </>
+            ) : (
+              <button type='submit' title='crear área'
+                className={`bg-green-500 hover:bg-green-700 text-white font-bold py-2 mx-4 px-4 rounded h-10 ${!activeNewArea ? 'hidden' : 'block'}`}>
+                <PlusIcon />
+              </button>
+            )
+          }
         </form>
       </section>
 
-      { modalIsOpen && <ModalDelete funAction={confirmDeleteArea} onCancel={closeModal} /> }
+      {modalIsOpen && <ModalDelete funAction={confirmDeleteArea} onCancel={closeModal} />}
 
     </section>
   );
