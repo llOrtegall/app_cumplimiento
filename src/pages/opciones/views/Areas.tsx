@@ -1,6 +1,7 @@
 import { PlusIcon } from '../../../components/icons/PlusIcon';
-import { type Area } from '../../../types/Interfaces';
+import { ModalDelete } from '../../../components/ModalDelete';
 import { FormEvent, useEffect, useState } from 'react';
+import { type Area } from '../../../types/Interfaces';
 import { URL_API } from '../../../utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
@@ -8,16 +9,20 @@ import axios from 'axios';
 export default function Areas() {
   const [areas, setAreas] = useState<Area[]>([]);
   const [activeNewArea, setActiveNewArea] = useState<boolean>(false);
+  const [areaToDelete, setAreaToDelete] = useState<number | null>(null);
 
   const [codigo, setCodigo] = useState<string>('');
   const [nombreA, setNombreA] = useState<string>('');
 
   const [request, setRequest] = useState<boolean>(false);
 
+  const [modalIsOpen, setModalIsOpen] = useState(false);
+
   useEffect(() => {
     axios.get(`${URL_API}/areas`)
       .then(response => {
         setAreas(response.data)
+        setRequest(false)
       })
       .catch(error => {
         console.log(error)
@@ -44,8 +49,37 @@ export default function Areas() {
       })
   }
 
+  const confirmDeleteArea = () => {
+    if (areaToDelete !== null) {
+      axios.delete(`${URL_API}/area/${areaToDelete}`)
+        .then(response => {
+          if(response.status === 200) {
+            toast.success('El área se eliminó correctamente', { description: 'Área eliminada' });
+            setRequest(true);
+          }
+        })
+        .catch(error => {
+          console.log(error);
+          toast.error(error.response?.data?.message || 'Error', { description: 'Error al eliminar el área' });
+        })
+        .finally(() => {
+          closeModal();
+        });
+    }
+  };
+
+  const openModal = (id: number) => {
+    setAreaToDelete(id);
+    setModalIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setModalIsOpen(false);
+    setAreaToDelete(null);
+  };
+
   return (
-    <section className="p-1 flex flex-col h-[91vh]">
+    <section className="p-1 flex flex-col h-[91vh] relative">
 
       <table className="w-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400">
@@ -63,17 +97,17 @@ export default function Areas() {
         </thead>
         <tbody>
           {
-            areas.map(emp => (
-              <tr key={emp.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700  ">
+            areas.map(area => (
+              <tr key={area.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700  ">
                 <td className="px-6 py-4">
-                  {emp.codigo}
+                  {area.codigo}
                 </td>
                 <td className="px-6 py-4">
-                  {emp.descripcion}
+                  {area.descripcion}
                 </td>
                 <td className='px-6 py-4 flex gap-2'>
                   <button className='bg-yellow-300 hover:bg-yellow-400 text-black px-2 py-1 rounded-md'>Editar</button>
-                  <button className='bg-red-400 hover:bg-red-600 text-white px-2 py-1 rounded-md'>Eliminar</button>
+                  <button className='bg-red-400 hover:bg-red-600 text-white px-2 py-1 rounded-md' onClick={() => openModal(area.id)}>Eliminar</button>
                 </td>
               </tr>
             ))
@@ -107,6 +141,8 @@ export default function Areas() {
           </button>
         </form>
       </section>
+
+      { modalIsOpen && <ModalDelete funAction={confirmDeleteArea} onCancel={closeModal} /> }
 
     </section>
   );
