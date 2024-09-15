@@ -18,7 +18,7 @@ export const NavBarOpciones = () => {
         {LinkRoutes.map((link) => (
           <li key={link.id}>
             <NavLink to={link.path} className={({ isActive }) =>  isActive 
-            ? "block px-6 py-3 bg-blue-100 font-medium dark:hover:bg-gray-600 dark:hover:text-white" 
+            ? "block px-6 py-3 bg-blue-100 font-medium dark:bg-blue-600 dark:hover:bg-gray-600 dark:hover:text-white" 
             : 'block px-6 py-3 hover:bg-yellow-100 hover:font-medium dark:hover:bg-gray-600 dark:hover:text-white' }>
               {link.name}
             </NavLink>

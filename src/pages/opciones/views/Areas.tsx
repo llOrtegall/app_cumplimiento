@@ -32,7 +32,7 @@ export default function Areas() {
         <tbody>
           {
             areas.map(emp => (
-              <tr key={emp.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-yellow-200 cursor-pointer">
+              <tr key={emp.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-yellow-200 cursor-pointer hover:dark:bg-slate-600">
                 <td className="px-6 py-4">
                   {emp.codigo}
                 </td>

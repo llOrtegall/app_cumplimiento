@@ -1,3 +1,4 @@
+import ThemeToggleButton from '../ThemeToggle'
 import { LinkNav } from './LinkNav'
 
 export const NavBar = () => {
@@ -16,6 +17,10 @@ export const NavBar = () => {
             <LinkNav link='/marcacion' text='Marcación' />
             <LinkNav link='/opciones' text='Opciones' />
           </ul>
+        </div>
+
+        <div className='flex items-center justify-center'>
+          <ThemeToggleButton />
         </div>
       </div>
     </nav>
