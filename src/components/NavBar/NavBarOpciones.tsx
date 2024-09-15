@@ -1,4 +1,4 @@
-import { Link } from "react-router-dom"
+import { NavLink } from "react-router-dom"
 
 const LinkRoutes = [
   { id: 1, name: 'Empresas', path: '/opciones/empresas' },
@@ -16,10 +16,12 @@ export const NavBarOpciones = () => {
     <>
       <ul className='py-2 text-gray-700 dark:text-gray-200 text-lg'>
         {LinkRoutes.map((link) => (
-          <li>
-            <Link to={link.path} className='block px-6 py-3 hover:bg-blue-100 hover:font-medium dark:hover:bg-gray-600 dark:hover:text-white'>
+          <li key={link.id}>
+            <NavLink to={link.path} className={({ isActive }) =>  isActive 
+            ? "block px-6 py-3 bg-blue-100 font-medium dark:hover:bg-gray-600 dark:hover:text-white" 
+            : 'block px-6 py-3 hover:bg-yellow-100 hover:font-medium dark:hover:bg-gray-600 dark:hover:text-white' }>
               {link.name}
-            </Link>
+            </NavLink>
           </li>
         ))}
       </ul>

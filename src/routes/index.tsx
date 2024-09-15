@@ -31,6 +31,7 @@ export const Router = createBrowserRouter([
         path: '/opciones',
         element: <Opciones />,
         children: [
+          { index: true, element: <div className='p-2 text-gray-600 flex items-center justify-center h-full pb-20'><span className='text-2xl'> ↩  Seleccione Una Opción</span></div> },
           { path: 'empresas', element: <Empresa /> },
           { path: 'ciudades', element: <Ciudades /> },
           { path: 'dependencias', element: <Dependencias /> },
