@@ -1,12 +1,12 @@
+import { CloseIcon } from '../../../components/icons/CloseIcon';
 import { PlusIcon } from '../../../components/icons/PlusIcon';
+import { EditIcon } from '../../../components/icons/EditIcon';
 import { ModalDelete } from '../../../components/ModalDelete';
 import { FormEvent, useEffect, useState } from 'react';
 import { type Area } from '../../../types/Interfaces';
 import { URL_API } from '../../../utils/contants';
 import { toast } from 'sonner';
 import axios from 'axios';
-import { EditIcon } from '../../../components/icons/EditIcon';
-import { CloseIcon } from '../../../components/icons/CloseIcon';
 
 export default function Areas() {
   const [areas, setAreas] = useState<Area[]>([]);
