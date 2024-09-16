@@ -23,7 +23,7 @@ export interface Cargo {
   descripcion: string
 }
 
-interface Turnos {
+export interface Turnos {
   id: number;
   codigo: string;
   descripcion: string;
@@ -34,4 +34,10 @@ interface Turnos {
   tolerancia_antes_salir: string;
   tiempo_breack: string;
   conceptos: string;
+}
+
+export interface GrupoTurnos {
+  id: number;
+  codigo: string;
+  descripcion: string;
 }
