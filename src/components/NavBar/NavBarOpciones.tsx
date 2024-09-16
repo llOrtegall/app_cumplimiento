@@ -6,8 +6,8 @@ const LinkRoutes = [
   { id: 3, name: 'Dependencias', path: '/opciones/dependencias' },
   { id: 4, name: 'Areas', path: '/opciones/areas' },
   { id: 5, name: 'Cargos', path: '/opciones/cargos' },
-  { id: 6, name: 'Grupo Turnos', path: '/opciones/grupoturno' },
-  { id: 7, name: 'Turnos', path: '/opciones/turnos' },
+  { id: 6, name: 'Turnos', path: '/opciones/turnos' },
+  { id: 7, name: 'Grupo Turnos', path: '/opciones/grupoturno' },
   { id: 8, name: 'Grupo Turno - Turno', path: '/opciones/grupo-turno' }
 ]
 
