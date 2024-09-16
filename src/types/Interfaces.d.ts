@@ -41,3 +41,8 @@ export interface GrupoTurnos {
   codigo: string;
   descripcion: string;
 }
+
+export interface GrupoVsTurno {
+  grupoHorario: GrupoTurnos[];
+  horario: Turnos[];
+}
