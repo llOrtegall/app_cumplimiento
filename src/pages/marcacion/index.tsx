@@ -21,7 +21,7 @@ export default function Marcacion() {
               Id
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-              Id Empleado
+              Nombres
             </th>
             <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
               Fecha Marcación
@@ -38,7 +38,7 @@ export default function Marcacion() {
                 {marcacion.id}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                {marcacion.id_empleado}
+                {marcacion.nombres}
               </td>
               <td className="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
                 {marcacion.fecha_marcacion.toString()}
