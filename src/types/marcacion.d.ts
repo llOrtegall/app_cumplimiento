@@ -14,3 +14,9 @@ export interface Marcacion {
   Longitud: string;
   id_foto_temota: string;
 }
+
+export interface MarcacionResponse {
+  marcaciones: Marcacion[];
+  page: number;
+  pageSize: number;
+}

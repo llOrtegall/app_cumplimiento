@@ -1,9 +1,13 @@
 import { NavLink } from "react-router-dom"
 
+/**
+ * LinkRoutes: Array of objects with the following structure:
+ */
+
 const LinkRoutes = [
-  { id: 1, name: 'Empresas', path: '/opciones/empresas' },
-  { id: 2, name: 'Ciudades', path: '/opciones/ciudades' },
-  { id: 3, name: 'Dependencias', path: '/opciones/dependencias' },
+  // { id: 1, name: 'Empresas', path: '/opciones/empresas' },
+  // { id: 2, name: 'Ciudades', path: '/opciones/ciudades' },
+  // { id: 3, name: 'Dependencias', path: '/opciones/dependencias' },
   { id: 4, name: 'Areas', path: '/opciones/areas' },
   { id: 5, name: 'Cargos', path: '/opciones/cargos' },
   { id: 6, name: 'Turnos', path: '/opciones/turnos' },
