@@ -1,10 +1,10 @@
 import { PlusIcon } from "../../../components/icons/PlusIcon";
 import { ModalDelete } from "../../../components/ModalDelete";
 import { GrupoTurnos } from "../../../types/Interfaces";
-import { URL_API } from "../../../utils/contants";
 import { FormEvent, useEffect, useState } from "react";
-import axios from "axios";
+import { URL_API } from "../../../utils/contants";
 import { toast } from "sonner";
+import axios from "axios";
 
 export default function GrupoTurno() {
   const [turnoGrupo, setTurnoGrupo] = useState<GrupoTurnos[]>([]);

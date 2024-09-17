@@ -1,5 +1,5 @@
-import { Outlet } from 'react-router-dom'
 import { NavBar } from '../components/NavBar/NavBar'
+import { Outlet } from 'react-router-dom'
 import { Toaster } from 'sonner'
 
 export default function Root () {
