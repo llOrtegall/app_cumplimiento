@@ -1,17 +1,20 @@
 import { createBrowserRouter } from 'react-router-dom';
+
+import GrupovsTurno from '../pages/opciones/views/GrupovsTurno';
+import Dependencias from '../pages/opciones/views/Dependencias';
+import GrupoTurno from '../pages/opciones/views/GrupoTurno';
+import Ciudades from '../pages/opciones/views/Ciudades';
+import Empresa from '../pages/opciones/views/Empresa';
+import Cargos from '../pages/opciones/views/Cargos';
+import Turnos from '../pages/opciones/views/Turnos';
+import Areas from '../pages/opciones/views/Areas';
 import Opciones from '../pages/opciones/Opciones';
-import PersonasView from '../pages/persona'
+import PersonasView from '../pages/persona';
+import Marcacion from '../pages/marcacion';
 import NotFound from '../pages/NotFound';
 import Home from '../pages/Home';
+
 import Root from './root';
-import Empresa from '../pages/opciones/views/Empresa';
-import Ciudades from '../pages/opciones/views/Ciudades';
-import Dependencias from '../pages/opciones/views/Dependencias';
-import Areas from '../pages/opciones/views/Areas';
-import Cargos from '../pages/opciones/views/Cargos';
-import GrupoTurno from '../pages/opciones/views/GrupoTurno';
-import Turnos from '../pages/opciones/views/Turnos';
-import GrupovsTurno from '../pages/opciones/views/GrupovsTurno';
 
 export const Router = createBrowserRouter([
   {
@@ -26,6 +29,10 @@ export const Router = createBrowserRouter([
       {
         path: '/empleados',
         element: <PersonasView />,
+      },
+      {
+        path: '/marcacion',
+        element: <Marcacion />,
       },
       {
         path: '/opciones',
