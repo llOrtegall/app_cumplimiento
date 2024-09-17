@@ -15,6 +15,7 @@ import NotFound from '../pages/NotFound';
 import Home from '../pages/Home';
 
 import Root from './root';
+import InfoPersona from '../pages/persona/InfoPersona';
 
 export const Router = createBrowserRouter([
   {
@@ -29,6 +30,10 @@ export const Router = createBrowserRouter([
       {
         path: '/empleados',
         element: <PersonasView />,
+      },
+      {
+        path: '/empleado/:id',
+        element: <InfoPersona />,
       },
       {
         path: '/marcacion',

@@ -2,9 +2,11 @@ import { URL_API } from '../../utils/contants'
 import { Persona } from '../../types/Persona'
 import { useEffect, useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
+import { useNavigate } from 'react-router-dom'
 
 function PersonasView() {
   const [personas, setPersonas] = useState<Persona[]>([])
+  const navigate = useNavigate()
 
   useEffect(() => {
     axios.get<Persona[]>(`${URL_API}/personas`)
@@ -53,7 +55,7 @@ function PersonasView() {
                   {p.nombres}
                 </td>
                 <td className='px-3 py-2'>
-                  <button className='p-2 bg-blue-500 text-white rounded-md'>
+                  <button className='p-2 bg-blue-500 text-white rounded-md' onClick={() => navigate(`/empleado/${p.id}`)}>
                     Editar
                   </button>
                 </td>
