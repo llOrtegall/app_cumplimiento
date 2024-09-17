@@ -30,7 +30,7 @@ const MarcacionesList = () => {
 
   return (
     <section className="p-4 bg-white rounded-lg shadow-md">
-      <div className='flex justify-around items-center'>
+      <div className='flex justify-around items-center pb-2'>
         <h1 className="text-gray-700 text-2xl font-semibold">Listado de marcaciones</h1>
 
         <div className='flex items-center gap-2'>

@@ -1,7 +1,8 @@
-import axios from "axios"
-import { useEffect, useState } from "react"
-import { URL_API } from "../../../utils/contants"
-import { GrupoVsTurno } from "../../../types/Interfaces"
+import { GrupoVsTurno } from '../../../types/Interfaces'
+import { URL_API } from '../../../utils/contants'
+import { useEffect, useState } from 'react'
+import axios from 'axios'
+import { PlusIcon } from '../../../components/icons/PlusIcon'
 
 export default function GrupovsTurno() {
   const [options, setOptions] = useState<GrupoVsTurno | null>(null)
@@ -17,60 +18,74 @@ export default function GrupovsTurno() {
   }, [])
 
   return (
-    <section className="p-4 bg-blue-200 rounded-md shadow-md">
-      <form className="flex px-4 gap-8">
+    <section className='p-1 flex flex-col h-[91vh]'>
 
-        <section className="w-3/6">
-          <div>
-            <label htmlFor="grupoHorario" className="block text-sm font-medium text-gray-700">
-              Seleccione un grupo
-            </label>
-            <select name="grupoHorario" id="grupoHorario"
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md">
-              <option value="">
-                Seleccione un grupo
-              </option>
-              {options?.grupoHorario.map(grupo => (
-                <option key={grupo.id} value={grupo.id}>
-                  {grupo.descripcion}
-                </option>
-              ))}
-            </select>
-          </div>
+      <form className='flex px-4 gap-8'>
 
-          <div>
-            <label htmlFor="turno" className="block text-sm font-medium text-gray-700">
-              Seleccione un turno
-            </label>
-            <select name="turno" id="turno"
-              className="mt-1 block w-full pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md" >
-              <option value="">
-                Seleccione un turno
+        <section className='flex flex-col gap-2 justify-center'>
+
+          <select name='grupoHorario' id='grupoHorario' className='border px-4 py-2 rounded-md'>
+            <option value=''>
+              Seleccione Grupo
+            </option>
+            {options?.grupoHorario.map(grupo => (
+              <option key={grupo.id} value={grupo.id}>
+                {grupo.descripcion}
               </option>
-              {options?.horario.map(turno => (
-                <option key={turno.id} value={turno.id}>
-                  {turno.descripcion}
-                </option>
-              ))}
-            </select>
-          </div>
+            ))}
+          </select>
+
+          <select name='turno' id='turno' className='border px-4 py-2 rounded-md'>
+            <option value=''>
+              Seleccione Turno
+            </option>
+            {options?.horario.map(turno => (
+              <option key={turno.id} value={turno.id}>
+                {turno.descripcion}
+              </option>
+            ))}
+          </select>
+
         </section>
 
-        <fieldset className="w-3/6 grid grid-cols-4">
-          <legend className="text-sm text-center font-medium text-gray-700">Seleccione los días</legend>
+        <fieldset className='grid grid-cols-4 py-4 gap-2'>
           {['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo'].map(dia => (
-            <div key={dia} className="flex items-center">
-              <input type="checkbox" name={dia} id={dia} className="h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500" />
-              <label htmlFor={dia} className="ml-2 block text-sm text-gray-700">{dia}</label>
+            <div key={dia} className='flex items-center'>
+              <input type='checkbox' name={dia} id={dia} className='h-4 w-4 text-indigo-600 border-gray-300 rounded focus:ring-indigo-500' />
+              <label htmlFor={dia} className='ml-2 block text-sm text-gray-700'>{dia}</label>
             </div>
           ))}
         </fieldset>
 
-        <button type="submit" className="my-10 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-          Guardar
+        <button type='submit' className='my-10 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded flex gap-1'>
+          <span>Agregar</span>
+          <PlusIcon />
         </button>
 
       </form>
+
+      <table>
+        <thead>
+          <tr>
+            <th className='px-4 py-2'>ID</th>
+            <th className='px-4 py-2'>Grupo Turnos</th>
+            <th className='px-4 py-2'>Turnos</th>
+            <th className='px-4 py-2'>Día</th>
+          </tr>
+        </thead>
+        <tbody>
+          {options?.asignados.map(grupo => (
+            <tr key={grupo.id}>
+              <td className='px-4 py-2'>{grupo.id}</td>
+              <td className='px-4 py-2'>{grupo.IdGrupoHorario}</td>
+              <td className='px-4 py-2'>{grupo.IdHorario}</td>
+              <td className='px-4 py-2'>{grupo.diaSeman}</td>
+            </tr>
+          ))}
+        </tbody>
+      </table>
+
+
     </section>
   )
 }

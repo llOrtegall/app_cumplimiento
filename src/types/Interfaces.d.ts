@@ -42,7 +42,15 @@ export interface GrupoTurnos {
   descripcion: string;
 }
 
+export interface GrupoHorarioAsignado {
+  id: number;
+  IdGrupoHorario: number;
+  IdHorario: number;
+  diaSeman: string;
+}
+
 export interface GrupoVsTurno {
   grupoHorario: GrupoTurnos[];
   horario: Turnos[];
+  asignados: GrupoHorarioAsignado[];
 }
