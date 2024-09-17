@@ -3,9 +3,11 @@ import { URL_API } from '../../../utils/contants'
 import { useEffect, useState } from 'react'
 import axios from 'axios'
 import { PlusIcon } from '../../../components/icons/PlusIcon'
+import { toast } from 'sonner'
 
 export default function GrupovsTurno() {
   const [options, setOptions] = useState<GrupoVsTurno | null>(null)
+  const [fechtData, setFechtData] = useState(false)
 
   useEffect(() => {
     axios.get(`${URL_API}/grupovsturnos`)
@@ -15,12 +17,57 @@ export default function GrupovsTurno() {
       .catch(error => {
         console.log(error)
       })
-  }, [])
+  }, [fechtData])
+
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault()
+    const form = e.currentTarget
+
+    const grupoHorario = form['grupoHorario'].value
+    const turno = form['turno'].value
+    const dias = ['Lunes', 'Martes', 'Miércoles', 'Jueves', 'Viernes', 'Sábado', 'Domingo']
+      .filter(dia => form[dia].checked)
+      .map(dia => dia[0].toUpperCase() + dia.slice(1))
+
+    if (!grupoHorario || !turno || !dias.length) {
+      alert('Debe seleccionar grupo, turno y al menos un día')
+      return
+    }
+
+    axios.post(`${URL_API}/creategpvstur`, { grupoHorario, turno, dias })
+      .then(response => {
+        if (response.status === 201) {
+          setFechtData(!fechtData)
+          toast.success('Asignación De Turno Exitosa', { description: 'Se ha asignado el turno correctamente' })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
+
+  const handleDelete = (id: number) => {
+    axios.delete(`${URL_API}/grupovsturnos/${id}`)
+      .then(response => {
+        if (response.status === 200) {
+          setFechtData(!fechtData)
+          toast.success('Eliminación Exitosa', { description: 'Se ha eliminado el turno correctamente' })
+        }
+      })
+      .catch(error => {
+        console.log(error)
+      })
+  }
 
   return (
-    <section className='p-1 flex flex-col h-[91vh]'>
+    <section className='grid h-[90vh]'>
 
-      <form className='flex w-max px-4 gap-8 border rounded-md shadow-md'>
+      <div className='col-span-1'>
+        <h1>Filtros</h1>
+        <label htmlFor="">Grupo Horario</label>
+      </div>
+
+      <form className='col-span-1 overflow-y-auto flex w-max px-4 gap-8 border rounded-md shadow-md' onSubmit={handleSubmit}>
 
         <section className='flex flex-col gap-2 justify-center'>
 
@@ -64,18 +111,22 @@ export default function GrupovsTurno() {
 
       </form>
 
-      <div className="p-1 shadow-md">
+      <div className="col-span-2 shadow-md overflow-y-auto">
         <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
           <thead className="text-xs text-blue-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-6 py-3">
+              <th className="px-6 py-3">ID</th>
+              <th className="px-6 py-3">
                 Día
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th className="px-6 py-3">
                 Grupo Horario
               </th>
-              <th scope="col" className="px-6 py-3">
+              <th className="px-6 py-3">
                 Turno
+              </th>
+              <th>
+                Acciones
               </th>
             </tr>
           </thead>
@@ -83,6 +134,9 @@ export default function GrupovsTurno() {
             {
               options?.asignados.map(asign => (
                 <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                  <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {asign.id}
+                  </th>
                   <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                     {asign.diaSeman}
                   </th>
@@ -91,6 +145,11 @@ export default function GrupovsTurno() {
                   </td>
                   <td className="px-6 py-4">
                     {asign.Turno.descripcion}
+                  </td>
+                  <td className="px-6 py-4">
+                    <button onClick={() => handleDelete(asign.id)} className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
+                      Eliminar
+                    </button>
                   </td>
                 </tr>
               ))
