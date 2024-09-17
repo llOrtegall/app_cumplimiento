@@ -1,6 +1,7 @@
 export interface Marcacion {
   id: number;
   nombres: string;
+  apellidos: string;
   fecha_marcacion: Date;
   estado_marcacion: string;
   nombre_dispositivo: string;
