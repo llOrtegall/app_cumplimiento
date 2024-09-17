@@ -20,7 +20,7 @@ export default function GrupovsTurno() {
   return (
     <section className='p-1 flex flex-col h-[91vh]'>
 
-      <form className='flex px-4 gap-8'>
+      <form className='flex w-max px-4 gap-8 border rounded-md shadow-md'>
 
         <section className='flex flex-col gap-2 justify-center'>
 
@@ -64,26 +64,40 @@ export default function GrupovsTurno() {
 
       </form>
 
-      <table>
-        <thead>
-          <tr>
-            <th className='px-4 py-2'>ID</th>
-            <th className='px-4 py-2'>Grupo Turnos</th>
-            <th className='px-4 py-2'>Turnos</th>
-            <th className='px-4 py-2'>Día</th>
-          </tr>
-        </thead>
-        <tbody>
-          {options?.asignados.map(grupo => (
-            <tr key={grupo.id}>
-              <td className='px-4 py-2'>{grupo.id}</td>
-              <td className='px-4 py-2'>{grupo.IdGrupoHorario}</td>
-              <td className='px-4 py-2'>{grupo.IdHorario}</td>
-              <td className='px-4 py-2'>{grupo.diaSeman}</td>
+      <div className="p-1 shadow-md">
+        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+          <thead className="text-xs text-blue-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+            <tr>
+              <th scope="col" className="px-6 py-3">
+                Día
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Grupo Horario
+              </th>
+              <th scope="col" className="px-6 py-3">
+                Turno
+              </th>
             </tr>
-          ))}
-        </tbody>
-      </table>
+          </thead>
+          <tbody>
+            {
+              options?.asignados.map(asign => (
+                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
+                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                    {asign.diaSeman}
+                  </th>
+                  <td className="px-6 py-4">
+                    {asign.GrupoHorario.descripcion}
+                  </td>
+                  <td className="px-6 py-4">
+                    {asign.Turno.descripcion}
+                  </td>
+                </tr>
+              ))
+            }
+          </tbody>
+        </table>
+      </div>
 
 
     </section>
