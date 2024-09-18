@@ -1,12 +1,13 @@
 import { PlusIcon } from '../../../components/icons/PlusIcon'
 import { GrupoVsTurno } from '../../../types/Interfaces'
 import { URL_API } from '../../../utils/contants'
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import { toast } from 'sonner'
 import axios from 'axios'
 
 export default function GrupovsTurno() {
   const [options, setOptions] = useState<GrupoVsTurno | null>(null)
+  const formRef = useRef<HTMLFormElement>(null);
   const [fechtData, setFechtData] = useState(false)
 
   useEffect(() => {
@@ -52,6 +53,7 @@ export default function GrupovsTurno() {
         if (response.status === 200) {
           setFechtData(!fechtData)
           toast.success('Eliminación Exitosa', { description: 'Se ha eliminado el turno correctamente' })
+          formRef.current?.reset()
         }
       })
       .catch(error => {
@@ -60,15 +62,15 @@ export default function GrupovsTurno() {
   }
 
   return (
-    <section className='h-[90vh]'>
+    <section className='flex flex-col h-[90vh]'>
 
       <section className='flex justify-around py-2'>
         <div className=''>
           <h1>Filtros</h1>
-          <label htmlFor="">Grupo Horario</label>
+          <label htmlFor=''>Grupo Horario</label>
         </div>
 
-        <form className=' overflow-y-auto flex max-h-32 w-max px-4 gap-8 border rounded-md shadow-md' onSubmit={handleSubmit}>
+        <form ref={formRef} className='overflow-y-auto flex max-h-32 w-max px-4 gap-8 border rounded-md shadow-md' onSubmit={handleSubmit}>
 
           <section className='flex flex-col gap-2 justify-center'>
 
@@ -113,18 +115,18 @@ export default function GrupovsTurno() {
         </form>
       </section>
 
-      <section className="shadow-md overflow-y-auto">
-        <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
-          <thead className="text-xs text-blue-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400">
+      <section className='shadow-md overflow-y-auto'>
+        <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
+          <thead className='text-xs text-blue-700 uppercase bg-gray-200 dark:bg-gray-700 dark:text-gray-400'>
             <tr>
-              <th className="px-6 py-3">ID</th>
-              <th className="px-6 py-3">
+              <th className='px-6 py-3'>ID</th>
+              <th className='px-6 py-3'>
                 Día
               </th>
-              <th className="px-6 py-3">
+              <th className='px-6 py-3'>
                 Grupo Horario
               </th>
-              <th className="px-6 py-3">
+              <th className='px-6 py-3'>
                 Turno
               </th>
               <th>
@@ -135,20 +137,20 @@ export default function GrupovsTurno() {
           <tbody>
             {
               options?.asignados.map(asign => (
-                <tr className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700">
-                  <th className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
+                  <th className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
                     {asign.id}
                   </th>
-                  <th scope="row" className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                  <th scope='row' className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
                     {asign.diaSeman}
                   </th>
-                  <td className="px-6 py-4">
+                  <td className='px-6 py-4'>
                     {asign.GrupoHorario.descripcion}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className='px-6 py-4'>
                     {asign.Turno.descripcion}
                   </td>
-                  <td className="px-6 py-4">
+                  <td className='px-6 py-4'>
                     <button onClick={() => handleDelete(asign.id)} className='bg-red-500 hover:bg-red-700 text-white font-bold py-2 px-4 rounded'>
                       Eliminar
                     </button>

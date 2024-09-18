@@ -1,3 +1,5 @@
+import { Area, Cargo, GrupoTurnos } from "./Interfaces"
+
 export interface Persona {
   id: number
   identificacion: string
@@ -5,11 +7,12 @@ export interface Persona {
   apellidos: string
 }
 
-interface OnePersona {
-  id: number
-  identificacion: string
-  nombres: string
-  apellidos: string
-  email: string
-  telefono: string
+interface ResponsePersona {
+  persona: Persona
+  options: {
+    Areas: Area[]
+    Cargos: Cargo[]
+    GruposHorario: GrupoTurnos[]
+  }
 }
+

@@ -12,7 +12,6 @@ export default function Turnos() {
   const [turnos, setturnos] = useState<Turnos[]>([]);
   const formRef = useRef<HTMLFormElement>(null);
   const [request, setRequest] = useState<boolean>(false);
-
   const [turnoDelete, setTurnoDelete] = useState<number | null>(null);
   const [modalIsOpen, setModalIsOpen] = useState(false);
 
