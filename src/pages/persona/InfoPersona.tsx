@@ -3,10 +3,12 @@ import { ResponsePersona } from '../../types/Persona';
 import { URL_API } from '../../utils/contants';
 import { useParams } from 'react-router-dom';
 import axios from 'axios';
+import { toast } from 'sonner';
 
 export default function InfoPersona() {
   const { id } = useParams();
   const [data, setData] = useState<ResponsePersona | null>(null);
+  const [reload, setReload] = useState(false);
   const formRef = useRef<HTMLFormElement>(null);
   const [persona, setPersona] = useState({ id: 0, identificacion: '', nombres: '', apellidos: '', email: '', telefono: '' });
 
@@ -22,7 +24,7 @@ export default function InfoPersona() {
       }
       )
       .catch(error => console.log(error));
-  }, [id]);
+  }, [id, reload]);
 
   const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
@@ -36,10 +38,17 @@ export default function InfoPersona() {
 
     axios.patch(`${URL_API}/persona`, { fields, id })
       .then(response => {
-        console.log(response);
+        if(response.status === 200) {
+          toast.success('Datos actualizados correctamente', { description: 'Los datos del empleado han sido actualizados' });
+          formRef.current?.reset();
+          setTimeout(() => {
+            setReload(!reload);
+          }, 3000);
+        }
       })
       .catch(error => {
         console.log(error);
+        toast.error('Error al actualizar datos', { description: 'Ocurrió un error al intentar actualizar los datos del empleado' });
       });
   }
 
