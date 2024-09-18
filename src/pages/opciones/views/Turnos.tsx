@@ -142,7 +142,7 @@ export default function Turnos() {
 
             <div>
               <Label name="teorico" >Horas Total Día</Label>
-              <Input type="time" name="teorico" id="teorico" required />
+              <Input type="text" name="teorico" id="teorico" required />
             </div>
           </section>
 
@@ -168,8 +168,8 @@ export default function Turnos() {
             </div>
 
             <div>
-              <Label name="tiempo_breack" >Tiempo Break</Label>
-              <Input type="time" name="tiempo_breack" id="tiempo_breack" required />
+              <Label name="tiempo_breack" >Tiempo Break ó Lunch</Label>
+              <Input type="text" name="tiempo_breack" id="tiempo_breack" required />
             </div>
 
             <div className="col-span-2">
