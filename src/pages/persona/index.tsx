@@ -1,68 +1,67 @@
+import { toast } from 'sonner'
 import { WarningIcon, CheckIcon } from '../../components/icons'
-
+import { usePersonas } from '../../hooks/usePersonas'
 import { useNavigate } from 'react-router-dom'
-import { URL_API } from '../../utils/contants'
-
-import { Persona } from '../../types/Persona'
-import { useEffect, useState } from 'react'
-
-import axios from 'axios'
+import { Loading } from '../../components/ui/Loading'
 
 function PersonasView() {
-  const [personas, setPersonas] = useState<Persona[]>([])
+  const { personas, setSearch, search, loading, error } = usePersonas()
   const navigate = useNavigate()
 
-  useEffect(() => {
-    axios.get(`${URL_API}/personas`)
-      .then((response) => {
-        setPersonas(response.data);
-      })
-      .catch(error => console.log(error));
-  }, []);
-
   return (
-    <section className='flex h-[88vh] overflow-y-auto m-2 rounded-md shadow-md sm:rounded-lg relative'>
-      <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
-        <thead className='text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400 sticky top-0'>
-          <tr>
-            <th className='px-2 py-3 text-center'>Id</th>
-            <th className='px-2 py-3'>N° Identicación</th>
-            <th className='px-2 py-3'>Apellidos</th>            
-            <th className='px-2 py-3'>Nombres</th>
-            <th className='px-2 py-3'>Opciones</th>
-          </tr>
-        </thead>
-        <tbody>
-          {
-            personas.map((p) => (
-              <tr key={p.identificacion} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
-                <td className='px-1 py-2 text-center'>
-                  {p.id}
-                </td>
-                <td className='px-3 py-2 font-medium text-gray-900 dark:text-white'>
-                  {p.identificacion}
-                </td>
-                <td className='px-3 py-2'>
-                  {p.apellidos}
-                </td>
-                <td className='px-3 py-2'>
-                  {p.nombres}
-                </td>
-                <td className='px-3 py-2 flex items-center gap-2'>
-                  {
-                    p.identificacion === p.apellidos && p.apellidos === p.nombres ? <p className='text-red-600' title='El empleado le faltan datos básicos. Edite la información para agregarlos'><WarningIcon /></p> : <p className='text-green-600'><CheckIcon /></p>
-                  }
-                  <button className='p-2 bg-blue-500 text-white rounded-md' onClick={() => navigate(`/empleado/${p.id}`)}>
-                    Editar
-                  </button>
-                </td>
-              </tr>
-            ))
-          }
-        </tbody>
-      </table>
+    <section className='h-[92vh] overflow-y-auto'>
 
-      
+      <div className='flex items-center py-2 px-8 bg-gray-700'>
+        <label htmlFor='search' className='w-36 text-white font-semibold'>Buscar empleado:</label>
+        <input type='text' id='search' className='w-96 py-2 rounded-md px-2' placeholder='N° Identificación / Nombres' value={search} onChange={ev => setSearch(ev.target.value)} />
+      </div>
+
+      {
+        loading
+          ? (
+            <section className='h-[92vh] flex items-center justify-center pb-12'>
+              <Loading>Cargando lista empleados</Loading>
+            </section>
+          )
+          : (
+            <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
+              <thead className='text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400 sticky top-0'>
+                <tr>
+                  <th className='px-2 py-3 text-center'>Id</th>
+                  <th className='px-2 py-3'>N° Identicación</th>
+                  <th className='px-2 py-3'>Apellidos</th>
+                  <th className='px-2 py-3'>Nombres</th>
+                  <th className='px-2 py-3'>Opciones</th>
+                </tr>
+              </thead>
+              <tbody>
+                {
+                  personas.map((p) => (
+                    <tr key={p.identificacion} className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
+                      <td className='px-1 py-1 text-center'>{p.id}</td>
+                      <td className='px-3 py-1 font-medium text-gray-900 dark:text-white'>{p.identificacion}</td>
+                      <td className='px-3 py-1'>{p.apellidos}</td>
+                      <td className='px-3 py-1'>{p.nombres}</td>
+                      <td className='px-3 py-1 flex items-center gap-2'>
+                        {
+                          p.identificacion === p.apellidos && p.apellidos === p.nombres
+                            ? <p className='text-red-600' title='El empleado le faltan datos básicos. Edite la información para agregarlos'><WarningIcon /></p>
+                            : <p className='text-green-600'><CheckIcon /></p>
+                        }
+                        <button className='p-2 bg-blue-500 text-white rounded-md' onClick={() => navigate(`/empleado/${p.id}`)}>
+                          Editar
+                        </button>
+                      </td>
+                    </tr>
+                  ))
+                }
+              </tbody>
+            </table>
+          )
+      }
+
+      {error && toast.error(error, { description: 'Error al cargar los empleados' })}
+
     </section>
   )
 }

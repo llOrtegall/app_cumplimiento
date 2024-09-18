@@ -4,10 +4,10 @@ import { LinkNav } from './LinkNav'
 export const NavBar = () => {
   return (
     <nav className='bg-white dark:bg-gray-900 border-b border-gray-200'>
-      <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto p-4'>
+      <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-2'>
         <a href='#' className='flex items-center space-x-3 rtl:space-x-reverse'>
-          <img src="logo.webp" className='h-12' alt='Logo Gestión Humana' />
-          <span className='self-center text-2xl font-semibold whitespace-nowrap dark:text-white'>Gestión Humana Multired</span>
+          <img src="logo.webp" className='h-10' alt='Logo Gestión Humana' />
+          <span className='self-center text-xl font-semibold whitespace-nowrap dark:text-white'>Gestión Humana Multired</span>
         </a>
 
         <div className='w-full md:block md:w-auto' id='navbar-multi-level'>
