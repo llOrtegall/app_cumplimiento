@@ -5,15 +5,22 @@ import { useNavigate } from 'react-router-dom'
 import { Loading } from '../../components/ui/Loading'
 
 function PersonasView() {
-  const { personas, setSearch, search, loading, error } = usePersonas()
+  const { personas, setSearch, search, loading, error, fechtDataAgain } = usePersonas()
   const navigate = useNavigate()
 
   return (
     <section className='h-[92vh] overflow-y-auto'>
 
-      <div className='flex items-center py-2 px-8 bg-gray-700'>
-        <label htmlFor='search' className='w-36 text-white font-semibold'>Buscar empleado:</label>
-        <input type='text' id='search' className='w-96 py-2 rounded-md px-2' placeholder='N° Identificación / Nombres' value={search} onChange={ev => setSearch(ev.target.value)} />
+      <div className='flex items-center justify-around py-2 px-8 bg-gray-700'>
+        <form className='space-x-2'>
+          <label htmlFor='search' className='w-36 text-white font-semibold'>Buscar empleado:</label>
+          <input type='text' id='search' className='w-96 py-2 rounded-md px-2' placeholder='N° Identificación / Nombres' value={search} onChange={ev => setSearch(ev.target.value)} />
+        </form>
+        <div className='flex items-center gap-2 text-white'>
+          <p>N° Empleados Registrados:</p>
+          <p className='text-xl font-semibold'>{personas.length}</p>
+        </div>
+        <button className='bg-blue-700 rounded-lg px-4 py-2 text-white hover:bg-blue-600 font-semibold' onClick={() => fechtDataAgain()}>Recargar Empleados</button>
       </div>
 
       {
