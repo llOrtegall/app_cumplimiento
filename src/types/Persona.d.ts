@@ -7,8 +7,18 @@ export interface Persona {
   apellidos: string
 }
 
+export interface PersonaFields extends Persona {
+  email: null | string
+  direccion: null | string
+  telefono: null | string
+  rH: null | string
+  id_Areas: null | number
+  id_Cargo: null | number
+  id_Grupo_Horario: null | number
+}
+
 interface ResponsePersona {
-  persona: Persona
+  persona: PersonaFields
   options: {
     Areas: Area[]
     Cargos: Cargo[]

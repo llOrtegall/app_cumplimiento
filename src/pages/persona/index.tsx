@@ -1,8 +1,8 @@
-import { toast } from 'sonner'
 import { WarningIcon, CheckIcon } from '../../components/icons'
 import { usePersonas } from '../../hooks/usePersonas'
-import { useNavigate } from 'react-router-dom'
 import { Loading } from '../../components/ui/Loading'
+import { useNavigate } from 'react-router-dom'
+import { toast } from 'sonner'
 
 function PersonasView() {
   const { personas, setSearch, search, loading, error, fechtDataAgain } = usePersonas()
