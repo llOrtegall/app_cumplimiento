@@ -3,6 +3,8 @@ import { Persona } from '../../types/Persona'
 import { useEffect, useState } from 'react'
 import axios, { AxiosResponse } from 'axios'
 import { useNavigate } from 'react-router-dom'
+import { WarningIcon } from '../../components/icons/WarningIcons'
+import { CheckIcon } from '../../components/icons/CheckIcon'
 
 function PersonasView() {
   const [personas, setPersonas] = useState<Persona[]>([])
@@ -21,21 +23,11 @@ function PersonasView() {
       <table className='w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400'>
         <thead className='text-xs text-gray-700 uppercase bg-gray-300 dark:bg-gray-700 dark:text-gray-400 sticky top-0'>
           <tr>
-            <th className='px-2 py-3 text-center'>
-              Id
-            </th>
-            <th className='px-2 py-3'>
-              N° Identicación
-            </th>
-            <th className='px-2 py-3'>
-              Apellidos
-            </th>
-            <th className='px-2 py-3'>
-              Nombres
-            </th>
-            <th className='px-2 py-3'>
-              Opciones
-            </th>
+            <th className='px-2 py-3 text-center'>Id</th>
+            <th className='px-2 py-3'>N° Identicación</th>
+            <th className='px-2 py-3'>Apellidos</th>            
+            <th className='px-2 py-3'>Nombres</th>
+            <th className='px-2 py-3'>Opciones</th>
           </tr>
         </thead>
         <tbody>
@@ -54,7 +46,10 @@ function PersonasView() {
                 <td className='px-3 py-2'>
                   {p.nombres}
                 </td>
-                <td className='px-3 py-2'>
+                <td className='px-3 py-2 flex items-center gap-2'>
+                  {
+                    p.identificacion === p.apellidos && p.apellidos === p.nombres ? <p className='text-red-600' title='El empleado le faltan datos básicos. Edite la información para agregarlos'><WarningIcon /></p> : <p className='text-green-600'><CheckIcon /></p>
+                  }
                   <button className='p-2 bg-blue-500 text-white rounded-md' onClick={() => navigate(`/empleado/${p.id}`)}>
                     Editar
                   </button>
