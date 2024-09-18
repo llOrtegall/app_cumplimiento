@@ -61,13 +61,13 @@ export default function Turnos() {
       axios.delete(`${URL_API}/turno/${turnoDelete}`)
         .then(response => {
           if (response.status === 200) {
-            toast.success('El cargo se eliminó correctamente', { description: 'cargo eliminada' });
+            toast.success('El cargo se eliminó correctamente', { description: 'turno eliminado' });
             setRequest(true);
           }
         })
         .catch(error => {
           console.log(error);
-          toast.error(error.response?.data?.message || 'Error', { description: 'Error al eliminar el cargo' });
+          toast.error(error.response?.data?.message || 'Error', { description: 'Error al eliminar el turno' });
         })
         .finally(() => {
           closeModal();
