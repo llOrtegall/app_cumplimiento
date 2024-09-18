@@ -1,18 +1,20 @@
+import { WarningIcon, CheckIcon } from '../../components/icons'
+
+import { useNavigate } from 'react-router-dom'
 import { URL_API } from '../../utils/contants'
+
 import { Persona } from '../../types/Persona'
 import { useEffect, useState } from 'react'
-import axios, { AxiosResponse } from 'axios'
-import { useNavigate } from 'react-router-dom'
-import { WarningIcon } from '../../components/icons/WarningIcons'
-import { CheckIcon } from '../../components/icons/CheckIcon'
+
+import axios from 'axios'
 
 function PersonasView() {
   const [personas, setPersonas] = useState<Persona[]>([])
   const navigate = useNavigate()
 
   useEffect(() => {
-    axios.get<Persona[]>(`${URL_API}/personas`)
-      .then((response: AxiosResponse<Persona[]>) => {
+    axios.get(`${URL_API}/personas`)
+      .then((response) => {
         setPersonas(response.data);
       })
       .catch(error => console.log(error));
