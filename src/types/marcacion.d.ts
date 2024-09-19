@@ -2,7 +2,7 @@ export interface Marcacion {
   id: number;
   nombres: string;
   apellidos: string;
-  fecha_marcacion: Date;
+  fecha_marcacion: string;
   estado_marcacion: string;
   nombre_dispositivo: string;
   observacion: string;
@@ -20,4 +20,13 @@ export interface MarcacionResponse {
   marcaciones: Marcacion[];
   page: number;
   pageSize: number;
+}
+
+export interface AuditMarcaciones {
+  id: number;
+  nombres: string;
+  apellidos: string;
+  hora_marcacion: string;
+  estado_marcacion: string;
+  hora_inicio: string;
 }
