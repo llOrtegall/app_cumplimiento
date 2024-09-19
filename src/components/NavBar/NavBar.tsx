@@ -15,6 +15,7 @@ export const NavBar = () => {
             <LinkNav link='/' text='Inicio' />
             <LinkNav link='/empleados' text='Empleados' />
             <LinkNav link='/marcacion' text='Marcación' />
+            <LinkNav link='/audit-marcacion' text='Audit Marcación' />
             <LinkNav link='/opciones' text='Opciones' />
           </ul>
         </div>

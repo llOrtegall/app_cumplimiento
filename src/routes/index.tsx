@@ -16,6 +16,7 @@ import Home from '../pages/Home';
 
 import Root from './root';
 import InfoPersona from '../pages/persona/InfoPersona';
+import AuditMarcacion from '../pages/marcacion/AuditMarcacion';
 
 export const Router = createBrowserRouter([
   {
@@ -38,6 +39,10 @@ export const Router = createBrowserRouter([
       {
         path: '/marcacion',
         element: <Marcacion />,
+      },
+      {
+        path: '/audit-marcacion',
+        element: <AuditMarcacion />,
       },
       {
         path: '/opciones',
