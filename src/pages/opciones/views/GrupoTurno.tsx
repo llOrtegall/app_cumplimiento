@@ -57,7 +57,7 @@ export default function GrupoTurno() {
         })
         .catch(error => {
           console.log(error);
-          toast.error(error.response?.data?.message || 'Error', { description: 'Error al eliminar el área' });
+          toast.error(error.response?.data?.message || 'Error', { description: 'Error al eliminar el Grupo Turno' });
         })
         .finally(() => {
           closeModal();
