@@ -1,7 +1,16 @@
+import { LogoutAndDeleteToken } from '../../services/LogOut'
+import { useAuth } from '../../auth/AuthContext'
 import ThemeToggleButton from '../ThemeToggle'
 import { LinkNav } from './LinkNav'
 
 export const NavBar = () => {
+  const { setIsAuthenticated } = useAuth()
+  
+  const handleLogout = () => {
+    LogoutAndDeleteToken()
+    setIsAuthenticated(false)
+  }
+
   return (
     <nav className='bg-white dark:bg-gray-900 border-b border-gray-200'>
       <div className='max-w-screen-xl flex flex-wrap items-center justify-between mx-auto py-2'>
@@ -22,6 +31,15 @@ export const NavBar = () => {
 
         <div className='flex items-center justify-center'>
           <ThemeToggleButton />
+        </div>
+
+        <div>
+          <button onClick={() => handleLogout()}
+            className='flex items-center justify-center p-2 rounded-md text-gray-600 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-800 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-100 dark:focus:ring-offset-gray-800 focus:ring-gray-500 dark:focus:ring-gray-500'>
+            <svg xmlns='http://www.w3.org/2000/svg' className='h-6 w-6' fill='none' viewBox='0 0 24 24' stroke='currentColor'>
+              <path strokeLinecap='round' strokeLinejoin='round' strokeWidth={2} d='M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a2 2 0 01-2 2H5a2 2 0 01-2-2V7a2 2 0 012-2h6a2 2 0 012 2v1' />
+            </svg>
+          </button>
         </div>
       </div>
     </nav>
