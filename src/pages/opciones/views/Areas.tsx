@@ -120,7 +120,7 @@ export default function Areas() {
 
 
   return (
-    <section className="p-1 flex flex-col h-[91vh] relative">
+    <section className="p-1 flex flex-col h-[90vh] relative">
 
       <table className="w-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
         <thead className="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400">

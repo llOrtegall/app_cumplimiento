@@ -9,7 +9,7 @@ function PersonasView() {
   const navigate = useNavigate()
 
   return (
-    <section className='h-[92vh] overflow-y-auto'>
+    <section className='h-[90vh] overflow-y-auto'>
 
       <div className='flex items-center justify-around py-2 px-8 bg-gray-700'>
         <form className='space-x-2'>
