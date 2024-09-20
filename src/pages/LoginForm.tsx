@@ -38,44 +38,35 @@ function LoginPage() {
   }
 
   return (
-    <section className="bg-gray-50 dark:bg-gray-900">
+    <section className='flex items-center justify-center h-screen'>
 
-      <div className="flex items-center justify-center min-h-screen py-6 sm:px-6 lg:px-8">
-        <div className="max-w-md w-full space-y-8">
-          <div>
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-200">
-              Iniciar sesión
-            </h2>
-          </div>
-          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
-            <input type="hidden" name="remember" defaultValue="true" />
-            <div className="rounded-md shadow-sm -space-y-px">
-              <div>
-                <Label htmlFor="username">Usuario</Label>
-                <UserIcon />
-                <Input id="username" name="username" type="text" autoComplete="username" required value={username}
-                  onChange={ev => setUsername((ev.target as HTMLInputElement) .value )} />
-              </div>
-              <div>
-                <Label htmlFor="password">Contraseña</Label>
-                <LockIcon />
-                <Input id="password" name="password" type="password" autoComplete="current-password" required value={password}
-                  onChange={ev => setPassword((ev.target as HTMLInputElement) .value )} />
-              </div>
-            </div>
+      <form className='flex flex-col gap-6 bg-gray-200 px-16 py-8 rounded-md' onSubmit={handleSubmit}>
+        <figure className='flex justify-center'>
+          <img src='/gane.webp' alt='Logo' width={180} />
+        </figure>
 
-            <div>
-              <Button type="submit">Iniciar sesión</Button>
-            </div>
-          </form>
-          <div className="text-center">
-            <p className="text-red-500">{errorString}</p>
+        <div>
+          <Label>Usuario</Label>
+          <div className='flex gap-2'>
+            <UserIcon />
+            <Input type='text' autoComplete='username' required value={username}
+              onChange={ev => setUsername((ev.target as HTMLInputElement).value)} />
           </div>
         </div>
-      </div>
+        <div>
+          <Label>Contraseña</Label>
+          <div className='flex gap-2'>
+            <LockIcon />
+            <Input type='password' autoComplete='password' required value={password}
+              onChange={ev => setPassword((ev.target as HTMLInputElement).value)} />
+          </div>
+        </div>
+
+        <Button type='submit'>Iniciar sesión</Button>
+
+      </form>
 
       {errorString && toast.error(errorString, { description: 'Error al Iniciar Sesion', id: ' ', duration: 5000 })}
-
       <Toaster position='top-right' duration={3000} />
 
     </section>
