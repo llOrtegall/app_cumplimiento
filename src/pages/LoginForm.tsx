@@ -7,7 +7,7 @@ import axios from 'axios'
 
 import { LOGIN_URL, APP_NAME } from '../utils/contants'
 
-function LoginPage () {
+function LoginPage() {
   const { setIsAuthenticated } = useAuth()
   const [username, setUsername] = useState('')
   const [errorString, setErrorString] = useState('')
@@ -38,42 +38,47 @@ function LoginPage () {
   }
 
   return (
-    <section className="w-screen h-screen flex bg-gradient-to-b from-blue-200 to-blue-300 relative">
-      <section className='w-full grid place-content-center '>
-        <form className='min-w-96 flex flex-col gap-8 bg-gray-200 py-10 px-16 rounded-lg shadow-lg' onSubmit={handleSubmit}>
-          <figure className='flex items-center justify-center'>
-            <img src="/gane.webp" alt="logo de gane" className='w-[220px] ' />
-          </figure>
-          <article className='flex flex-col gap-1 text-md lg:text-lg 2xl:text-2xl'>
-            <Label>Usuario: </Label>
-            <div className='flex items-center gap-2 w-full justify-around px-2'>
-              <UserIcon />
-              <Input name='username' type='text' placeholder='CP1118342523' required
-                autoComplete='username' value={username}
-                onChange={(ev) => { setUsername((ev.target as HTMLInputElement).value) }} />
+    <section className="bg-gray-50 dark:bg-gray-900">
+
+      <div className="flex items-center justify-center min-h-screen py-6 sm:px-6 lg:px-8">
+        <div className="max-w-md w-full space-y-8">
+          <div>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900 dark:text-gray-200">
+              Iniciar sesión
+            </h2>
+          </div>
+          <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+            <input type="hidden" name="remember" defaultValue="true" />
+            <div className="rounded-md shadow-sm -space-y-px">
+              <div>
+                <Label htmlFor="username">Usuario</Label>
+                <UserIcon />
+                <Input id="username" name="username" type="text" autoComplete="username" required value={username}
+                  onChange={ev => setUsername((ev.target as HTMLInputElement) .value )} />
+              </div>
+              <div>
+                <Label htmlFor="password">Contraseña</Label>
+                <LockIcon />
+                <Input id="password" name="password" type="password" autoComplete="current-password" required value={password}
+                  onChange={ev => setPassword((ev.target as HTMLInputElement) .value )} />
+              </div>
             </div>
-          </article>
 
-          <article className='flex flex-col gap-1 text-md lg:text-lg 2xl:text-2xl'>
-            <Label>Contraseña:</Label>
-            <div className='flex items-center gap-2 w-full justify-around px-2'>
-              <LockIcon />
-              <Input name='contraseña' type='password' placeholder='***********' required
-                autoComplete='contraseña' value={password}
-                onChange={(ev) => { setPassword((ev.target as HTMLInputElement).value) }} />
+            <div>
+              <Button type="submit">Iniciar sesión</Button>
             </div>
-          </article>
-
-          <Button>Iniciar Sesión</Button>
-
-        </form >
-      </section>
+          </form>
+          <div className="text-center">
+            <p className="text-red-500">{errorString}</p>
+          </div>
+        </div>
+      </div>
 
       {errorString && toast.error(errorString, { description: 'Error al Iniciar Sesion', id: ' ', duration: 5000 })}
 
       <Toaster position='top-right' duration={3000} />
 
-    </section >
+    </section>
   )
 }
 
