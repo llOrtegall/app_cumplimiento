@@ -2,13 +2,16 @@ import { LogoutAndDeleteToken } from '../../services/LogOut'
 import { useAuth } from '../../auth/AuthContext'
 import ThemeToggleButton from '../ThemeToggle'
 import { LinkNav } from './LinkNav'
+import { useNavigate } from 'react-router-dom'
 
 export const NavBar = () => {
   const { setIsAuthenticated } = useAuth()
-  
+  const navigate = useNavigate()
+
   const handleLogout = () => {
     LogoutAndDeleteToken()
     setIsAuthenticated(false)
+    navigate('/')
   }
 
   return (
