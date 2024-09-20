@@ -50,7 +50,7 @@ function LoginPage () {
               <UserIcon />
               <Input name='username' type='text' placeholder='CP1118342523' required
                 autoComplete='username' value={username}
-                onChange={(ev) => { setUsername(ev.target.value) }} />
+                onChange={(ev) => { setUsername((ev.target as HTMLInputElement).value) }} />
             </div>
           </article>
 
@@ -60,7 +60,7 @@ function LoginPage () {
               <LockIcon />
               <Input name='contraseña' type='password' placeholder='***********' required
                 autoComplete='contraseña' value={password}
-                onChange={(ev) => { setPassword(ev.target.value) }} />
+                onChange={(ev) => { setPassword((ev.target as HTMLInputElement).value) }} />
             </div>
           </article>
 
