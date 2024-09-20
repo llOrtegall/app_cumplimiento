@@ -17,9 +17,11 @@ export interface Marcacion {
 }
 
 export interface MarcacionResponse {
-  marcaciones: Marcacion[];
-  page: number;
-  pageSize: number;
+  id: number;
+  nombres: string;
+  apellidos: string;
+  fecha_marcacion: string;
+  estado_marcacion: string;
 }
 
 export interface AuditMarcaciones {

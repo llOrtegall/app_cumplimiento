@@ -48,7 +48,6 @@ export default function InfoPersona() {
     setPersona(prev => ({ ...prev, [name]: parseInt(value) }))
   }
 
-
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
