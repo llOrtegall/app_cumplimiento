@@ -66,8 +66,8 @@ export default function GrupovsTurno() {
 
       <section className='flex justify-around py-2'>
         <div className=''>
-          <h1>Filtros</h1>
-          <label htmlFor=''>Grupo Horario</label>
+          <h1></h1>
+          <label htmlFor=''></label>
         </div>
 
         <form ref={formRef} className='overflow-y-auto flex max-h-32 w-max px-4 gap-8 border rounded-md shadow-md' onSubmit={handleSubmit}>
