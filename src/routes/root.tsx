@@ -1,20 +1,17 @@
 import { NavBar } from '../components/NavBar/NavBar'
+import { useAuth } from '../auth/AuthContext'
+import LoginPage from '../pages/LoginForm';
 import { Outlet } from 'react-router-dom'
 import { Toaster } from 'sonner'
-import { useAuth } from '../auth/AuthContext'
-import LoginPage from '../pages/LoginForm'
 
-export default function Root () {
-
-  const {isAuthenticated, user } = useAuth();
-
-  console.log(isAuthenticated, user);
+export default function Root() {
+  const { isAuthenticated } = useAuth();
 
   if (!isAuthenticated) {
     return <LoginPage />
   }
 
-  return(
+  return (
     <>
       <NavBar />
       <Outlet />
