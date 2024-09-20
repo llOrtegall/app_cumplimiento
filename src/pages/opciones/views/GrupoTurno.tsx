@@ -1,10 +1,10 @@
-import { PlusIcon } from "../../../components/icons/PlusIcon";
-import { ModalDelete } from "../../../components/ModalDelete";
-import { GrupoTurnos } from "../../../types/Interfaces";
-import { FormEvent, useEffect, useState } from "react";
-import { URL_API } from "../../../utils/contants";
-import { toast } from "sonner";
-import axios from "axios";
+import { PlusIcon } from '../../../components/icons/PlusIcon';
+import { ModalDelete } from '../../../components/ModalDelete';
+import { GrupoTurnos } from '../../../types/Interfaces';
+import { FormEvent, useEffect, useState } from 'react';
+import { URL_API } from '../../../utils/contants';
+import { toast } from 'sonner';
+import axios from 'axios';
 
 export default function GrupoTurno() {
   const [turnoGrupo, setTurnoGrupo] = useState<GrupoTurnos[]>([]);
@@ -37,7 +37,7 @@ export default function GrupoTurno() {
           toast.success('El área se creo correctamente', { description: 'Área creada' })
           setCodigo('')
           setNombreGrupoTurno('')
-          setRequest(true)
+          setRequest(!request)
         }
       })
       .catch(error => {
@@ -52,7 +52,7 @@ export default function GrupoTurno() {
         .then(response => {
           if (response.status === 200) {
             toast.success('El área se eliminó correctamente', { description: 'Área eliminada' });
-            setRequest(true);
+            setRequest(!request);
           }
         })
         .catch(error => {
@@ -77,21 +77,21 @@ export default function GrupoTurno() {
 
 
   return (
-    <section className="p-1 flex flex-col h-[91vh] relative">
-      <table className="w-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-x-auto">
-        <thead className="text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400">
+    <section className='p-1 flex flex-col h-[91vh] relative'>
+      <table className='w-auto text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 overflow-x-auto'>
+        <thead className='text-xs text-gray-700 uppercase bg-blue-100 dark:bg-gray-700 dark:text-gray-400'>
           <tr>
-            <th className="px-6 py-3">CODIGO</th>
-            <th className="px-6 py-3">grupo turno</th>
-            <th className="px-6 py-3">Acciones</th>
+            <th className='px-6 py-3'>CODIGO</th>
+            <th className='px-6 py-3'>grupo turno</th>
+            <th className='px-6 py-3'>Acciones</th>
           </tr>
         </thead>
         <tbody>
           {
             turnoGrupo.map(turno => (
-              <tr key={turno.id} className="bg-white border-b dark:bg-gray-800 dark:border-gray-700  ">
-                <td className="px-6 py-4">{turno.codigo}</td>
-                <td className="px-6 py-4">{turno.descripcion}</td>
+              <tr key={turno.id} className='bg-white border-b dark:bg-gray-800 dark:border-gray-700  '>
+                <td className='px-6 py-4'>{turno.codigo}</td>
+                <td className='px-6 py-4'>{turno.descripcion}</td>
                 <td className='px-6 py-4 flex gap-2'>
                   <button className='bg-red-400 hover:bg-red-600 text-white px-2 py-1 rounded-md' onClick={() => openModal(turno.id)}
                   >Eliminar</button>
@@ -109,15 +109,15 @@ export default function GrupoTurno() {
             <label className={`text-gray-700 dark:text-gray-400 w-72 text-center `}>
               Código:
             </label>
-            <input type="text" value={codigo} onChange={(e) => setCodigo(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500" />
+            <input type='text' value={codigo} onChange={(e) => setCodigo(e.target.value)}
+              className='w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500' />
           </div>
           <div className='flex items-center'>
             <label className={`text-gray-700 dark:text-gray-400 w-72 text-center `}>
               Nombre Grupo Turno:
             </label>
-            <input type="text" value={nombreGrupoTurno} onChange={(e) => setNombreGrupoTurno(e.target.value)}
-              className="w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500" />
+            <input type='text' value={nombreGrupoTurno} onChange={(e) => setNombreGrupoTurno(e.target.value)}
+              className='w-full px-4 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500' />
           </div>
 
           <button type='submit' title='crear área'
