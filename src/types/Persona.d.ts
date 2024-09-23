@@ -8,11 +8,11 @@ export interface Persona {
 }
 
 export interface PersonaFields extends Persona {
-  email: null | string
-  direccion: null | string
-  ciudad: null | string
-  telefono: null | string
-  rH: null | string
+  //email: null | string
+  // direccion: null | string
+  // ciudad: null | string
+  // telefono: null | string
+  // rH: null | string
   id_Areas: null | number
   id_Cargo: null | number
   id_Grupo_Horario: null | number
