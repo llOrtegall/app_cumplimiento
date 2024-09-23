@@ -1,7 +1,7 @@
 import { ResponsePersona, PersonaFields } from '../../types/Persona';
+import { useNavigate, useParams } from 'react-router-dom';
 import { useEffect, useState, ChangeEvent } from 'react';
 import { URL_API } from '../../utils/contants';
-import { useParams } from 'react-router-dom';
 import { toast } from 'sonner';
 import axios from 'axios';
 
@@ -22,6 +22,7 @@ export default function InfoPersona() {
     id_Grupo_Horario: 0
   });
   const [data, setData] = useState<ResponsePersona | null>(null);
+  const navigate = useNavigate();
   const [reload, setReload] = useState(false);
 
   useEffect(() => {
@@ -167,6 +168,11 @@ export default function InfoPersona() {
           <span>Guardar Información</span>
         </button>
       </form>
+
+      <button onClick={() => navigate('/empleados')}
+        className='absolute bottom-12 right-64 px-4 py-2 text-white bg-red-700 rounded-lg font-semibold hover:bg-red-600'>
+          <span>Cancelar</span>
+      </button>
 
     </section>
   );
