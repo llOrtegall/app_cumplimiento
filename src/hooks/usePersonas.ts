@@ -35,7 +35,7 @@ export function usePersonas() {
   const personasFiltered = useMemo(() => {
     return personas.filter((p) => {
       if (!search) return personas;
-      return p.identificacion.includes(search) || p.nombres.toLowerCase().includes(search.toLowerCase());
+      return p.identificacion.includes(search) || p.nombres.toLowerCase().includes(search.toLowerCase()) || p.apellidos.toLowerCase().includes(search.toLowerCase());
     });
   }, [personas, search]);
 
