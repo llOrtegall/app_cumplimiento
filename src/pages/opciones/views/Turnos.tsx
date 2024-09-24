@@ -96,8 +96,8 @@ export default function Turnos() {
             <th className="px-6 py-3">Horas Total Día</th>
             <th className="px-6 py-3">Hora Inicio</th>
             <th className="px-6 py-3">Hora Fin</th>
-            <th className="px-6 py-3">Tolerancia Entrada</th>
-            <th className="px-6 py-3">Tolerancia Salida</th>
+            <th className="px-6 py-3">Hora Inicio Break</th>
+            <th className="px-6 py-3">Hora Final Break</th>
             <th className="px-6 py-3">Tiempo Breack</th>
             <th className="px-6 py-3">Acciones</th>
           </tr>
@@ -158,12 +158,12 @@ export default function Turnos() {
             </div>
 
             <div>
-              <Label name="tolerancia_entrada" >Tolerancia Entrada</Label>
+              <Label name="tolerancia_entrada" >Hora Inicio Break</Label>
               <Input type="time" name="tolerancia_entrada" id="tolerancia_entrada" required />
             </div>
 
             <div>
-              <Label name="tolerancia_salida" >Tolerancia Salida</Label>
+              <Label name="tolerancia_salida" >Hora Final Break</Label>
               <Input type="time" name="tolerancia_salida" id="tolerancia_salida" required />
             </div>
 
