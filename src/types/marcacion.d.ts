@@ -16,12 +16,17 @@ export interface Marcacion {
   id_foto_temota: string;
 }
 
-export interface MarcacionResponse {
+interface MarcacionSimple {
   id: number;
   nombres: string;
   apellidos: string;
   fecha_marcacion: string;
   estado_marcacion: string;
+}
+
+export interface MarcacionResponse {
+  marcaciones: MarcacionSimple[];
+  count: number;
 }
 
 export interface AuditMarcaciones {

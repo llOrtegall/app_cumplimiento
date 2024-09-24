@@ -4,7 +4,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 
 const MarcacionesList = () => {
-  const [data, setData] = useState<MarcacionResponse[]>([]);
+  const [data, setData] = useState<MarcacionResponse>({ marcaciones: [], count: 0 });
   const [fechaInitial, setFechaInitial] = useState('');
   const [fechaFinal, setFechaFinal] = useState('');
 
@@ -58,7 +58,7 @@ const MarcacionesList = () => {
           </tr>
         </thead>
         <tbody>
-          {data?.map((marcacion) => (
+          {data?.marcaciones?.map((marcacion) => (
             <tr key={marcacion.id}>
               <td className="border px-4 py-2">{marcacion.id}</td>
               <td className="border px-4 py-2">{marcacion.nombres}</td>
