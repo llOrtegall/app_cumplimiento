@@ -5,15 +5,16 @@ import axios from 'axios';
 
 const MarcacionesList = () => {
   const [data, setData] = useState<MarcacionResponse[]>([]);
-  const [fecha, setFecha] = useState('');
+  const [fechaInitial, setFechaInitial] = useState('');
+  const [fechaFinal, setFechaFinal] = useState('');
 
   useEffect(() => {
     fetchdata();
-  }, [fecha]);
+  }, [fechaInitial]);
 
   const fetchdata = async () => {
     try {
-      const response = await axios.get(`${URL_API}/marcaciones`, { params: { fecha } });
+      const response = await axios.get(`${URL_API}/marcaciones`, { params: { fechaInitial, fechaFinal } });
       setData(response.data);
     } catch (error) {
       console.error('Error fetching data:', error);
@@ -27,9 +28,21 @@ const MarcacionesList = () => {
         <h1 className="text-gray-700 text-2xl font-semibold">Listado de marcaciones</h1>
 
         <div className='flex items-center gap-2'>
-          <label htmlFor="">Fecha</label>
-          <input type="date" value={fecha} onChange={(e) => setFecha(e.target.value)}
+          <label className='w-full'>Fecha Initial</label>
+          <input type="date" value={fechaInitial} onChange={(e) => setFechaInitial(e.target.value)}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+        </div>
+
+        <div className='flex items-center gap-2'>
+          <label className='w-full'>Fecha Final</label>
+          <input type="date" value={fechaFinal} onChange={(e) => setFechaFinal(e.target.value)}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+        </div>
+
+        <div className='flex items-center gap-2'>
+          <button className='px-4 py-2 bg-green-600 rounded-lg font-semibold text-white hover:bg-green-500'>
+            Exportar Excel
+          </button>
         </div>
 
       </div>
