@@ -2,6 +2,7 @@ import { MarcacionResponse } from '../../types/marcacion';
 import { URL_API } from '../../utils/contants';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { BottonExporCartera } from '../../components/ExportExcel';
 
 const MarcacionesList = () => {
   const [data, setData] = useState<MarcacionResponse>({ marcaciones: [], count: 0 });
@@ -44,9 +45,7 @@ const MarcacionesList = () => {
         </div>
 
         <div className='flex items-center gap-2'>
-          <button className='px-4 py-2 bg-green-600 rounded-lg font-semibold text-white hover:bg-green-500'>
-            Exportar Excel
-          </button>
+          <BottonExporCartera datos={data.marcaciones} time1={fechaInitial} time2={fechaFinal} />
         </div>
 
       </div>
