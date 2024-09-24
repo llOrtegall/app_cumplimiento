@@ -22,6 +22,11 @@ const MarcacionesList = () => {
     }
   };
 
+  const cleanDates = () => {
+    setFechaInitial('')
+    setFechaFinal('')
+  }
+
 
   return (
     <section className="p-4 bg-white rounded-lg shadow-md">
@@ -29,15 +34,22 @@ const MarcacionesList = () => {
         <h1 className="text-gray-700 text-2xl font-semibold">Listado de marcaciones</h1>
 
         <div className='flex items-center gap-2'>
-          <label className='w-full'>Fecha Initial</label>
-          <input type="date" value={fechaInitial} onChange={(e) => setFechaInitial(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-        </div>
 
-        <div className='flex items-center gap-2'>
-          <label className='w-full'>Fecha Final</label>
-          <input type="date" value={fechaFinal} onChange={(e) => setFechaFinal(e.target.value)}
-            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+          <div className='flex items-center gap-2'>
+            <label className='w-full'>Fecha Initial</label>
+            <input type="date" value={fechaInitial} onChange={(e) => setFechaInitial(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+          </div>
+
+          <div className='flex items-center gap-2'>
+            <label className='w-full'>Fecha Final</label>
+            <input type="date" value={fechaFinal} onChange={(e) => setFechaFinal(e.target.value)}
+              className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+          </div>
+
+          <button className='px-4 py-2 bg-red-600 rounded-lg font-semibold text-white hover:bg-red-500' onClick={cleanDates}>
+            Limpiar Fechas
+          </button>
         </div>
 
         <div className='flex items-center'>
