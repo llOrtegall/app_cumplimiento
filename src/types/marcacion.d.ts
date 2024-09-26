@@ -20,8 +20,9 @@ interface MarcacionSimple {
   id: number;
   nombres: string;
   apellidos: string;
-  fecha_marcacion: string;
-  estado_marcacion: string;
+  fecha: string;
+  hora: string
+  estado: string;
 }
 
 export interface MarcacionResponse {
