@@ -18,6 +18,7 @@ export interface Marcacion {
 
 interface MarcacionSimple {
   id: number
+  documento: string
   nombres: string
   apellidos: string
   fecha: string
@@ -32,7 +33,6 @@ export interface MarcacionResponse {
 
 export interface AuditMarcaciones {
   id: number
-  documento: string
   nombres: string
   apellidos: string
   hora: string

@@ -66,6 +66,7 @@ const MarcacionesList = () => {
         <thead className='bg-blue-200'>
           <tr>
             <th className="px-4 py-2">ID</th>
+            <th className="px-4 py-2">Documento</th>
             <th className="px-4 py-2">Nombres</th>
             <th className="px-4 py-2">Apellidos</th>
             <th className="px-4 py-2">Fecha Marcación</th>
@@ -77,6 +78,7 @@ const MarcacionesList = () => {
           {data?.marcaciones?.map((marcacion) => (
             <tr key={marcacion.id}>
               <td className="border px-4 py-2">{marcacion.id}</td>
+              <td className="border px-4 py-2">{marcacion.documento}</td>
               <td className="border px-4 py-2">{marcacion.nombres}</td>
               <td className="border px-4 py-2">{marcacion.apellidos}</td>
               <td className="border px-4 py-2">{marcacion.fecha.toString()}</td>
