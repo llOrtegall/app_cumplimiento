@@ -36,8 +36,8 @@ export default function Turnos() {
       hora_inicio: fields.hora_inicio,
       hora_fin: fields.hora_fin,
       teorico: fields.teorico,
-      tolerancia_despues_entrada: fields.tolerancia_entrada,
-      tolerancia_antes_salir: fields.tolerancia_salida,
+      hora_inicio_break: fields.hora_inicio_break,
+      hora_fin_break: fields.hora_fin_break,
       tiempo_breack: fields.tiempo_breack,
       conceptos: fields.conceptos
     }
@@ -158,13 +158,13 @@ export default function Turnos() {
             </div>
 
             <div>
-              <Label name="tolerancia_entrada" >Hora Inicio Break</Label>
-              <Input type="time" name="tolerancia_entrada" id="tolerancia_entrada" required />
+              <Label name="hora_inicio_break" >Hora Inicio Break</Label>
+              <Input type="time" name="hora_inicio_break" id="hora_inicio_break" required />
             </div>
 
             <div>
-              <Label name="tolerancia_salida" >Hora Final Break</Label>
-              <Input type="time" name="tolerancia_salida" id="tolerancia_salida" required />
+              <Label name="hora_fin_break" >Hora Final Break</Label>
+              <Input type="time" name="hora_fin_break" id="hora_fin_break" required />
             </div>
 
             <div>
