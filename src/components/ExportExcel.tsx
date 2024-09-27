@@ -13,21 +13,23 @@ const generateExcelData = (datos: MarcacionSimple[], time1?: string, time2?: str
   const headers = [
     {
       A: 'ID',
-      B: 'Nombres',
-      C: 'Apellidos',
-      D: 'Fecha Marcación',
-      E: 'Hora Marcación',
-      F: 'Estado Marcación',
+      B: 'Documento',
+      C: 'Nombres',
+      D: 'Apellidos',
+      E: 'Fecha Marcación',
+      F: 'Hora Marcación',
+      G: 'Estado Marcación',
     }
   ]
 
   const rows = datos.map((it) => ({
     A: it.id,
-    B: it.nombres,
-    C: it.apellidos,
-    D: it.fecha,
-    E: it.hora,
-    F: it.estado
+    B: it.documento,
+    C: it.nombres,
+    D: it.apellidos,
+    E: it.fecha,
+    F: it.hora,
+    G: it.estado
   }))
 
   return [...titulo, ...headers, ...rows]
@@ -47,8 +49,8 @@ const createExcelFile = (data: unknown[]): void => {
   ]
 
   hoja['!cols'] = colWidths
-  utils.book_append_sheet(libro, hoja, 'Cartera')
-  writeFile(libro, 'ReporteCartera.xlsx')
+  utils.book_append_sheet(libro, hoja, 'Marcaciones')
+  writeFile(libro, 'ReporteMarcaciones.xlsx')
 }
 
 export const BottonExporCartera = ({ datos, time1, time2 }: Props): JSX.Element => {
