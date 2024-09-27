@@ -45,7 +45,7 @@ export default function AuditMarcacion() {
                   {
                     item.estado === 'Entrada' && item.hora > item.hora_inicio
                       ? (<span className='text-red-500 font-semibold'>Tarde</span>)
-                      : (<span className='text-green-500 font-semibold'>a tiempo</span>)
+                      : (<span className='text-green-500 font-semibold'>A tiempo</span>)
                   }
                 </td>
               </tr>
