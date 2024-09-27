@@ -69,6 +69,7 @@ const MarcacionesList = () => {
             <th className="px-4 py-2">Nombres</th>
             <th className="px-4 py-2">Apellidos</th>
             <th className="px-4 py-2">Fecha Marcación</th>
+            <th className='px-4 py-2'>Hora Marcación</th>
             <th className="px-4 py-2">Estado Marcación</th>
           </tr>
         </thead>
@@ -78,7 +79,8 @@ const MarcacionesList = () => {
               <td className="border px-4 py-2">{marcacion.id}</td>
               <td className="border px-4 py-2">{marcacion.nombres}</td>
               <td className="border px-4 py-2">{marcacion.apellidos}</td>
-              <td className="border px-4 py-2">{marcacion.fecha.toString()} {marcacion.hora}</td>
+              <td className="border px-4 py-2">{marcacion.fecha.toString()}</td>
+              <td className="border px-4 py-2">{marcacion.hora.toString()}</td>
               <td className="border px-4 py-2">{marcacion.estado}</td>
             </tr>
           ))}

@@ -16,7 +16,8 @@ const generateExcelData = (datos: MarcacionSimple[], time1?: string, time2?: str
       B: 'Nombres',
       C: 'Apellidos',
       D: 'Fecha Marcación',
-      E: 'Estado Marcación',
+      E: 'Hora Marcación',
+      F: 'Estado Marcación',
     }
   ]
 
@@ -24,8 +25,9 @@ const generateExcelData = (datos: MarcacionSimple[], time1?: string, time2?: str
     A: it.id,
     B: it.nombres,
     C: it.apellidos,
-    D: it.fecha_marcacion,
-    E: it.estado_marcacion
+    D: it.fecha,
+    E: it.hora,
+    F: it.estado
   }))
 
   return [...titulo, ...headers, ...rows]
