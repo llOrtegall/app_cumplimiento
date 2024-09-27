@@ -1,8 +1,8 @@
+import { BottonExporCartera } from '../../components/ExportExcel';
 import { MarcacionResponse } from '../../types/marcacion';
 import { URL_API } from '../../utils/contants';
 import { useState, useEffect } from 'react';
 import axios from 'axios';
-import { BottonExporCartera } from '../../components/ExportExcel';
 
 const MarcacionesList = () => {
   const [data, setData] = useState<MarcacionResponse>({ marcaciones: [], count: 0 });
