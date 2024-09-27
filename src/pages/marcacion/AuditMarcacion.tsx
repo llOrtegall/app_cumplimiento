@@ -38,12 +38,12 @@ export default function AuditMarcacion() {
               <tr key={index} className='border-b hover:bg-gray-50'>
                 <td className='py-2 px-4 text-sm text-gray-700'>{item.nombres}</td>
                 <td className='py-2 px-4 text-sm text-gray-700'>{item.apellidos}</td>
-                <td className='py-2 px-4 text-sm text-gray-700'>{item.hora_marcacion}</td>
-                <td className='py-2 px-4 text-sm text-gray-700'>{item.estado_marcacion}</td>
+                <td className='py-2 px-4 text-sm text-gray-700'>{item.hora}</td>
+                <td className='py-2 px-4 text-sm text-gray-700'>{item.estado}</td>
                 <td className='py-2 px-4 text-sm text-gray-700'>{item.hora_inicio}</td>
                 <td className='py-2 px-4 text-sm text-gray-700'>
                   {
-                    item.estado_marcacion === 'Entrada' && item.hora_marcacion > item.hora_inicio
+                    item.estado === 'Entrada' && item.hora > item.hora_inicio
                       ? (<span className='text-red-500 font-semibold'>Tarde</span>)
                       : (<span className='text-green-500 font-semibold'>a tiempo</span>)
                   }

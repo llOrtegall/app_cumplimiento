@@ -34,7 +34,7 @@ export interface AuditMarcaciones {
   id: number;
   nombres: string;
   apellidos: string;
-  hora_marcacion: string;
-  estado_marcacion: string;
+  hora: string;
+  estado: string;
   hora_inicio: string;
 }
