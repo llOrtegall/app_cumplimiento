@@ -10,7 +10,7 @@ export default function App() {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await fetch(`http://localhost:3030/clientes?page=${page}&pageSize=${pageSize}`);
+        const response = await fetch(`http://172.20.1.70:3030/clientes?page=${page}&pageSize=${pageSize}`);
         const data = await response.json() as DataResponse;
         setClients(data.clients);
         setTotalClients(data.count);
@@ -37,9 +37,12 @@ export default function App() {
             <tr>
               <th className='px-6 py-3'> Documento </th>
               <th className='px-6 py-3'> Nombres </th>
+              <th className='px-6 py-3'> F. Nacimiento </th>
+              <th className='px-6 py-3'> Dirección </th>
               <th className='px-6 py-3'> Telefono </th>
               <th className='px-6 py-3'> Correo </th>
               <th className='px-6 py-3'> Categoría </th>
+              <th className='px-6 py-3'> PEP </th>
             </tr>
           </thead>
           <tbody>
@@ -54,6 +57,12 @@ export default function App() {
                       {client.NOMBRES}
                     </td>
                     <td className='px-6 py-4'>
+                      {client.FECHANACIMIENTO ? new Date(client.FECHANACIMIENTO).toLocaleDateString() : 'N/A'}
+                    </td>
+                    <td className='px-6 py-4'>
+                      {client.DIRECCION}
+                    </td>
+                    <td className='px-6 py-4'>
                       {client.TELEFONO1}
                     </td>
                     <td className='px-6 py-4'>
@@ -61,6 +70,9 @@ export default function App() {
                     </td>
                     <td className='px-6 py-4'>
                       {client.CATEGORIA}
+                    </td>
+                    <td className='px-6 py-4'>
+                      {client.PEP}
                     </td>
                   </tr>
                 ))
@@ -76,7 +88,7 @@ export default function App() {
         </table>
       </div>
 
-      <div className='py-2 bg-yellow-400 flex items-center gap-4 justify-center'>
+      <div className='py-2 bg-yellow-200 flex items-center gap-4 justify-center'>
         <button onClick={() => setPage(page - 1)} disabled={page === 1}
           className={`px-4 py-2 rounded ${page === 1 ? 'bg-gray-300 cursor-not-allowed' : 'bg-blue-500 text-white hover:bg-blue-700'}`}>
           Anterior
