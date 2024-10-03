@@ -29,6 +29,14 @@ export default function App() {
   const handleSearh = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     console.log(identificacion);
+
+    try {
+      const result = await fetch(`http://172.20.1.70:3030/cliente/${identificacion}`);
+      const data = await result.json() as Cliente[];
+      setClients(data);
+    } catch (error) {
+      console.error('Error fetching clients:', error);
+    }
     
   }
 
@@ -44,24 +52,24 @@ export default function App() {
         <input type="text" required
           value={identificacion} onChange={(e) => setIdentificacion(e.target.value)}
           className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-          <button type='submit' className='bg-green-600 py-2 px-4 rounded-md hover:bg-green-500'>
+          <button className='bg-green-600 py-2 px-4 rounded-md hover:bg-green-500'>
             Buscar
           </button>
       </form>
 
         <div className='flex items-center gap-2'>
-          <label className='w-full'>Fecha Initial</label>
+          <label className='w-full'>Fecha Nacimiento</label>
           <input type="date" 
             // value={fechaInitial} onChange={(e) => setFechaInitial(e.target.value)}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" />
         </div>
 
-        <div className='flex items-center gap-2'>
+        {/* <div className='flex items-center gap-2'>
           <label className='w-full'>Fecha Final</label>
           <input type="date" 
           // value={fechaFinal} onChange={(e) => setFechaFinal(e.target.value)}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-        </div>
+        </div> */}
 
         <button className='px-4 py-2 bg-red-600 rounded-lg font-semibold text-white hover:bg-red-500' 
           // onClick={cleanDates}
@@ -71,7 +79,7 @@ export default function App() {
 
 
         <div className='flex items-center'>
-          <span className='font-semibold text-xl'>Cantidad Registros: {50}</span>
+          <span className='font-semibold text-xl'>Cantidad Registros: {clients?.length || identificacion?.length}</span>
         </div>
 
 
