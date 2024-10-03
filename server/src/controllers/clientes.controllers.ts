@@ -38,3 +38,22 @@ export const getClientById = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+export const getClientByFN = async (req: Request, res: Response) => {
+  const { FN } = req.body;
+
+  console.log(FN);
+
+  try {
+    const results = await ClientModel.findAll({
+      where: {
+        FECHANACIMIENTO: FN
+      }
+    });
+
+    res.status(200).json(results);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}

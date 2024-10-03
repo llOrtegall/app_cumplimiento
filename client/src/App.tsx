@@ -9,6 +9,8 @@ export default function App() {
   const [totalClients, setTotalClients] = useState(0);
   const [identificacion, setIdentificacion] = useState('');
 
+  const [fechaNacimiento, setFechaNacimiento] = useState('');
+
   useEffect(() => {
     const fetchClients = async () => {
       try {
@@ -37,7 +39,24 @@ export default function App() {
     } catch (error) {
       console.error('Error fetching clients:', error);
     }
-    
+
+  }
+
+  const handleSearhByFN = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(fechaNacimiento);
+    try {
+      const result = await fetch('http://172.20.1.70:3030/clienteFN', {
+        method: 'POST', headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ FN: fechaNacimiento })
+      });
+
+      const data = await result.json() as Cliente[];
+      setClients(data);
+    } catch (error) {
+      console.error('Error fetching clients:', error);
+    }
+
   }
 
   return (
@@ -46,23 +65,26 @@ export default function App() {
       <NavBar />
 
       <div className='flex justify-around py-2 bg-blue-700 text-white'>
-      
-      <form className='flex items-center gap-2' onSubmit={ev => handleSearh(ev)}>
-        <label >Documento</label>
-        <input type="text" required
-          value={identificacion} onChange={(e) => setIdentificacion(e.target.value)}
-          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+
+        <form className='flex items-center gap-2' onSubmit={ev => handleSearh(ev)}>
+          <label >Documento</label>
+          <input type="text" required
+            value={identificacion} onChange={(e) => setIdentificacion(e.target.value)}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" />
           <button className='bg-green-600 py-2 px-4 rounded-md hover:bg-green-500'>
             Buscar
           </button>
-      </form>
+        </form>
 
-        <div className='flex items-center gap-2'>
+        <form className='flex items-center gap-2' onSubmit={ev => handleSearhByFN(ev)}>
           <label className='w-full'>Fecha Nacimiento</label>
-          <input type="date" 
-            // value={fechaInitial} onChange={(e) => setFechaInitial(e.target.value)}
+          <input type="date"
+            value={fechaNacimiento} onChange={(e) => setFechaNacimiento(e.target.value)}
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" />
-        </div>
+          <button className='bg-green-600 py-2 px-4 rounded-md hover:bg-green-500'>
+            Buscar
+          </button>
+        </form>
 
         {/* <div className='flex items-center gap-2'>
           <label className='w-full'>Fecha Final</label>
@@ -71,9 +93,9 @@ export default function App() {
             className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" />
         </div> */}
 
-        <button className='px-4 py-2 bg-red-600 rounded-lg font-semibold text-white hover:bg-red-500' 
-          // onClick={cleanDates}
-          >
+        <button className='px-4 py-2 bg-red-600 rounded-lg font-semibold text-white hover:bg-red-500'
+        // onClick={cleanDates}
+        >
           Limpiar Fechas
         </button>
 
