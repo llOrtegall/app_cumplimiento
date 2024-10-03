@@ -1,11 +1,13 @@
 import { useEffect, useState } from 'react';
 import { Cliente, DataResponse } from './types/intefaces';
+import NavBar from './components/NavBar';
 
 export default function App() {
   const [clients, setClients] = useState<Cliente[]>([]);
   const [page, setPage] = useState(1);
   const [pageSize] = useState(50);
   const [totalClients, setTotalClients] = useState(0);
+  const [identificacion, setIdentificacion] = useState('');
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -24,14 +26,58 @@ export default function App() {
 
   const totalPages = Math.ceil(totalClients / pageSize);
 
+  const handleSearh = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    console.log(identificacion);
+    
+  }
+
   return (
     <div className='flex flex-col'>
 
-      <div className='py-4 bg-blue-600 text-white text-2xl font-semibold text-center'>
-        Listado de Clientes
+      <NavBar />
+
+      <div className='flex justify-around py-2 bg-blue-700 text-white'>
+      
+      <form className='flex items-center gap-2' onSubmit={ev => handleSearh(ev)}>
+        <label >Documento</label>
+        <input type="text" required
+          value={identificacion} onChange={(e) => setIdentificacion(e.target.value)}
+          className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+          <button type='submit' className='bg-green-600 py-2 px-4 rounded-md hover:bg-green-500'>
+            Buscar
+          </button>
+      </form>
+
+        <div className='flex items-center gap-2'>
+          <label className='w-full'>Fecha Initial</label>
+          <input type="date" 
+            // value={fechaInitial} onChange={(e) => setFechaInitial(e.target.value)}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+        </div>
+
+        <div className='flex items-center gap-2'>
+          <label className='w-full'>Fecha Final</label>
+          <input type="date" 
+          // value={fechaFinal} onChange={(e) => setFechaFinal(e.target.value)}
+            className="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-200 dark:border-gray-600 dark:placeholder-gray-400  dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+        </div>
+
+        <button className='px-4 py-2 bg-red-600 rounded-lg font-semibold text-white hover:bg-red-500' 
+          // onClick={cleanDates}
+          >
+          Limpiar Fechas
+        </button>
+
+
+        <div className='flex items-center'>
+          <span className='font-semibold text-xl'>Cantidad Registros: {50}</span>
+        </div>
+
+
       </div>
 
-      <div className='h-[86vh] overflow-y-auto'>
+      <div className='h-[79vh] overflow-y-auto'>
         <table className='w-full text-sm text-left rtl:text-right text-black sticky top-0 z-10'>
           <thead className='text-xs text-black uppercase bg-blue-200 '>
             <tr>
@@ -78,7 +124,7 @@ export default function App() {
                 ))
               ) : (
                 <tr className='odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700'>
-                  <td colSpan={5} className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white'>
+                  <td colSpan={5} className='px-6 py-4 font-medium text-gray-900 whitespace-nowrap '>
                     No hay datos
                   </td>
                 </tr>
@@ -102,6 +148,6 @@ export default function App() {
         </button>
       </div>
 
-    </div>
+    </div >
   );
 }
