@@ -1,3 +1,4 @@
+import { Op } from 'sequelize';
 import ClientModel from '../models/clientes.model';
 import { Request, Response } from 'express';
 
@@ -23,8 +24,10 @@ export const getAllClients = async (req: Request, res: Response) => {
 export const getClientById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const client = await ClientModel.findOne({
-      where: { DOCUMENTO: id }
+    const client = await ClientModel.findAll({
+      where: { DOCUMENTO: {
+        [Op.like]: `%${id}%`
+      } }
     });
 
     if (!client) {
@@ -32,7 +35,7 @@ export const getClientById = async (req: Request, res: Response) => {
       return;
     }
 
-    res.status(200).json([client]);
+    res.status(200).json(client);
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Internal server error' });
