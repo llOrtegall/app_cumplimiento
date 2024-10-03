@@ -19,3 +19,22 @@ export const getAllClients = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+export const getClientById = async (req: Request, res: Response) => {
+  try {
+    const id = req.params.id;
+    const client = await ClientModel.findOne({
+      where: { DOCUMENTO: id }
+    });
+
+    if (!client) {
+      res.status(404).json({ message: 'Client not found' });
+      return;
+    }
+
+    res.status(200).json([client]);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
