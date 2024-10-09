@@ -119,7 +119,7 @@ const TableCell = React.forwardRef<
     ref={forwardedRef}
     className={cx(
       // base
-      "p-4 text-sm",
+      "p-1 text-sm",
       // text color
       "text-gray-600 dark:text-gray-400",
       className,

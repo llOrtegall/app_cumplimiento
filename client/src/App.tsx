@@ -29,13 +29,12 @@ function App() {
 
   return (
     <section className=''>
-      <div className='py-2 px-2 text-end'>
+      <div className='py-2 px-2 text-end flex justify-around bg-gray-400'>
         <p>Total Clientes Nuevos: {totalClients}</p>
+        <p>Clientes Visibles: {pageSize}</p>
       </div>
       <div className="h-[90vh] overflow-y-auto">
-        <TableRoot>
           <Table>
-            <TableCaption>Recent invoices.</TableCaption>
             <TableHead>
               <TableRow>
                 <TableHeaderCell>Name</TableHeaderCell>
@@ -44,6 +43,7 @@ function App() {
                 <TableHeaderCell>Correo</TableHeaderCell>
                 <TableHeaderCell>Categoría</TableHeaderCell>
                 <TableHeaderCell>Tipo Zona</TableHeaderCell>
+                <TableHeaderCell>Acciones</TableHeaderCell>
               </TableRow>
             </TableHead>
             <TableBody>
@@ -55,11 +55,13 @@ function App() {
                   <TableCell>{item.EMAIL}</TableCell>
                   <TableCell>{item.CATEGORIA}</TableCell>
                   <TableCell>{item.TIPOZONA}</TableCell>
+                  <TableCell>
+                    <button className="px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800">Editar</button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </TableRoot>
 
       </div>
 
