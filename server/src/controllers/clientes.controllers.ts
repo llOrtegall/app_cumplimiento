@@ -9,6 +9,10 @@ export const getAllClients = async (req: Request, res: Response) => {
     const offset = (page - 1) * pageSize;
 
     const { count, rows } = await ClientModel.findAndCountAll({
+      where: {
+        CATEGORIA: { [Op.is]: null },
+        TIPOZONA: { [Op.is]: null }
+      },
       limit: pageSize,
       offset: offset,
       order: [['DOCUMENTO', 'desc']]
