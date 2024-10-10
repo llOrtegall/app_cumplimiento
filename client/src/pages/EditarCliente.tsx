@@ -41,23 +41,29 @@ function EditarCliente() {
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fields = Object.fromEntries(new FormData(e.target as HTMLFormElement))
-    
+
     const { categoria, tipozona, documento } = fields;
-    if(!categoria || !tipozona || !documento) {
+    if (!categoria || !tipozona || !documento) {
       alert('Los Campos categoría y tipo de zona son obligatorios');
       return;
     }
 
-    console.log(categoria, tipozona, documento);
-    // supongamos que aquí se hace la petición a la API para guardar los cambios
+    fetch('http://172.20.1.70:3030/updateCliente', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ categoria, tipozona, documento })
+    })
+    .then(response => response.json())
+    .then(data => { console.log(data) })
+    .catch(error => { console.error('Error updating client:', error) });
 
 
     // resetear los campos
-    setTimeout(() => {
-      formRef.current?.reset();
-    }, 5000);
+    // setTimeout(() => {
+    //   formRef.current?.reset();
+    // }, 5000);
 
-  
+
   }
 
   return (
@@ -69,39 +75,39 @@ function EditarCliente() {
             <form ref={formRef} className='grid grid-cols-3 gap-4 max-w-[1200px] m-auto' onSubmit={handleSubmit}>
               <div>
                 <Label>Nombres</Label>
-                <Input name='nombres' defaultValue={cliente.NOMBRES} readOnly/>
+                <Input name='nombres' defaultValue={cliente.NOMBRES} readOnly />
               </div>
               <div>
                 <Label>Documento</Label>
-                <Input name='documento' defaultValue={cliente.DOCUMENTO} readOnly/>
+                <Input name='documento' defaultValue={cliente.DOCUMENTO} readOnly />
               </div>
               <div>
                 <Label>Tipo de documento</Label>
-                <Input name='tipodocumento' defaultValue={cliente.TIPODOCUMENTO} readOnly/>
+                <Input name='tipodocumento' defaultValue={cliente.TIPODOCUMENTO} readOnly />
               </div>
               <div>
                 <Label>Fecha de nacimiento</Label>
-                <Input name='fechanacimiento' defaultValue={cliente.FECHANACIMIENTO} readOnly/>
+                <Input name='fechanacimiento' defaultValue={cliente.FECHANACIMIENTO} readOnly />
               </div>
               <div>
                 <Label>Dirección</Label>
-                <Input name='direccion' defaultValue={cliente.DIRECCION} readOnly/>
+                <Input name='direccion' defaultValue={cliente.DIRECCION} readOnly />
               </div>
               <div>
                 <Label>Correo</Label>
-                <Input name='nombres' defaultValue={cliente.EMAIL} readOnly/>
+                <Input name='nombres' defaultValue={cliente.EMAIL} readOnly />
               </div>
               <div>
                 <Label>Telefono 1</Label>
-                <Input name='telefono1' defaultValue={cliente.TELEFONO1} readOnly/>
+                <Input name='telefono1' defaultValue={cliente.TELEFONO1} readOnly />
               </div>
               <div>
                 <Label>Telefono 2</Label>
-                <Input name='telefono2' defaultValue={cliente.TELEFONO2} readOnly/>
+                <Input name='telefono2' defaultValue={cliente.TELEFONO2} readOnly />
               </div>
               <div>
                 <Label>PEP</Label>
-                <Input name='pep' defaultValue={cliente.PEP} readOnly/>
+                <Input name='pep' defaultValue={cliente.PEP} readOnly />
               </div>
               <div>
                 <Label>Categoria</Label>
@@ -113,7 +119,7 @@ function EditarCliente() {
               </div>
               <div>
                 <Label>Fecha de carga</Label>
-                <Input name='fechacarga' defaultValue={cliente.FECHACARGA} readOnly/>
+                <Input name='fechacarga' defaultValue={cliente.FECHACARGA} readOnly />
               </div>
 
               <div className='col-span-1'>

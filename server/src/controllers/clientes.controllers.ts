@@ -29,9 +29,11 @@ export const getClientById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
     const [client] = await ClientModel.findAll({
-      where: { DOCUMENTO: {
-        [Op.eq]: id
-      } }
+      where: {
+        DOCUMENTO: {
+          [Op.eq]: id
+        }
+      }
     });
 
     if (!client) {
@@ -59,6 +61,34 @@ export const getClientByFN = async (req: Request, res: Response) => {
     });
 
     res.status(200).json(results);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
+
+export const updateCliente = async (req: Request, res: Response) => {
+  const { categoria, tipozona, documento } = req.body;
+
+  if (!categoria || !tipozona || !documento) {
+    res.status(400).json({ message: 'faltan Campos Requeridos' });
+    return;
+  }
+
+  try {
+    const [updated] = await ClientModel.update({
+      CATEGORIA: categoria,
+      TIPOZONA: tipozona
+    }, {
+      where: { DOCUMENTO: documento }
+    });
+
+    if (!updated) {
+      res.status(404).json({ message: 'Client not found' });
+      return;
+    }
+
+    res.status(200).json({ message: 'Client Actualizado Correctamente' });
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Internal server error' });
