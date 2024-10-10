@@ -1,4 +1,4 @@
-import { getAllClients, getClientById, getClientByFN, updateCliente, getAllClientsNuevos } from '../controllers/clientes.controllers';
+import { getAllClients, getClientById, getClientByFN, updateCliente, getAllClientsNuevos, updateClientes } from '../controllers/clientes.controllers';
 
 // TODO: este es una funcion que solo se usa para pruebas
 import { insertTest } from '../controllers/insertTest';
@@ -18,5 +18,7 @@ clientRoutes.post('/clienteFN', getClientByFN)
 clientRoutes.post('/updateCliente', updateCliente)
 
 clientRoutes.get('/crearDatosMasivos', insertTest)
+
+clientRoutes.post('/updateClientes', updateClientes)
 
 export { clientRoutes };

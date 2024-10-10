@@ -6,6 +6,7 @@ import { useEffect, useState, useRef } from 'react';
 
 import { CantidadDatos, Categorizacion, TipoZona } from '../utils/contanst'
 import { Label } from '../components/Label';
+import { toast } from 'sonner';
 
 function ClientesNuevos() {
   const [clients, setClients] = useState<Cliente[]>([]);
@@ -15,6 +16,7 @@ function ClientesNuevos() {
 
   const [identificaciones, setIdentificaciones] = useState<string[]>([]);
   const [showEdition, setShowEdition] = useState(false);
+  const [reload, setReload] = useState(false);
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = e.target;
@@ -52,7 +54,7 @@ function ClientesNuevos() {
     };
 
     fetchClients();
-  }, [page, pageSize]);
+  }, [page, pageSize, reload]);
 
   const totalPages = Math.ceil(totalClients / pageSize);
   const navigate = useNavigate();
@@ -61,8 +63,23 @@ function ClientesNuevos() {
     e.preventDefault();
     const fields = Object.fromEntries(new FormData(e.target as HTMLFormElement))
 
-    console.log(fields);
-    console.log(identificaciones);
+    const { categoria, tipozona } = fields;
+
+    fetch('http://172.20.1.70:3030/updateClientes', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ categoria, tipozona, documentos: identificaciones })
+    })
+      .then(response => response.json())
+      .then(data => {
+        console.log(data);
+        toast.success('Datos actualizados correctamente');
+        setTimeout(() => { limpiarSeleccion(); setReload(true) }, 3000);
+      })
+      .catch(error => {
+        console.error('Error updating clients:', error);
+        toast.error('Error al actualizar los datos');
+      })
 
   }
 

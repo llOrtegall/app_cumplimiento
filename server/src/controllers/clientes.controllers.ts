@@ -115,3 +115,32 @@ export const updateCliente = async (req: Request, res: Response) => {
     res.status(500).json({ message: 'Internal server error' });
   }
 }
+
+export const updateClientes = async (req: Request, res: Response) => {
+  const { categoria, tipozona, documentos } = req.body;
+
+  if (!documentos) {
+    res.status(400).json({ message: 'faltan Campos Requeridos' });
+    return;
+  }
+
+  try {
+    const updated = await Client.update({
+      CATEGORIA: categoria ? categoria : null,
+      TIPOZONA: tipozona ? tipozona : null,
+    }, {
+      where: {
+        DOCUMENTO: {
+          [Op.in]: documentos
+        }
+      }
+    });
+
+    console.log(updated);
+
+    res.status(200).json({ message: 'Clientes Actualizados Correctamente' });
+  } catch (error) {
+    console.log(error);
+    res.status(500).json({ message: 'Internal server error' });
+  }
+}
