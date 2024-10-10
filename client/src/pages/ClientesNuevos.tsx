@@ -3,6 +3,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '.
 import { Cliente, DataResponse } from '../types/Interfaces';
 import { RiDatabase2Line } from '@remixicon/react';
 import { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 const data = [
   {
@@ -27,12 +28,11 @@ const data = [
   },
 ]
 
-
 function ClientesNuevos() {
   const [clients, setClients] = useState<Cliente[]>([]);
   const [totalClients, setTotalClients] = useState(0);
-  const [page, setPage] = useState(1);
   const [pageSize, setPageSize] = useState(100);
+  const [page, setPage] = useState(1);
 
   // const [identificacion, setIdentificacion] = useState('');
 
@@ -52,6 +52,7 @@ function ClientesNuevos() {
   }, [page, pageSize]);
 
   const totalPages = Math.ceil(totalClients / pageSize);
+  const navigate = useNavigate();
 
   return (
     <section className=''>
@@ -112,7 +113,7 @@ function ClientesNuevos() {
                 <TableCell>{item.CATEGORIA}</TableCell>
                 <TableCell>{item.TIPOZONA}</TableCell>
                 <TableCell>
-                  <button className='px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-green-200 transition-colors'>Editar</button>
+                  <button onClick={() => navigate(`/editar-cliente/${item.DOCUMENTO}`)} className='px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-green-200 transition-colors'>Editar</button>
                 </TableCell>
               </TableRow>
             ))}

@@ -28,9 +28,9 @@ export const getAllClients = async (req: Request, res: Response) => {
 export const getClientById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const client = await ClientModel.findAll({
+    const [client] = await ClientModel.findAll({
       where: { DOCUMENTO: {
-        [Op.like]: `%${id}%`
+        [Op.eq]: id
       } }
     });
 
