@@ -1,6 +1,6 @@
-import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from './components/Table';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from './components/Select';
-import { Cliente, DataResponse } from './types/Interfaces';
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
+import { Cliente, DataResponse } from '../types/Interfaces';
 import { RiDatabase2Line } from '@remixicon/react';
 import { useEffect, useState } from 'react';
 
@@ -28,7 +28,7 @@ const data = [
 ]
 
 
-function App() {
+function ClientesNuevos() {
   const [clients, setClients] = useState<Cliente[]>([]);
   const [totalClients, setTotalClients] = useState(0);
   const [page, setPage] = useState(1);
@@ -86,9 +86,9 @@ function App() {
         </div>
       </section>
 
-      <div className='h-[89vh] overflow-y-auto'>
+      <div className='h-[90vh] overflow-y-auto'>
         <Table>
-          <TableHead>
+          <TableHead className='bg-blue-100'>
             <TableRow>
               <TableHeaderCell>Name</TableHeaderCell>
               <TableHeaderCell>Documento</TableHeaderCell>
@@ -118,16 +118,16 @@ function App() {
 
       </div>
 
-      <div className='flex items-center justify-center py-2 bg-yellow-50 gap-2'>
+      <div className='flex items-center justify-center py-1 bg-yellow-50 gap-2'>
         <button disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}
-          className='px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800'>
+          className={` ${page === 1 ? 'hover:bg-red-200' : 'hover:bg-green-200'} px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800  transition-colors`}>
           Previous
         </button>
 
         <span>{page} de {totalPages}</span>
 
         <button disabled={page === totalPages} onClick={() => setPage((prev) => prev + 1)}
-          className='px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800' >
+          className={` ${page === totalPages ? 'hover:bg-red-200' : 'hover:bg-green-200'} px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800  transition-colors`} >
           Next
         </button>
 
@@ -137,4 +137,4 @@ function App() {
   )
 }
 
-export default App
+export default ClientesNuevos

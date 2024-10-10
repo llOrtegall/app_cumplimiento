@@ -45,12 +45,8 @@ const Table = React.forwardRef<
 
 Table.displayName = "Table"
 
-const TableHead = React.forwardRef<
-  HTMLTableSectionElement,
-  React.HTMLAttributes<HTMLTableSectionElement>
->(({ className, ...props }, forwardedRef) => (
-  <thead ref={forwardedRef} className={cx(className)} {...props} />
-))
+const TableHead = React.forwardRef<HTMLTableSectionElement, React.HTMLAttributes<HTMLTableSectionElement>>(
+  ({ className, ...props }, forwardedRef) => (<thead ref={forwardedRef} className={cx(className)} {...props} />))
 
 TableHead.displayName = "TableHead"
 
@@ -62,7 +58,7 @@ const TableHeaderCell = React.forwardRef<
     ref={forwardedRef}
     className={cx(
       // base
-      "border-b px-4 py-3.5 text-left text-sm font-semibold",
+      "border-b px-4 py-2 text-left text-sm font-semibold",
       // text color
       "text-gray-900 dark:text-gray-50",
       // border color
@@ -119,7 +115,7 @@ const TableCell = React.forwardRef<
     ref={forwardedRef}
     className={cx(
       // base
-      "p-1 text-sm",
+      "p-1 text-xs",
       // text color
       "text-gray-600 dark:text-gray-400",
       className,
