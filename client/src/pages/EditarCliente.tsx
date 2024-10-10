@@ -1,9 +1,10 @@
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
+import { Categorizacion, TipoZona } from '../utils/contanst'
 import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Input } from '../components/Input';
 import { Label } from '../components/Label';
 import { toast } from 'sonner';
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 
 interface Cliente {
   CATEGORIA: string;
@@ -20,22 +21,6 @@ interface Cliente {
   TIPOZONA: string;
   VERSION: string;
 }
-
-const data = [
-  { value: 'null', label: 'Seleccionar' },
-  { value: 'CL', label: 'CL' },
-  { value: 'TR', label: 'TR' },
-  { value: 'AC', label: 'AC' },
-  { value: 'CI', label: 'CI' },
-  { value: 'CC', label: 'CC' }
-]
-
-const data2 = [
-  { value: 'null', label: 'Seleccionar' },
-  { value: 'N/A', label: 'N/A' },
-  { value: 'URBANO', label: 'URBANO' },
-  { value: 'RUAL', label: 'RUAL' }
-]
 
 function EditarCliente() {
   const { id } = useParams();
@@ -138,7 +123,7 @@ function EditarCliente() {
                     <SelectValue placeholder='Select' />
                   </SelectTrigger>
                   <SelectContent>
-                    {data.map((item) => (
+                    {Categorizacion.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         <span className='flex justify-between gap-x-2'>
                           {/* <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' /> */}
@@ -157,7 +142,7 @@ function EditarCliente() {
                     <SelectValue placeholder='Select' />
                   </SelectTrigger>
                   <SelectContent>
-                    {data2.map((item) => (
+                    {TipoZona.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         <span className='flex justify-between gap-x-2'>
                           {/* <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' /> */}

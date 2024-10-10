@@ -22,3 +22,19 @@ export const CantidadDatos = [
     icon: RiDatabase2Line
   },
 ]
+
+export const Categorizacion = [
+  { value: 'null', label: 'Sin Categoría' },
+  { value: 'CL', label: 'Cliente' },
+  { value: 'TR', label: 'Trabajador' },
+  { value: 'AC', label: 'Accionista' },
+  { value: 'CI', label: 'Colocador Independiente' },
+  { value: 'CC', label: 'Cajero Comercial' }
+]
+
+export const TipoZona = [
+  { value: 'null', label: 'Seleccionar' },
+  { value: 'N/A', label: 'N/A' },
+  { value: 'URBANO', label: 'URBANO' },
+  { value: 'RUAL', label: 'RUAL' }
+]
