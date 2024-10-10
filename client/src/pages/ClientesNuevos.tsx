@@ -32,7 +32,7 @@ function ClientesNuevos() {
   const [clients, setClients] = useState<Cliente[]>([]);
   const [totalClients, setTotalClients] = useState(0);
   const [page, setPage] = useState(1);
-  const [pageSize] = useState(100);
+  const [pageSize, setPageSize] = useState(100);
 
   // const [identificacion, setIdentificacion] = useState('');
 
@@ -57,6 +57,12 @@ function ClientesNuevos() {
     <section className=''>
 
       <section className='flex py-2 justify-around'>
+
+        <div className='flex items-center gap-2'>
+          <label className='text-sm font-semibold'>Cantida De Clientes Nuevos:</label>
+          <span className='px-2 py-1 text-sm font-semibold text-gray-800 bg-yellow-400 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800'>{totalClients}</span>
+        </div>
+
         <div className='flex items-center gap-2'>
           <label className='text-sm font-semibold'>Buscar:</label>
           <input type='text' className='w-[200px] px-1 py-2 text-sm border border-gray-200 rounded-md dark:border-gray-800' />
@@ -65,18 +71,15 @@ function ClientesNuevos() {
 
         <div className='flex items-center gap-2'>
           <label className='text-sm font-semibold'>Mostrar:</label>
-          <Select defaultValue='100'>
+          <Select defaultValue={'100'} onValueChange={value => setPageSize(parseInt(value))}>
             <SelectTrigger className='mx-auto w-[120px]'>
               <SelectValue placeholder='Select' />
             </SelectTrigger>
             <SelectContent>
               {data.map((item) => (
-                <SelectItem key={item.value} value={item.value} >
+                <SelectItem key={item.value} value={item.value}>
                   <span className='flex justify-between gap-x-2'>
-                    <item.icon
-                      className='size-4 shrink-0 text-gray-500 dark:text-gray-500'
-                      aria-hidden='true'
-                    />
+                    <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' />
                     {item.label}
                   </span>
                 </SelectItem>
