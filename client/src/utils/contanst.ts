@@ -36,5 +36,5 @@ export const TipoZona = [
   { value: 'null', label: 'Seleccionar' },
   { value: 'N/A', label: 'N/A' },
   { value: 'URBANO', label: 'URBANO' },
-  { value: 'RUAL', label: 'RUAL' }
+  { value: 'RURAL', label: 'RURAL' }
 ]

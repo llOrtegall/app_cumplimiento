@@ -27,7 +27,7 @@ export const getAllClientsNuevos = async (req: Request, res: Response) => {
     const pageSize = parseInt(req.query.pageSize as string) || 100;
     const offset = (page - 1) * pageSize;
 
-    const { count, rows } = await Client.findAndCountAll({
+    const { rows, count } = await Client.findAndCountAll({
       where: {
         [Op.or]: [
           { CATEGORIA: { [Op.is]: null } },

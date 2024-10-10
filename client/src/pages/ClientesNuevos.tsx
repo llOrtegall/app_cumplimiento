@@ -4,7 +4,8 @@ import { Cliente, DataResponse } from '../types/Interfaces';
 import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
 
-import { CantidadDatos } from '../utils/contanst'
+import { CantidadDatos, Categorizacion, TipoZona } from '../utils/contanst'
+import { Label } from '../components/Label';
 
 function ClientesNuevos() {
   const [clients, setClients] = useState<Cliente[]>([]);
@@ -13,6 +14,7 @@ function ClientesNuevos() {
   const [page, setPage] = useState(1);
 
   const [identificaciones, setIdentificaciones] = useState<string[]>([]);
+  const [showEdition, setShowEdition] = useState(false);
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = e.target;
@@ -33,6 +35,7 @@ function ClientesNuevos() {
       }
     });
     setIdentificaciones([]);
+    setShowEdition(false);
   };
 
 
@@ -54,10 +57,17 @@ function ClientesNuevos() {
   const totalPages = Math.ceil(totalClients / pageSize);
   const navigate = useNavigate();
 
-  console.log(identificaciones);
+  const handleSubmitMasivo = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    const fields = Object.fromEntries(new FormData(e.target as HTMLFormElement))
+
+    console.log(fields);
+    console.log(identificaciones);
+
+  }
 
   return (
-    <section className=''>
+    <section className='relative'>
 
       <section className='flex py-2 justify-around'>
 
@@ -68,9 +78,10 @@ function ClientesNuevos() {
 
         {
           identificaciones.length > 0 && (
-            <div className='flex gap-2'>
-              <button className='px-2 py-2 text-sm text-gray-800 bg-blue-200 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-green-200 transition-colors'>Edición Masiva</button>
+            <div className='flex items-center gap-2'>
+              <button onClick={() => setShowEdition(true)} className='px-2 py-2 text-sm text-gray-800 bg-blue-200 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-green-200 transition-colors'>Edición Masiva</button>
               <button onClick={limpiarSeleccion} className='px-2 py-2 text-sm text-gray-800 bg-yellow-200 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-red-200 transition-colors'>Limpiar Seleción</button>
+              <label className='text-sm font-semibold'>Seleccionados: {identificaciones.length}</label>
             </div>
           )
         }
@@ -160,6 +171,63 @@ function ClientesNuevos() {
 
       </div>
 
+      {
+        showEdition && (
+          <section className='flex gap-4 absolute top-16 bg-yellow-100 p-4 rounded-md items-center min-w-[460px]'>
+            <button onClick={() => setShowEdition(false)} className='absolute top-2 right-2 text-lg font-semibold text-gray-800 dark:text-gray-100'>X</button>
+            <div className='flex flex-col bg-red-200 p-4 rounded-md gap-1 h-[60vh] overflow-y-auto'>
+              {
+                identificaciones.map((id) => (
+                  <span key={id} className='px-2 py-1 text-sm font-semibold text-gray-800 bg-blue-200 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800'>{id}</span>
+                ))
+              }
+            </div>
+            <form className='space-y-4' onSubmit={handleSubmitMasivo}>
+              <div>
+                <Label>Cetegoría</Label>
+                {/* <Input name='categoria' defaultValue={cliente.CATEGORIA} /> */}
+                <Select defaultValue={'null'} name='categoria'>
+                  <SelectTrigger className='mx-auto'>
+                    <SelectValue placeholder='Select' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {Categorizacion.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        <span className='flex justify-between gap-x-2'>
+                          {/* <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' /> */}
+                          {item.label}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <div>
+                <Label>Tipo de zona</Label>
+                {/* <Input name='tipozona' defaultValue={cliente.TIPOZONA} /> */}
+                <Select defaultValue={'null'} name='tipozona'>
+                  <SelectTrigger className='mx-auto'>
+                    <SelectValue placeholder='Select' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {TipoZona.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        <span className='flex justify-between gap-x-2'>
+                          {/* <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' /> */}
+                          {item.label}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
+              </div>
+              <button type='submit' className='w-full bg-blue-500 hover:bg-green-500 text-white font-bold py-2 px-4 rounded'>
+                Actualizar
+              </button>
+            </form>
+          </section>
+        )
+      }
     </section>
   )
 }
