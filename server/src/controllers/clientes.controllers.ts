@@ -10,8 +10,10 @@ export const getAllClients = async (req: Request, res: Response) => {
 
     const { count, rows } = await ClientModel.findAndCountAll({
       where: {
-        CATEGORIA: { [Op.is]: null },
-        TIPOZONA: { [Op.is]: null }
+        [Op.or]: [
+          { CATEGORIA: { [Op.is]: null } },
+          { TIPOZONA: { [Op.is]: null } }
+        ]
       },
       limit: pageSize,
       offset: offset,

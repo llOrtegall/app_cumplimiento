@@ -2,6 +2,8 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams } from 'react-router-dom';
 import { Input } from '../components/Input';
 import { Label } from '../components/Label';
+import { toast } from 'sonner';
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 
 interface Cliente {
   CATEGORIA: string;
@@ -18,6 +20,22 @@ interface Cliente {
   TIPOZONA: string;
   VERSION: string;
 }
+
+const data = [
+  { value: 'null', label: 'Seleccionar' },
+  { value: 'CL', label: 'CL' },
+  { value: 'TR', label: 'TR' },
+  { value: 'AC', label: 'AC' },
+  { value: 'CI', label: 'CI' },
+  { value: 'CC', label: 'CC' }
+]
+
+const data2 = [
+  { value: 'null', label: 'Seleccionar' },
+  { value: 'N/A', label: 'N/A' },
+  { value: 'URBANO', label: 'URBANO' },
+  { value: 'RUAL', label: 'RUAL' }
+]
 
 function EditarCliente() {
   const { id } = useParams();
@@ -42,6 +60,8 @@ function EditarCliente() {
     e.preventDefault();
     const fields = Object.fromEntries(new FormData(e.target as HTMLFormElement))
 
+    console.log(fields);
+
     const { categoria, tipozona, documento } = fields;
     if (!categoria || !tipozona || !documento) {
       alert('Los Campos categoría y tipo de zona son obligatorios');
@@ -53,17 +73,18 @@ function EditarCliente() {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ categoria, tipozona, documento })
     })
-    .then(response => response.json())
-    .then(data => { console.log(data) })
-    .catch(error => { console.error('Error updating client:', error) });
-
-
-    // resetear los campos
-    // setTimeout(() => {
-    //   formRef.current?.reset();
-    // }, 5000);
-
-
+      .then(response => response.json())
+      .then(data => {
+        console.log(data)
+        toast.success(data.message || 'Cliente actualizado correctamente', { description: 'Cambio de información del cliente' });
+        setTimeout(() => {
+          formRef.current?.reset();
+        }, 5000);
+      })
+      .catch(error => {
+        console.error('Error updating client:', error)
+        toast.error('Error al actualizar cliente', { description: 'Cambio de información del cliente' });
+      });
   }
 
   return (
@@ -111,11 +132,41 @@ function EditarCliente() {
               </div>
               <div>
                 <Label>Categoria</Label>
-                <Input name='categoria' defaultValue={cliente.CATEGORIA} />
+                {/* <Input name='categoria' defaultValue={cliente.CATEGORIA} /> */}
+                <Select defaultValue={'null'} name='categoria'>
+                  <SelectTrigger className='mx-auto'>
+                    <SelectValue placeholder='Select' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {data.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        <span className='flex justify-between gap-x-2'>
+                          {/* <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' /> */}
+                          {item.label}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <Label>Tipo de zona</Label>
-                <Input name='tipozona' defaultValue={cliente.TIPOZONA} />
+                {/* <Input name='tipozona' defaultValue={cliente.TIPOZONA} /> */}
+                <Select defaultValue={'null'} name='tipozona'>
+                  <SelectTrigger className='mx-auto'>
+                    <SelectValue placeholder='Select' />
+                  </SelectTrigger>
+                  <SelectContent>
+                    {data2.map((item) => (
+                      <SelectItem key={item.value} value={item.value}>
+                        <span className='flex justify-between gap-x-2'>
+                          {/* <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' /> */}
+                          {item.label}
+                        </span>
+                      </SelectItem>
+                    ))}
+                  </SelectContent>
+                </Select>
               </div>
               <div>
                 <Label>Fecha de carga</Label>
