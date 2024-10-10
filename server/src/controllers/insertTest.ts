@@ -2,7 +2,7 @@ import { Client, ClienteAttributes } from '../models/clientes.model';
 import { faker } from '@faker-js/faker';
 import { Request, Response } from 'express';
 
-const cantidad = 10000;
+const cantidad = 1000;
 
 export const insertTest = async (req: Request, res: Response) => {
   try {
@@ -12,7 +12,7 @@ export const insertTest = async (req: Request, res: Response) => {
       data.push({
         FECHACARGA: faker.date.recent(),
         TIPODOCUMENTO: 'CC',
-        DOCUMENTO: faker.number.int({ min: 6600000, max: 122200111}).toString(),
+        DOCUMENTO: faker.number.int({ min: 0, max: 999999990}).toString(),
         NOMBRES: faker.person.firstName(),
         FECHANACIMIENTO: faker.date.past(),
         CATEGORIA: null,
@@ -26,6 +26,7 @@ export const insertTest = async (req: Request, res: Response) => {
       });
     }
 
+    await Client.sync();
     await Client.bulkCreate(data);
 
     res.status(200).json({ message: 'Datos insertados' });

@@ -17,6 +17,6 @@ clientRoutes.post('/clienteFN', getClientByFN)
 
 clientRoutes.post('/updateCliente', updateCliente)
 
-clientRoutes.get('/crearMasivo', insertTest)
+clientRoutes.get('/crearDatosMasivos', insertTest)
 
 export { clientRoutes };
