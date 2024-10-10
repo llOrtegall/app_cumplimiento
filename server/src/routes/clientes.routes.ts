@@ -1,4 +1,8 @@
 import { getAllClients, getClientById, getClientByFN, updateCliente, getAllClientsNuevos } from '../controllers/clientes.controllers';
+
+// TODO: este es una funcion que solo se usa para pruebas
+import { insertTest } from '../controllers/insertTest';
+
 import { Router } from 'express';
 
 const clientRoutes = Router();
@@ -13,5 +17,6 @@ clientRoutes.post('/clienteFN', getClientByFN)
 
 clientRoutes.post('/updateCliente', updateCliente)
 
+clientRoutes.get('/crearMasivo', insertTest)
 
 export { clientRoutes };

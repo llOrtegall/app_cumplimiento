@@ -11,9 +11,9 @@ interface ClienteAttributes {
   DIRECCION: string;
   TIPOZONA: string | null;
   TELEFONO1: string;
-  TELEFONO2: string;
+  TELEFONO2: string | null;
   EMAIL: string;
-  PEP: string;
+  PEP: string | null;
   VERSION: string;
 }
 
@@ -25,13 +25,13 @@ class Client extends Model<ClienteAttributes, ClienteCreationAttributes> {
   declare DOCUMENTO: string;
   declare NOMBRES: string;
   declare FECHANACIMIENTO: Date;
-  declare CATEGORIA: string;
+  declare CATEGORIA: string | null;
   declare DIRECCION: string;
-  declare TIPOZONA: string;
+  declare TIPOZONA: string | null;
   declare TELEFONO1: string;
-  declare TELEFONO2: string;
+  declare TELEFONO2: string | null;
   declare EMAIL: string;
-  declare PEP: string;
+  declare PEP: string | null;
   declare VERSION: string;
 }
 
@@ -45,7 +45,7 @@ Client.init({
   DIRECCION: { type: DataTypes.STRING, allowNull: false },
   TIPOZONA: { type: DataTypes.STRING, allowNull: false },
   TELEFONO1: { type: DataTypes.STRING, allowNull: false },
-  TELEFONO2: { type: DataTypes.STRING, allowNull: false },
+  TELEFONO2: { type: DataTypes.STRING, allowNull: false},
   EMAIL: { type: DataTypes.STRING, allowNull: false },
   PEP: { type: DataTypes.STRING, allowNull: false },
   VERSION: { type: DataTypes.STRING, allowNull: false }
@@ -55,4 +55,4 @@ Client.init({
   timestamps: false
 })
 
-export default Client;
+export { Client, ClienteAttributes };

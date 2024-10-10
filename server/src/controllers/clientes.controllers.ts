@@ -1,5 +1,5 @@
 import { Op } from 'sequelize';
-import ClientModel from '../models/clientes.model';
+import { Client } from '../models/clientes.model';
 import { Request, Response } from 'express';
 
 export const getAllClients = async (req: Request, res: Response) => {
@@ -8,7 +8,7 @@ export const getAllClients = async (req: Request, res: Response) => {
     const pageSize = parseInt(req.query.pageSize as string) || 100;
     const offset = (page - 1) * pageSize;
 
-    const { count, rows } = await ClientModel.findAndCountAll({
+    const { count, rows } = await Client.findAndCountAll({
       limit: pageSize,
       offset: offset,
       order: [['DOCUMENTO', 'desc']]
@@ -27,7 +27,7 @@ export const getAllClientsNuevos = async (req: Request, res: Response) => {
     const pageSize = parseInt(req.query.pageSize as string) || 100;
     const offset = (page - 1) * pageSize;
 
-    const { count, rows } = await ClientModel.findAndCountAll({
+    const { count, rows } = await Client.findAndCountAll({
       where: {
         [Op.or]: [
           { CATEGORIA: { [Op.is]: null } },
@@ -49,7 +49,7 @@ export const getAllClientsNuevos = async (req: Request, res: Response) => {
 export const getClientById = async (req: Request, res: Response) => {
   try {
     const id = req.params.id;
-    const [client] = await ClientModel.findAll({
+    const [client] = await Client.findAll({
       where: {
         DOCUMENTO: {
           [Op.eq]: id
@@ -75,7 +75,7 @@ export const getClientByFN = async (req: Request, res: Response) => {
   console.log(FN);
 
   try {
-    const results = await ClientModel.findAll({
+    const results = await Client.findAll({
       where: {
         FECHANACIMIENTO: FN
       }
@@ -97,7 +97,7 @@ export const updateCliente = async (req: Request, res: Response) => {
   }
 
   try {
-    const [updated] = await ClientModel.update({
+    const [updated] = await Client.update({
       CATEGORIA: categoria,
       TIPOZONA: tipozona
     }, {
