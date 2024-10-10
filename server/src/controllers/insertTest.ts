@@ -8,7 +8,7 @@ export const insertTest = async (req: Request, res: Response) => {
   try {
     const data: ClienteAttributes[] = [];
 
-    for (let i = 0; i < cantidad; i++) {
+    Array.from({ length: cantidad }).forEach(() => {
       data.push({
         FECHACARGA: faker.date.recent(),
         TIPODOCUMENTO: 'CC',
@@ -23,8 +23,8 @@ export const insertTest = async (req: Request, res: Response) => {
         EMAIL: faker.internet.email(),
         PEP: null,
         VERSION: ''
-      });
-    }
+      })
+    });
 
     await Client.sync();
     await Client.bulkCreate(data);

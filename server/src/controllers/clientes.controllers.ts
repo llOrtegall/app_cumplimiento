@@ -1,6 +1,7 @@
 import { Op } from 'sequelize';
 import { Client } from '../models/clientes.model';
 import { Request, Response } from 'express';
+import { validateUpdate } from '../schemas/update';
 
 export const getAllClients = async (req: Request, res: Response) => {
   try {
@@ -117,30 +118,37 @@ export const updateCliente = async (req: Request, res: Response) => {
 }
 
 export const updateClientes = async (req: Request, res: Response) => {
-  const { categoria, tipozona, documentos } = req.body;
+  const result = validateUpdate(req.body);
 
-  if (!documentos) {
-    res.status(400).json({ message: 'faltan Campos Requeridos' });
+  if (!result.success) {
+    res.status(400).json({ message: 'Invalid data' });
+    return;
+  }
+
+  const { documentos, categoria, tipozona } = result.data;
+
+  if(categoria === undefined && tipozona === undefined) {
+    res.status(400).json({ message: 'Se debe seleccionar mínimo un campo a actualizar' });
     return;
   }
 
   try {
     const updated = await Client.update({
-      CATEGORIA: categoria ? categoria : null,
-      TIPOZONA: tipozona ? tipozona : null,
+      CATEGORIA: categoria,
+      TIPOZONA: tipozona
     }, {
       where: {
-        DOCUMENTO: {
-          [Op.in]: documentos
-        }
+        DOCUMENTO: { [Op.in]: documentos }
       }
     });
 
     console.log(updated);
 
     res.status(200).json({ message: 'Clientes Actualizados Correctamente' });
+    return;
   } catch (error) {
     console.log(error);
     res.status(500).json({ message: 'Internal server error' });
+    return;
   }
 }

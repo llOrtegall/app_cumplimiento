@@ -24,7 +24,6 @@ export const CantidadDatos = [
 ]
 
 export const Categorizacion = [
-  { value: 'null', label: 'Sin Categoría' },
   { value: 'CL', label: 'Cliente' },
   { value: 'TR', label: 'Trabajador' },
   { value: 'AC', label: 'Accionista' },
@@ -33,7 +32,6 @@ export const Categorizacion = [
 ]
 
 export const TipoZona = [
-  { value: 'null', label: 'Seleccionar' },
   { value: 'N/A', label: 'N/A' },
   { value: 'URBANO', label: 'URBANO' },
   { value: 'RURAL', label: 'RURAL' }

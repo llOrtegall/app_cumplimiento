@@ -18,6 +18,9 @@ function ClientesNuevos() {
   const [showEdition, setShowEdition] = useState(false);
   const [reload, setReload] = useState(false);
 
+  const [categoria, setCategoria] = useState<string | undefined>(undefined);
+  const [tipozona, setTipoZona] = useState<string | undefined>(undefined);
+
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = e.target;
 
@@ -61,10 +64,7 @@ function ClientesNuevos() {
 
   const handleSubmitMasivo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    const fields = Object.fromEntries(new FormData(e.target as HTMLFormElement))
-
-    const { categoria, tipozona } = fields;
-
+    
     fetch('http://172.20.1.70:3030/updateClientes', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -74,7 +74,7 @@ function ClientesNuevos() {
       .then(data => {
         console.log(data);
         toast.success('Datos actualizados correctamente');
-        setTimeout(() => { limpiarSeleccion(); setReload(true) }, 3000);
+        setTimeout(() => { limpiarSeleccion(); setReload(true); setCategoria(undefined), setTipoZona(undefined) }, 3000);
       })
       .catch(error => {
         console.error('Error updating clients:', error);
@@ -202,8 +202,7 @@ function ClientesNuevos() {
             <form className='space-y-4' onSubmit={handleSubmitMasivo}>
               <div>
                 <Label>Cetegoría</Label>
-                {/* <Input name='categoria' defaultValue={cliente.CATEGORIA} /> */}
-                <Select defaultValue={'null'} name='categoria'>
+                <Select defaultValue={categoria} name='categoria' onValueChange={value => setCategoria(value)}>
                   <SelectTrigger className='mx-auto'>
                     <SelectValue placeholder='Select' />
                   </SelectTrigger>
@@ -211,7 +210,6 @@ function ClientesNuevos() {
                     {Categorizacion.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         <span className='flex justify-between gap-x-2'>
-                          {/* <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' /> */}
                           {item.label}
                         </span>
                       </SelectItem>
@@ -221,8 +219,7 @@ function ClientesNuevos() {
               </div>
               <div>
                 <Label>Tipo de zona</Label>
-                {/* <Input name='tipozona' defaultValue={cliente.TIPOZONA} /> */}
-                <Select defaultValue={'null'} name='tipozona'>
+                <Select defaultValue={tipozona} name='tipozona' onValueChange={value => setTipoZona(value)}>
                   <SelectTrigger className='mx-auto'>
                     <SelectValue placeholder='Select' />
                   </SelectTrigger>
@@ -230,7 +227,6 @@ function ClientesNuevos() {
                     {TipoZona.map((item) => (
                       <SelectItem key={item.value} value={item.value}>
                         <span className='flex justify-between gap-x-2'>
-                          {/* <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' /> */}
                           {item.label}
                         </span>
                       </SelectItem>
