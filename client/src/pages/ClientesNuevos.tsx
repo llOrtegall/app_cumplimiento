@@ -1,32 +1,10 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 import { Cliente, DataResponse } from '../types/Interfaces';
-import { RiDatabase2Line } from '@remixicon/react';
-import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
 
-const data = [
-  {
-    value: '20',
-    label: '20',
-    icon: RiDatabase2Line
-  },
-  {
-    value: '50',
-    label: '50',
-    icon: RiDatabase2Line
-  },
-  {
-    value: '100',
-    label: '100',
-    icon: RiDatabase2Line
-  },
-  {
-    value: '200',
-    label: '200',
-    icon: RiDatabase2Line
-  },
-]
+import { CantidadDatos } from '../utils/contanst'
 
 function ClientesNuevos() {
   const [clients, setClients] = useState<Cliente[]>([]);
@@ -39,7 +17,7 @@ function ClientesNuevos() {
   useEffect(() => {
     const fetchClients = async () => {
       try {
-        const response = await fetch(`http://172.20.1.70:3030/clientes?page=${page}&pageSize=${pageSize}`);
+        const response = await fetch(`http://172.20.1.70:3030/clientesNevos?page=${page}&pageSize=${pageSize}`);
         const data = await response.json() as DataResponse;
         setClients(data.clients);
         setTotalClients(data.count);
@@ -77,7 +55,7 @@ function ClientesNuevos() {
               <SelectValue placeholder='Select' />
             </SelectTrigger>
             <SelectContent>
-              {data.map((item) => (
+              {CantidadDatos.map((item) => (
                 <SelectItem key={item.value} value={item.value}>
                   <span className='flex justify-between gap-x-2'>
                     <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' />

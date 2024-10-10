@@ -1,9 +1,11 @@
-import { getAllClients, getClientById, getClientByFN, updateCliente } from '../controllers/clientes.controllers';
+import { getAllClients, getClientById, getClientByFN, updateCliente, getAllClientsNuevos } from '../controllers/clientes.controllers';
 import { Router } from 'express';
 
 const clientRoutes = Router();
 
 clientRoutes.get('/clientes', getAllClients);
+
+clientRoutes.get('/clientesNevos', getAllClientsNuevos);
 
 clientRoutes.get('/cliente/:id', getClientById)
 
