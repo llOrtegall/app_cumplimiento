@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } fro
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 import { Cliente, DataResponse } from '../types/Interfaces';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 
 import { CantidadDatos } from '../utils/contanst'
 
@@ -12,7 +12,29 @@ function ClientesNuevos() {
   const [pageSize, setPageSize] = useState(100);
   const [page, setPage] = useState(1);
 
-  // const [identificacion, setIdentificacion] = useState('');
+  const [identificaciones, setIdentificaciones] = useState<string[]>([]);
+
+  const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { checked, value } = e.target;
+
+    if (checked) {
+      setIdentificaciones([...identificaciones, value]);
+    } else {
+      setIdentificaciones(identificaciones.filter((id) => id !== value));
+    }
+  }
+
+  const checkboxesRef = useRef<HTMLInputElement[]>([]);
+
+  const limpiarSeleccion = () => {
+    checkboxesRef.current.forEach((checkbox) => {
+      if (checkbox) {
+        checkbox.checked = false;
+      }
+    });
+    setIdentificaciones([]);
+  };
+
 
   useEffect(() => {
     const fetchClients = async () => {
@@ -32,6 +54,8 @@ function ClientesNuevos() {
   const totalPages = Math.ceil(totalClients / pageSize);
   const navigate = useNavigate();
 
+  console.log(identificaciones);
+
   return (
     <section className=''>
 
@@ -41,6 +65,15 @@ function ClientesNuevos() {
           <label className='text-sm font-semibold'>Clientes Nuevos:</label>
           <span className='px-2 py-1 text-sm font-semibold text-gray-800 bg-yellow-400 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800'>{totalClients}</span>
         </div>
+
+        {
+          identificaciones.length > 0 && (
+            <div className='flex gap-2'>
+              <button className='px-2 py-2 text-sm text-gray-800 bg-blue-200 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-green-200 transition-colors'>Edición Masiva</button>
+              <button onClick={limpiarSeleccion} className='px-2 py-2 text-sm text-gray-800 bg-yellow-200 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-red-200 transition-colors'>Limpiar Seleción</button>
+            </div>
+          )
+        }
 
         <div className='flex items-center gap-2'>
           <label className='text-sm font-semibold'>Buscar:</label>
@@ -72,7 +105,8 @@ function ClientesNuevos() {
         <Table>
           <TableHead className='bg-blue-100'>
             <TableRow>
-              <TableHeaderCell>Name</TableHeaderCell>
+              <TableHeaderCell>Check</TableHeaderCell>
+              <TableHeaderCell>Nombres</TableHeaderCell>
               <TableHeaderCell>Documento</TableHeaderCell>
               <TableHeaderCell>Telefono</TableHeaderCell>
               <TableHeaderCell>Correo</TableHeaderCell>
@@ -82,8 +116,13 @@ function ClientesNuevos() {
             </TableRow>
           </TableHead>
           <TableBody>
-            {clients.map((item) => (
+            {clients.map((item, index) => (
               <TableRow key={item.DOCUMENTO}>
+                <TableCell>
+                  <input type='checkbox' value={item.DOCUMENTO} onChange={handleCheck} ref={(el) => {
+                    if (el) { checkboxesRef.current[index] = el }
+                  }} />
+                </TableCell>
                 <TableCell>{item.NOMBRES}</TableCell>
                 <TableCell>{item.DOCUMENTO}</TableCell>
                 <TableCell>{item.TELEFONO1}</TableCell>
@@ -91,7 +130,13 @@ function ClientesNuevos() {
                 <TableCell>{item.CATEGORIA}</TableCell>
                 <TableCell>{item.TIPOZONA}</TableCell>
                 <TableCell>
-                  <button onClick={() => navigate(`/editar-cliente/${item.DOCUMENTO}`)} className='px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-green-200 transition-colors'>Editar</button>
+                  <button disabled={identificaciones.length > 0 ? true : false} onClick={() => navigate(`/editar-cliente/${item.DOCUMENTO}`)} className={`${identificaciones.length > 0
+                    ? 'min-w-20 px-2 py-1 text-sm font-medium text-gray-800 bg-red-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 '
+                    : 'min-w-20 px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-green-200 transition-colors'} `}>
+                    {
+                      identificaciones.length > 0 ? '🚫' : 'Editar'
+                    }
+                  </button>
                 </TableCell>
               </TableRow>
             ))}
