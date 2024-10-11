@@ -1,8 +1,8 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 import { Cliente, DataResponse } from '../types/Interfaces';
-import { useNavigate } from 'react-router-dom';
 import { useEffect, useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 
 import { CantidadDatos, Categorizacion, TipoZona } from '../utils/contanst'
 import { Label } from '../components/Label';

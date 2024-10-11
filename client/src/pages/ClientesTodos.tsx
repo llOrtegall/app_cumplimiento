@@ -1,35 +1,12 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 import { CantidadDatos, Categorizacion } from '../utils/contanst'
-import { Cliente, DataResponse } from '../types/Interfaces';
+import { useClientes } from '../hooks/useClientes';
 import { useNavigate } from 'react-router-dom';
-import { useEffect, useState } from 'react';
 
 
 function ClientesTodos() {
-  const [clients, setClients] = useState<Cliente[]>([]);
-  const [totalClients, setTotalClients] = useState(0);
-  const [pageSize, setPageSize] = useState(100);
-  const [page, setPage] = useState(1);
-
-  // const [identificacion, setIdentificacion] = useState('');
-
-  useEffect(() => {
-    const fetchClients = async () => {
-      try {
-        const response = await fetch(`http://172.20.1.70:3030/clientes?page=${page}&pageSize=${pageSize}`);
-        const data = await response.json() as DataResponse;
-        setClients(data.clients);
-        setTotalClients(data.count);
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-      }
-    };
-
-    fetchClients();
-  }, [page, pageSize]);
-
-  const totalPages = Math.ceil(totalClients / pageSize);
+  const { clients, page, setPage, setPageSize, totalClients, totalPages } = useClientes({ url: 'clientes' });
   const navigate = useNavigate();
 
   return (

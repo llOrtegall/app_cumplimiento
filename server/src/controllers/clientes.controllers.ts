@@ -1,7 +1,7 @@
-import { Op } from 'sequelize';
+import { validateUpdate } from '../schemas/update';
 import { Client } from '../models/clientes.model';
 import { Request, Response } from 'express';
-import { validateUpdate } from '../schemas/update';
+import { Op } from 'sequelize';
 
 export const getAllClients = async (req: Request, res: Response) => {
   try {
