@@ -2,7 +2,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } fro
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 import { SelectCantidadClientes } from '../components/ui/SelectCantClients';
 import { RenderFooterClients } from '../components/ui/RenderFooterClients';
-import { Categorizacion, TipoZona } from '../utils/contanst'
+import { RiCloseCircleLine, RiDeleteBinLine } from '@remixicon/react';
+import { Categorizacion, TipoZona } from '../utils/contanst';
 import { useClientes } from '../hooks/useClientes';
 import { useNavigate } from 'react-router-dom';
 import { Label } from '../components/Label';
@@ -37,6 +38,11 @@ function ClientesNuevos() {
     setIdentificaciones([]);
     setShowEdition(false);
   };
+
+  const handleRemoveDocument = (id: string) => {
+    setIdentificaciones(identificaciones.filter((item) => item !== id));
+  }
+
 
   const navigate = useNavigate();
 
@@ -85,7 +91,7 @@ function ClientesNuevos() {
         </div>
       </section>
 
-      <div className='h-[90vh] overflow-y-auto'>
+      <div className='h-[89vh] overflow-y-auto'>
         <Table>
           <TableHead className='bg-blue-100'>
             <TableRow>
@@ -135,16 +141,24 @@ function ClientesNuevos() {
 
       {
         showEdition && (
-          <section className='flex gap-4 absolute top-16 bg-yellow-100 p-4 rounded-md items-center min-w-[460px]'>
-            <button onClick={() => setShowEdition(false)} className='absolute top-2 right-2 text-lg font-semibold text-gray-800 dark:text-gray-100'>X</button>
-            <div className='flex flex-col bg-red-200 p-4 rounded-md gap-1 h-[60vh] overflow-y-auto'>
+          <section className='flex p-4 gap-4 absolute top-14 bg-white border shadow-md rounded-md items-center min-w-[550px]'>
+            <button onClick={() => setShowEdition(false)} className='absolute top-2 right-2 text-lg font-semibold hover:text-red-400 text-gray-800 dark:text-gray-100'>
+              <RiCloseCircleLine />
+            </button>
+            <div className='relative flex w-1/2 flex-col rounded-md gap-1 h-[60vh] overflow-y-auto'>
+              <h1 className='text-center font-semibold sticky top-0 bg-white'>Documentos</h1>
               {
                 identificaciones.map((id) => (
-                  <span key={id} className='px-2 py-1 text-sm font-semibold text-gray-800 bg-blue-200 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800'>{id}</span>
+                  <div className='flex justify-around'>
+                    <span key={id} className='px-2 py-1 text-sm border-b'>{id}</span>
+                    {/* <button onClick={() => handleRemoveDocument(id) } className='border rounded-full p-1 hover:bg-red-200 transition-all' title='eliminar'>
+                      <RiDeleteBinLine />
+                    </button> */}
+                  </div>
                 ))
               }
             </div>
-            <form className='space-y-4' onSubmit={handleSubmitMasivo}>
+            <form className='space-y-4 w-1/2' onSubmit={handleSubmitMasivo}>
               <div>
                 <Label>Cetegoría</Label>
                 <Select defaultValue={categoria} name='categoria' onValueChange={value => setCategoria(value)}>
