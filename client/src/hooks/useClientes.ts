@@ -6,6 +6,7 @@ export const useClientes = ({ url }: { url: string }) => {
   const [totalClients, setTotalClients] = useState(0);
   const [clients, setClients] = useState<Cliente[]>([]);
   const [pageSize, setPageSize] = useState(100);
+  const [reload, setReload] = useState(false);
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
 
@@ -21,9 +22,9 @@ export const useClientes = ({ url }: { url: string }) => {
         console.error(error);
         setError(error.message);
       })
-  }, [page, pageSize, url])
+  }, [page, pageSize, url, reload]);
 
   const totalPages = Math.ceil(totalClients / pageSize);
 
-  return { clients, totalClients, error, setPageSize, page, setPage, totalPages };
+  return { clients, totalClients, error, setPageSize, page, setPage, totalPages, setReload };
 }

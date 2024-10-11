@@ -1,25 +1,22 @@
 import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
-import { Cliente, DataResponse } from '../types/Interfaces';
-import { useEffect, useState, useRef } from 'react';
+import { SelectCantidadClientes } from '../components/ui/SelectCantClients';
+import { RenderFooterClients } from '../components/ui/RenderFooterClients';
+import { Categorizacion, TipoZona } from '../utils/contanst'
+import { useClientes } from '../hooks/useClientes';
 import { useNavigate } from 'react-router-dom';
-
-import { CantidadDatos, Categorizacion, TipoZona } from '../utils/contanst'
 import { Label } from '../components/Label';
+import { useState, useRef } from 'react';
 import { toast } from 'sonner';
+import axios from 'axios';
 
 function ClientesNuevos() {
-  const [clients, setClients] = useState<Cliente[]>([]);
-  const [totalClients, setTotalClients] = useState(0);
-  const [pageSize, setPageSize] = useState(100);
-  const [page, setPage] = useState(1);
-
-  const [identificaciones, setIdentificaciones] = useState<string[]>([]);
-  const [showEdition, setShowEdition] = useState(false);
-  const [reload, setReload] = useState(false);
-
+  const { clients, page, setPage, setPageSize, setReload, totalClients, totalPages } = useClientes({ url: 'clientesNevos' });
   const [categoria, setCategoria] = useState<string | undefined>(undefined);
   const [tipozona, setTipoZona] = useState<string | undefined>(undefined);
+  const [identificaciones, setIdentificaciones] = useState<string[]>([]);
+  const [showEdition, setShowEdition] = useState(false);
+  const checkboxesRef = useRef<HTMLInputElement[]>([]);
 
   const handleCheck = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { checked, value } = e.target;
@@ -29,9 +26,7 @@ function ClientesNuevos() {
     } else {
       setIdentificaciones(identificaciones.filter((id) => id !== value));
     }
-  }
-
-  const checkboxesRef = useRef<HTMLInputElement[]>([]);
+  };
 
   const limpiarSeleccion = () => {
     checkboxesRef.current.forEach((checkbox) => {
@@ -43,36 +38,14 @@ function ClientesNuevos() {
     setShowEdition(false);
   };
 
-
-  useEffect(() => {
-    const fetchClients = async () => {
-      try {
-        const response = await fetch(`http://172.20.1.70:3030/clientesNevos?page=${page}&pageSize=${pageSize}`);
-        const data = await response.json() as DataResponse;
-        setClients(data.clients);
-        setTotalClients(data.count);
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-      }
-    };
-
-    fetchClients();
-  }, [page, pageSize, reload]);
-
-  const totalPages = Math.ceil(totalClients / pageSize);
   const navigate = useNavigate();
 
   const handleSubmitMasivo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
-    
-    fetch('http://172.20.1.70:3030/updateClientes', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ categoria, tipozona, documentos: identificaciones })
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data);
+
+    axios.post('/updateClientes', { categoria, tipozona, documentos: identificaciones })
+      .then(response => {
+        console.log(response.data);
         toast.success('Datos actualizados correctamente');
         setTimeout(() => { limpiarSeleccion(); setReload(true); setCategoria(undefined), setTipoZona(undefined) }, 3000);
       })
@@ -80,12 +53,10 @@ function ClientesNuevos() {
         console.error('Error updating clients:', error);
         toast.error('Error al actualizar los datos');
       })
-
   }
 
   return (
     <section className='relative'>
-
       <section className='flex py-2 justify-around'>
 
         <div className='flex items-center gap-2'>
@@ -110,22 +81,7 @@ function ClientesNuevos() {
         </div>
 
         <div className='flex items-center gap-2'>
-          <label className='text-sm font-semibold'>Mostrar:</label>
-          <Select defaultValue={'100'} onValueChange={value => setPageSize(parseInt(value))}>
-            <SelectTrigger className='mx-auto w-[120px]'>
-              <SelectValue placeholder='Select' />
-            </SelectTrigger>
-            <SelectContent>
-              {CantidadDatos.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  <span className='flex justify-between gap-x-2'>
-                    <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' />
-                    {item.label}
-                  </span>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <SelectCantidadClientes setPageSize={setPageSize} />
         </div>
       </section>
 
@@ -174,18 +130,7 @@ function ClientesNuevos() {
       </div>
 
       <div className='flex items-center justify-center py-1 bg-yellow-50 gap-2'>
-        <button disabled={page === 1} onClick={() => setPage((prev) => prev - 1)}
-          className={` ${page === 1 ? 'hover:bg-red-200' : 'hover:bg-green-200'} px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800  transition-colors`}>
-          Previous
-        </button>
-
-        <span>{page} de {totalPages}</span>
-
-        <button disabled={page === totalPages} onClick={() => setPage((prev) => prev + 1)}
-          className={` ${page === totalPages ? 'hover:bg-red-200' : 'hover:bg-green-200'} px-2 py-1 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800  transition-colors`} >
-          Next
-        </button>
-
+        <RenderFooterClients page={page} totalPages={totalPages} setPage={setPage} />
       </div>
 
       {
@@ -245,4 +190,4 @@ function ClientesNuevos() {
   )
 }
 
-export default ClientesNuevos
+export default ClientesNuevos;

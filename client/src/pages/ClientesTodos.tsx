@@ -1,7 +1,7 @@
+import { SelectCantidadClientes } from '../components/ui/SelectCantClients';
 import { RenderFooterClients } from '../components/ui/RenderFooterClients';
 import { RenderClients } from '../components/ui/RenderClients';
 import { useClientes } from '../hooks/useClientes';
-import { SelectCantidadClientes } from '../components/ui/SelectCantClients';
 
 function ClientesTodos() {
   const { clients, page, setPage, setPageSize, totalClients, totalPages } = useClientes({ url: 'clientes' });
@@ -35,6 +35,6 @@ function ClientesTodos() {
 
     </section>
   )
-}
+};
 
-export default ClientesTodos
+export default ClientesTodos;
