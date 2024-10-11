@@ -1,8 +1,7 @@
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
-import { RenderClients } from '../components/ui/RenderClients';
 import { RenderFooterClients } from '../components/ui/RenderFooterClients';
+import { RenderClients } from '../components/ui/RenderClients';
 import { useClientes } from '../hooks/useClientes';
-import { CantidadDatos } from '../utils/contanst'
+import { SelectCantidadClientes } from '../components/ui/SelectCantClients';
 
 function ClientesTodos() {
   const { clients, page, setPage, setPageSize, totalClients, totalPages } = useClientes({ url: 'clientes' });
@@ -24,28 +23,13 @@ function ClientesTodos() {
         </div>
 
         <div className='flex items-center gap-2'>
-          <label className='text-sm font-semibold'>Mostrar:</label>
-          <Select defaultValue={'100'} onValueChange={value => setPageSize(parseInt(value))}>
-            <SelectTrigger className='mx-auto w-[120px]'>
-              <SelectValue placeholder='Select' />
-            </SelectTrigger>
-            <SelectContent>
-              {CantidadDatos.map((item) => (
-                <SelectItem key={item.value} value={item.value}>
-                  <span className='flex justify-between gap-x-2'>
-                    <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' />
-                    {item.label}
-                  </span>
-                </SelectItem>
-              ))}
-            </SelectContent>
-          </Select>
+          <SelectCantidadClientes setPageSize={setPageSize} />
         </div>
       </section>
 
-      <div className='h-[90vh] overflow-y-auto'>
+      <section className='h-[90vh] overflow-y-auto'>
         <RenderClients clientes={clients} />
-      </div>
+      </section>
 
       <RenderFooterClients page={page} totalPages={totalPages} setPage={setPage} />
 
