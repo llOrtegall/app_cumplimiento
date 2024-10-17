@@ -133,16 +133,9 @@ export const updateClientes = async (req: Request, res: Response) => {
   }
 
   try {
-    const updated = await Client.update({
-      CATEGORIA: categoria,
-      TIPOZONA: tipozona
-    }, {
-      where: {
-        DOCUMENTO: { [Op.in]: documentos }
-      }
+    await Client.update({ CATEGORIA: categoria, TIPOZONA: tipozona }, {
+      where: { DOCUMENTO: { [Op.in]: documentos } }
     });
-
-    console.log(updated);
 
     res.status(200).json({ message: 'Clientes Actualizados Correctamente' });
     return;
