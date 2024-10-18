@@ -5,6 +5,7 @@ import { useParams } from 'react-router-dom';
 import { Input } from '../components/Input';
 import { Label } from '../components/Label';
 import { toast } from 'sonner';
+import axios from 'axios';
 
 interface Cliente {
   CATEGORIA: string;
@@ -30,9 +31,8 @@ function EditarCliente() {
   useEffect(() => {
     const fetchClientById = async () => {
       try {
-        const response = await fetch(`http://172.20.1.70:3030/cliente/${id}`);
-        const data = await response.json()
-        setCliente(data);
+        const response = await axios.get(`/cliente/${id}`)
+        setCliente(response.data);
       } catch (error) {
         console.error('Error fetching clients:', error);
       }
@@ -53,15 +53,10 @@ function EditarCliente() {
       return;
     }
 
-    fetch('http://172.20.1.70:3030/updateCliente', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ categoria, tipozona, documento })
-    })
-      .then(response => response.json())
-      .then(data => {
-        console.log(data)
-        toast.success(data.message || 'Cliente actualizado correctamente', { description: 'Cambio de información del cliente' });
+    axios.post('/updateCliente', { categoria, tipozona, documento })
+      .then(res => {
+        console.log(res)
+        toast.success('Cliente actualizado correctamente', { description: 'Cambio de información del cliente' });
         setTimeout(() => {
           formRef.current?.reset();
         }, 5000);

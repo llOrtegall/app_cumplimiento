@@ -6,7 +6,7 @@ import { StrictMode } from 'react'
 import './index.css'
 import axios from 'axios'
 
-axios.defaults.baseURL = 'http://172.20.1.70:3030'
+axios.defaults.baseURL = import.meta.env.VITE_API_UTL as string
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>

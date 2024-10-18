@@ -2,7 +2,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } fro
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 import { SelectCantidadClientes } from '../components/ui/SelectCantClients';
 import { RenderFooterClients } from '../components/ui/RenderFooterClients';
-import { RiCloseCircleLine, RiDeleteBinLine } from '@remixicon/react';
+import { RiCloseCircleLine } from '@remixicon/react';
 import { Categorizacion, TipoZona } from '../utils/contanst';
 import { useClientes } from '../hooks/useClientes';
 import { useNavigate } from 'react-router-dom';
@@ -39,10 +39,9 @@ function ClientesNuevos() {
     setShowEdition(false);
   };
 
-  const handleRemoveDocument = (id: string) => {
-    setIdentificaciones(identificaciones.filter((item) => item !== id));
-  }
-
+  // const handleRemoveDocument = (id: string) => {
+  //   setIdentificaciones(identificaciones.filter((item) => item !== id));
+  // }
 
   const navigate = useNavigate();
 
@@ -53,7 +52,7 @@ function ClientesNuevos() {
       .then(response => {
         console.log(response.data);
         toast.success('Datos actualizados correctamente');
-        setTimeout(() => { limpiarSeleccion(); setReload(true); setCategoria(undefined), setTipoZona(undefined) }, 3000);
+        setTimeout(() => { limpiarSeleccion(); setReload(true); setCategoria(undefined); setTipoZona(undefined) }, 3000);
       })
       .catch(error => {
         console.error('Error updating clients:', error);
