@@ -1,6 +1,6 @@
-import {  Outlet } from "react-router-dom";
-import NavBar from "../components/NavBar";
-import { Toaster } from "sonner";
+import {  Outlet } from 'react-router-dom';
+import NavBar from '../components/NavBar';
+import { Toaster } from 'sonner';
 
 function Root() {
   return (
@@ -11,7 +11,7 @@ function Root() {
       <main className='w-full'>
         <Outlet />
       </main>
-      <Toaster position="top-right" duration={5000} visibleToasts={4} richColors />
+      <Toaster position='top-right' duration={5000} visibleToasts={4} richColors />
     </section>
   )
 }

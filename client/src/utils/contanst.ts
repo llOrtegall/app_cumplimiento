@@ -1,4 +1,4 @@
-import { RiDatabase2Line } from "@remixicon/react";
+import { RiDatabase2Line } from '@remixicon/react';
 
 export const CantidadDatos = [
   {
