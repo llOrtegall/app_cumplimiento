@@ -11,7 +11,7 @@ clientRoutes.get('/clientes', getAllClients);
 
 clientRoutes.get('/clientesNuevos', getAllClientsNuevos);
 
-clientRoutes.get('/cliente/:id', getClientById)
+clientRoutes.get('/getCliente/:id', getClientById)
 
 clientRoutes.post('/clienteFN', getClientByFN)
 

@@ -9,7 +9,7 @@ export const useEditClient = (id: string | undefined) => {
   useEffect(() => {
     if (!id) return;
 
-    axios.get(`${URL_API_DATA}/cliente/${id}`)
+    axios.get(`${URL_API_DATA}/getCliente/${id}`)
       .then(res => {
         setCliente(res.data);
       })

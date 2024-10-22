@@ -56,9 +56,15 @@ export const getAllClientsNuevos = async (req: Request, res: Response) => {
 }
 
 export const getClientById = async (req: Request, res: Response) => {
+  const id = req.params.id;
+
+  if (!id) {
+    res.status(400).json({ message: 'id is required' });
+    return;
+  }
+
   try {
-    const id = req.params.id;
-    const [client] = await Client.findAll({
+    const client = await Client.findOne({
       where: {
         DOCUMENTO: {
           [Op.eq]: id
