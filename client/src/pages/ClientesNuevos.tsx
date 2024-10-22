@@ -79,7 +79,6 @@ function ClientesNuevos() {
           <label className='text-sm font-semibold'>Buscar:</label>
           <input type='text' value={search} placeholder='N° Documento' onChange={(ev) => setSearch(ev.target.value)}
             className='w-[200px] px-1 py-2 text-sm border border-gray-200 rounded-md dark:border-gray-800' />
-          <button className='px-2 py-2 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-green-200 transition-colors' onClick={() => setReload(!reload)}>Buscar</button>
         </div>
 
         <div className='flex items-center gap-2'>
