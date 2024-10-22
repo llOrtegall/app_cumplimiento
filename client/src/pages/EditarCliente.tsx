@@ -10,8 +10,8 @@ import axios from 'axios';
 import { useRef } from 'react';
 
 function EditarCliente() {
-  const { id } = useParams();
-  const { cliente } = useEditClient(id || '');
+  const { id } = useParams<{ id: string }>();
+  const { cliente } = useEditClient(id);
 
   const formRef = useRef<HTMLFormElement>(null);
 
