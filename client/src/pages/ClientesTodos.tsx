@@ -12,7 +12,7 @@ function ClientesTodos() {
       <section className='flex py-2 justify-around'>
 
         <div className='flex items-center gap-2'>
-          <label className='text-sm font-semibold'>Clientes Nuevos:</label>
+          <label className='text-sm font-semibold'>Clientes:</label>
           <span className='px-2 py-1 text-sm font-semibold text-gray-800 bg-yellow-400 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800'>{totalClients}</span>
         </div>
 

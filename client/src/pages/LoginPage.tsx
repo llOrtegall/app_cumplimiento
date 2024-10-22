@@ -1,5 +1,5 @@
-import { useAuth } from '../auth/AuthContext'
 import { APP_NAME, URL_API_LOGIN } from '../utils/contanst'
+import { useAuth } from '../auth/AuthContext'
 import { FormEvent, useState } from 'react'
 import { toast, Toaster } from 'sonner'
 import axios from 'axios'
@@ -29,7 +29,6 @@ function LoginPage() {
           toast.error(error.response.data.message, { description: error.response.data.description })
           return
         }
-
       })
   }
 
