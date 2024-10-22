@@ -33,6 +33,7 @@ export const getAllClientsNuevos = async (req: Request, res: Response) => {
 
     const { rows, count } = await Client.findAndCountAll({
       where: {
+        DOCUMENTO: { [Op.like]: `%${search}%` },
         [Op.or]: [
           { CATEGORIA: { [Op.is]: null } },
           { TIPOZONA: { [Op.is]: null } }

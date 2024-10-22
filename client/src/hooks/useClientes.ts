@@ -23,7 +23,7 @@ export const useClientes = ({ url }: { url: string }) => {
         console.error(error);
         setError(error.message);
       })
-  }, [page, pageSize, url, reload]);
+  }, [page, pageSize, url, reload, search]);
 
   const totalPages = Math.ceil(totalClients / pageSize);
 
