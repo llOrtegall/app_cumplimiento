@@ -1,43 +1,19 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 import { Categorizacion, TipoZona } from '../utils/contanst'
-import { useEffect, useRef, useState } from 'react';
+import { useEditClient } from '../hooks/useEditClient';
 import { URL_API_DATA } from '../utils/contanst';
 import { useParams } from 'react-router-dom';
 import { Input } from '../components/Input';
 import { Label } from '../components/Label';
 import { toast } from 'sonner';
 import axios from 'axios';
-
-interface Cliente {
-  CATEGORIA: string;
-  DIRECCION: string;
-  DOCUMENTO: string;
-  EMAIL: string;
-  FECHACARGA: string;
-  FECHANACIMIENTO: string;
-  NOMBRES: string;
-  PEP: string;
-  TELEFONO1: string;
-  TELEFONO2: string;
-  TIPODOCUMENTO: string;
-  TIPOZONA: string;
-  VERSION: string;
-}
+import { useRef } from 'react';
 
 function EditarCliente() {
   const { id } = useParams();
-  const [cliente, setCliente] = useState<Cliente | null>(null);
-  const formRef = useRef<HTMLFormElement>(null);
+  const { cliente } = useEditClient(id || '');
 
-  useEffect(() => {
-    axios.get(`${URL_API_DATA}/cliente/${id}`)
-      .then(res => {
-        setCliente(res.data);
-      })
-      .catch(error => {
-        console.error('Error fetching client:', error)
-      })
-  }, [id]);
+  const formRef = useRef<HTMLFormElement>(null);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -84,7 +60,7 @@ function EditarCliente() {
               </div>
               <div>
                 <Label>Fecha de nacimiento</Label>
-                <Input name='fechanacimiento' defaultValue={cliente.FECHANACIMIENTO} readOnly />
+                <Input name='fechanacimiento' defaultValue={cliente.FECHANACIMIENTO.toString()} readOnly />
               </div>
               <div>
                 <Label>Dirección</Label>
@@ -100,7 +76,7 @@ function EditarCliente() {
               </div>
               <div>
                 <Label>Telefono 2</Label>
-                <Input name='telefono2' defaultValue={cliente.TELEFONO2} readOnly />
+                <Input name='telefono2' defaultValue={cliente.TELEFONO2 || ''} readOnly />
               </div>
               <div>
                 <Label>PEP</Label>
@@ -145,7 +121,7 @@ function EditarCliente() {
               </div>
               <div>
                 <Label>Fecha de carga</Label>
-                <Input name='fechacarga' defaultValue={cliente.FECHACARGA} readOnly />
+                <Input name='fechacarga' defaultValue={cliente.FECHACARGA.toString()} readOnly />
               </div>
 
               <div className='col-span-1'>
