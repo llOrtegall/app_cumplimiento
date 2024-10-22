@@ -112,8 +112,8 @@ function ClientesNuevos() {
                 <TableCell>{item.DOCUMENTO}</TableCell>
                 <TableCell>{item.TELEFONO1}</TableCell>
                 <TableCell>{item.EMAIL}</TableCell>
-                <TableCell>{item.CATEGORIA}</TableCell>
-                <TableCell>{item.TIPOZONA}</TableCell>
+                <TableCell>{item.CATEGORIA || 'N/A'}</TableCell>
+                <TableCell>{item.TIPOZONA || 'N/A'}</TableCell>
                 <TableCell>
                   <button disabled={identificaciones.length > 0 ? true : false} onClick={() => navigate(`/editar-cliente/${item.DOCUMENTO}`)} className={`${identificaciones.length > 0
                     ? 'min-w-20 px-2 py-1 text-sm font-medium text-gray-800 bg-red-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 '
