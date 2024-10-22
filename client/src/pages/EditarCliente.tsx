@@ -1,6 +1,7 @@
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 import { Categorizacion, TipoZona } from '../utils/contanst'
 import { useEffect, useRef, useState } from 'react';
+import { URL_API_DATA } from '../utils/contanst';
 import { useParams } from 'react-router-dom';
 import { Input } from '../components/Input';
 import { Label } from '../components/Label';
@@ -31,7 +32,7 @@ function EditarCliente() {
   useEffect(() => {
     const fetchClientById = async () => {
       try {
-        const response = await axios.get(`/cliente/${id}`)
+        const response = await axios.get(`${URL_API_DATA}/cliente/${id}`)
         setCliente(response.data);
       } catch (error) {
         console.error('Error fetching clients:', error);
@@ -53,7 +54,7 @@ function EditarCliente() {
       return;
     }
 
-    axios.post('/updateCliente', { categoria, tipozona, documento })
+    axios.post(`${URL_API_DATA}/updateCliente`, { categoria, tipozona, documento })
       .then(res => {
         console.log(res)
         toast.success('Cliente actualizado correctamente', { description: 'Cambio de información del cliente' });

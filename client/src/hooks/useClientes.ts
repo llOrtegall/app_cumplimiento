@@ -1,4 +1,5 @@
 import { type Cliente, type DataResponse } from '../types/Interfaces';
+import { URL_API_DATA } from '../utils/contanst';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 
@@ -12,7 +13,7 @@ export const useClientes = ({ url }: { url: string }) => {
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    axios.get<DataResponse>(`/${url}?page=${page}&pageSize=${pageSize}&search=${search}`)
+    axios.get<DataResponse>(`${URL_API_DATA}/${url}?page=${page}&pageSize=${pageSize}&search=${search}`)
       .then((response) => {
         if(response.status === 200){
           setClients(response.data.clients);

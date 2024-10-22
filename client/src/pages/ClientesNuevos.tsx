@@ -2,8 +2,8 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } fro
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from '../components/Select';
 import { SelectCantidadClientes } from '../components/ui/SelectCantClients';
 import { RenderFooterClients } from '../components/ui/RenderFooterClients';
+import { Categorizacion, TipoZona, URL_API_DATA } from '../utils/contanst';
 import { RiCloseCircleLine } from '@remixicon/react';
-import { Categorizacion, TipoZona } from '../utils/contanst';
 import { useClientes } from '../hooks/useClientes';
 import { useNavigate } from 'react-router-dom';
 import { Label } from '../components/Label';
@@ -44,7 +44,7 @@ function ClientesNuevos() {
   const handleSubmitMasivo = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
 
-    axios.post('/updateClientes', { categoria, tipozona, documentos: identificaciones })
+    axios.post(`${URL_API_DATA}/updateClientes`, { categoria, tipozona, documentos: identificaciones })
       .then(response => {
         console.log(response.data);
         toast.success('Datos actualizados correctamente');
