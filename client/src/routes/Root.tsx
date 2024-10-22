@@ -1,14 +1,21 @@
-import {  Outlet } from 'react-router-dom';
-import NavBar from '../components/NavBar';
-import { Toaster } from 'sonner';
+import { lazy, Suspense } from 'react';
+
 import { useAuth } from '../auth/AuthContext';
-import LoginPage from '../pages/LoginPage';
+import { Outlet } from 'react-router-dom';
+import { Toaster } from 'sonner';
+import NavBar from '../components/NavBar';
+
+const LoginPage = lazy(() => import('../pages/LoginPage'));
 
 function Root() {
-  const { user, isAuthenticated } = useAuth();
+  const { user } = useAuth();
 
   if (user) {
-    return <LoginPage />
+    return (
+      <Suspense fallback={<div>Loading...</div>}>
+        <LoginPage />
+      </Suspense>
+    )
   }
 
   return (
