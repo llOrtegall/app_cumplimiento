@@ -14,7 +14,7 @@ services:
     build:
       context: ./server
       dockerfile: Dockerfile
-    container_name: api-segmentacion
+    container_name: api_segmentacion
     image: api-segmentacion-v1.0
     networks:
       - red-gane-int
