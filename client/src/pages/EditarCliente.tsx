@@ -114,10 +114,9 @@ function EditarCliente() {
                     <SelectValue placeholder='Select' />
                   </SelectTrigger>
                   <SelectContent>
-                    {Categorizacion.map((item) => (
-                      <SelectItem key={item.value} value={item.value || 'N/A'}>
+                    {Categorizacion.map((item, index) => (
+                      <SelectItem key={index} value={item.value || 'ninguno'}>
                         <span className='flex justify-between gap-x-2'>
-                          {/* <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' /> */}
                           {item.label}
                         </span>
                       </SelectItem>
@@ -133,8 +132,8 @@ function EditarCliente() {
                     <SelectValue placeholder='Select' />
                   </SelectTrigger>
                   <SelectContent>
-                    {TipoZona.map((item) => (
-                      <SelectItem key={item.value} value={item.value || 'N/A'}>
+                    {TipoZona.map((item, index) => (
+                      <SelectItem key={index} value={item.value || 'ninguno'}>
                         <span className='flex justify-between gap-x-2'>
                           {/* <item.icon className='size-4 shrink-0 text-gray-500 dark:text-gray-500' aria-hidden='true' /> */}
                           {item.label}

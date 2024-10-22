@@ -16,11 +16,11 @@ export const BrowserRouter = createBrowserRouter([
         element: <Suspense fallback={<div>Loading...</div>}><ClienteTodosPage /></Suspense>
       },
       {
-        path: 'clientes-nuevos',
+        path: '/clientes-nuevos',
         element: <Suspense fallback={<div>Loading...</div>}><ClienteNuevosPage /></Suspense>
       },
       {
-        path: 'editar-cliente/:id',
+        path: '/editar-cliente/:id',
         element: <Suspense fallback={<div>Loading...</div>}><EditarClientePage /></Suspense>
       }
     ]
