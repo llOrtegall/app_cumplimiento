@@ -162,7 +162,7 @@ function ClientesNuevos() {
                   </SelectTrigger>
                   <SelectContent>
                     {Categorizacion.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
+                      <SelectItem key={item.value} value={item.value || 'N/A'}>
                         <span className='flex justify-between gap-x-2'>
                           {item.label}
                         </span>
@@ -179,7 +179,7 @@ function ClientesNuevos() {
                   </SelectTrigger>
                   <SelectContent>
                     {TipoZona.map((item) => (
-                      <SelectItem key={item.value} value={item.value}>
+                      <SelectItem key={item.value} value={item.value || 'N/A'}>
                         <span className='flex justify-between gap-x-2'>
                           {item.label}
                         </span>
