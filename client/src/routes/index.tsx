@@ -1,10 +1,10 @@
 import { createBrowserRouter } from 'react-router-dom';
-
-import ClientesNuevos from '../pages/ClientesNuevos';
-import ClienteTodos from '../pages/ClientesTodos';
-
+import { lazy, Suspense } from 'react';
 import Root from './Root';
-import EditarCliente from '../pages/EditarCliente';
+
+const ClienteNuevosPage = lazy(() => import('../pages/ClientesNuevos'));
+const ClienteTodosPage = lazy(() => import('../pages/ClientesTodos'));
+const EditarClientePage = lazy(() => import('../pages/EditarCliente'));
 
 export const BrowserRouter = createBrowserRouter([
   {
@@ -13,15 +13,15 @@ export const BrowserRouter = createBrowserRouter([
     children: [
       {
         index: true,
-        element: <ClienteTodos />
+        element: <Suspense fallback={<div>Loading...</div>}><ClienteTodosPage /></Suspense>
       },
       {
         path: 'clientes-nuevos',
-        element: <ClientesNuevos />
+        element: <Suspense fallback={<div>Loading...</div>}><ClienteNuevosPage /></Suspense>
       },
       {
         path: 'editar-cliente/:id',
-        element: <EditarCliente />
+        element: <Suspense fallback={<div>Loading...</div>}><EditarClientePage /></Suspense>
       }
     ]
   }
