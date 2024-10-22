@@ -1,10 +1,8 @@
 // import { useAuth } from '../auth/AuthContext'
+import { APP_NAME, URL_API_LOGIN } from '../utils/contanst'
 import { FormEvent, useState } from 'react'
 import { toast, Toaster } from 'sonner'
 import axios from 'axios'
-
-const URL_API_LOGIN = import.meta.env.VITE_URL_API_LOGIN as string;
-const APP_NAME = import.meta.env.VITE_APP_NAME as string;
 
 function LoginPage() {
   // const { setIsAuthenticated } = useAuth()
