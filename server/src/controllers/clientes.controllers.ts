@@ -24,9 +24,12 @@ export const getAllClients = async (req: Request, res: Response) => {
 
 export const getAllClientsNuevos = async (req: Request, res: Response) => {
   try {
+    const search = req.query.search as string;
     const page = parseInt(req.query.page as string) || 1;
     const pageSize = parseInt(req.query.pageSize as string) || 100;
     const offset = (page - 1) * pageSize;
+
+    console.log(search);
 
     const { rows, count } = await Client.findAndCountAll({
       where: {

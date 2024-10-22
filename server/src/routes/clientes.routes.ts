@@ -9,7 +9,7 @@ const clientRoutes = Router();
 
 clientRoutes.get('/clientes', getAllClients);
 
-clientRoutes.get('/clientesNevos', getAllClientsNuevos);
+clientRoutes.get('/clientesNuevos', getAllClientsNuevos);
 
 clientRoutes.get('/cliente/:id', getClientById)
 

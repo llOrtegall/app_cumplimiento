@@ -7,11 +7,12 @@ export const useClientes = ({ url }: { url: string }) => {
   const [clients, setClients] = useState<Cliente[]>([]);
   const [pageSize, setPageSize] = useState(100);
   const [reload, setReload] = useState(false);
+  const [search, setSearch] = useState('');
   const [error, setError] = useState('');
   const [page, setPage] = useState(1);
 
   useEffect(() => {
-    axios.get<DataResponse>(`/${url}?page=${page}&pageSize=${pageSize}`)
+    axios.get<DataResponse>(`/${url}?page=${page}&pageSize=${pageSize}&search=${search}`)
       .then((response) => {
         if(response.status === 200){
           setClients(response.data.clients);
@@ -26,5 +27,5 @@ export const useClientes = ({ url }: { url: string }) => {
 
   const totalPages = Math.ceil(totalClients / pageSize);
 
-  return { clients, totalClients, error, setPageSize, page, setPage, totalPages, setReload };
+  return { clients, totalClients, error, setPageSize, page, setPage, totalPages, setReload, search, setSearch, reload };
 }

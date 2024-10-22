@@ -12,7 +12,7 @@ import { toast } from 'sonner';
 import axios from 'axios';
 
 function ClientesNuevos() {
-  const { clients, page, setPage, setPageSize, setReload, totalClients, totalPages } = useClientes({ url: 'clientesNevos' });
+  const { clients, page, setPage, setPageSize, setReload, totalClients, totalPages, search, setSearch, reload } = useClientes({ url: 'clientesNuevos' });
   const [categoria, setCategoria] = useState<string | undefined>(undefined);
   const [tipozona, setTipoZona] = useState<string | undefined>(undefined);
   const [identificaciones, setIdentificaciones] = useState<string[]>([]);
@@ -38,11 +38,7 @@ function ClientesNuevos() {
     setIdentificaciones([]);
     setShowEdition(false);
   };
-
-  // const handleRemoveDocument = (id: string) => {
-  //   setIdentificaciones(identificaciones.filter((item) => item !== id));
-  // }
-
+  
   const navigate = useNavigate();
 
   const handleSubmitMasivo = (e: React.FormEvent<HTMLFormElement>) => {
@@ -52,7 +48,7 @@ function ClientesNuevos() {
       .then(response => {
         console.log(response.data);
         toast.success('Datos actualizados correctamente');
-        setTimeout(() => { limpiarSeleccion(); setReload(true); setCategoria(undefined); setTipoZona(undefined) }, 3000);
+        setTimeout(() => { limpiarSeleccion(); setReload(!reload); setCategoria(undefined); setTipoZona(undefined) }, 3000);
       })
       .catch(error => {
         console.error('Error updating clients:', error);
@@ -81,8 +77,9 @@ function ClientesNuevos() {
 
         <div className='flex items-center gap-2'>
           <label className='text-sm font-semibold'>Buscar:</label>
-          <input type='text' className='w-[200px] px-1 py-2 text-sm border border-gray-200 rounded-md dark:border-gray-800' />
-          <button className='px-2 py-2 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-green-200 transition-colors'>Buscar</button>
+          <input type='text' value={search} placeholder='N° Documento' onChange={(ev) => setSearch(ev.target.value)}
+            className='w-[200px] px-1 py-2 text-sm border border-gray-200 rounded-md dark:border-gray-800' />
+          <button className='px-2 py-2 text-sm font-medium text-gray-800 bg-gray-100 border border-gray-200 rounded-md dark:bg-gray-800 dark:text-gray-100 dark:border-gray-800 hover:bg-green-200 transition-colors' onClick={() => setReload(!reload)}>Buscar</button>
         </div>
 
         <div className='flex items-center gap-2'>
