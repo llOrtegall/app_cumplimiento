@@ -4,11 +4,11 @@ export interface Cliente {
   DOCUMENTO: string;
   NOMBRES: string;
   FECHANACIMIENTO: Date;
-  CATEGORIA?: string;
+  CATEGORIA: string | null;
   DIRECCION: string;
-  TIPOZONA?: string;
+  TIPOZONA: string | null;
   TELEFONO1: string;
-  TELEFONO2?: string;
+  TELEFONO2: string | null;
   EMAIL: string;
   PEP: string;
   VERSION: string;
