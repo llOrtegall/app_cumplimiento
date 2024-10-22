@@ -30,23 +30,18 @@ function EditarCliente() {
   const formRef = useRef<HTMLFormElement>(null);
 
   useEffect(() => {
-    const fetchClientById = async () => {
-      try {
-        const response = await axios.get(`${URL_API_DATA}/cliente/${id}`)
-        setCliente(response.data);
-      } catch (error) {
-        console.error('Error fetching clients:', error);
-      }
-    };
-
-    fetchClientById();
+    axios.get(`${URL_API_DATA}/cliente/${id}`)
+      .then(res => {
+        setCliente(res.data);
+      })
+      .catch(error => {
+        console.error('Error fetching client:', error)
+      })
   }, [id]);
 
   const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     const fields = Object.fromEntries(new FormData(e.target as HTMLFormElement))
-
-    console.log(fields);
 
     const { categoria, tipozona, documento } = fields;
     if (!categoria || !tipozona || !documento) {
