@@ -1,8 +1,16 @@
 import {  Outlet } from 'react-router-dom';
 import NavBar from '../components/NavBar';
 import { Toaster } from 'sonner';
+import { useAuth } from '../auth/AuthContext';
+import LoginPage from '../pages/LoginPage';
 
 function Root() {
+  const { user, isAuthenticated } = useAuth();
+
+  if (user) {
+    return <LoginPage />
+  }
+
   return (
     <section className='flex'>
       <nav className='border-r px-2 py-4 flex flex-col items-center gap-6'>

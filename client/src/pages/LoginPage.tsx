@@ -1,11 +1,11 @@
-// import { useAuth } from '../auth/AuthContext'
+import { useAuth } from '../auth/AuthContext'
 import { APP_NAME, URL_API_LOGIN } from '../utils/contanst'
 import { FormEvent, useState } from 'react'
 import { toast, Toaster } from 'sonner'
 import axios from 'axios'
 
 function LoginPage() {
-  // const { setIsAuthenticated } = useAuth()
+  const { setIsAuthenticated } = useAuth()
   const [username, setUsername] = useState('')
   const [password, setPassword] = useState('')
 
@@ -15,7 +15,7 @@ function LoginPage() {
     axios.post(`${URL_API_LOGIN}/login`, { username, password, app: APP_NAME })
       .then(res => {
         if (res.status === 200) {
-          // setIsAuthenticated(true)
+          setIsAuthenticated(true)
         }
       })
       .catch(error => {
@@ -42,8 +42,8 @@ function LoginPage() {
             <figure className='flex justify-center mb-6 text-2xl font-semibold text-gray-900 '>
               <img width={180} src='/gane.webp' alt='logo' />
             </figure>
-            <h1 className='text-lg pb-2 font-bold leading-tight tracking-tight text-gray-900 md:text-2xl '>
-              Iniciar sesión en tu cuenta
+            <h1 className='text-lg text-center pb-4 font-bold leading-tight tracking-tight text-gray-900 md:text-2xl '>
+              Segmentación Clientes
             </h1>
             <form className='space-y-4 md:space-y-6' onSubmit={handleSubmit}>
               <div>
