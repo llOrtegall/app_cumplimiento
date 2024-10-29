@@ -39,22 +39,23 @@ export const getInfo = async (req: Request, res: Response) => {
       {
         id: 1, 
         value: result1[1].Result1,
-        label: ` (${result1[1].Result1}) Menor a 15 UVT`
+        label: `(${result1[1].Result1}) Menor a 15 UVT`
       },
       {
         id: 2, 
         value: result1[1].Result2,
-        label: ` (${result1[1].Result2}) Entre 15 y 48 UVT`
+        label: `(${result1[1].Result2}) Entre 15 y 48 UVT`
       },
       {
         id: 3, 
         value: result1[1].Result3,
-        label: ` (${result1[1].Result3}) Mayor a 48 UVT`
+        label: `(${result1[1].Result3}) Mayor a 48 UVT`
       }
     ]
 
 
     res.status(200).json([{ empresa: 'Multired', data }, { empresa: 'Servired', data: data2 }]);
+    // res.status(200).json(result1);
   } catch (error) {
     console.log(error);
     res.status(500).json('Internal server error');
