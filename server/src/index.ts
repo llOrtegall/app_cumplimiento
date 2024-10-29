@@ -1,4 +1,5 @@
 import { clientRoutes } from './routes/clientes.routes';
+import { infoRouter } from './routes/info.routes';
 import { PORT } from './config';
 import express from 'express';
 import cors from 'cors';
@@ -13,6 +14,7 @@ app.use(cors(
 ));
 
 app.use('/', clientRoutes);
+app.use('/', infoRouter);
 
 app.listen(PORT, () => {
   console.log(`Server is running on http://localhost:${PORT}`);
