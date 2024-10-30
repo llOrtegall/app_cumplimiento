@@ -1,11 +1,23 @@
 import { Premios } from '../models/premios.model';
 import { Request, Response } from 'express';
-import PowerBi from '../connection';
+import { pool } from '../connection/mysql2';
+import { RowDataPacket } from 'mysql2';
 import { fn } from 'sequelize';
 
+interface InfoData extends RowDataPacket {
+  FECHAPAGO: string,
+  EMPRESA: string,
+  Result1: number,
+  Result2: number,
+  Result3: number
+}
+
 export const getInfo = async (req: Request, res: Response) => {
+  let connection;
   try {
-    const [result1] = await PowerBi.query(`
+    connection = await pool.getConnection();
+
+    const [result1] = await connection.query<InfoData[]>(`
       SELECT FECHAPAGO, 
       case ZONA
       when '39627' then 'Multired'
