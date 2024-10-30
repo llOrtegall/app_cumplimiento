@@ -97,7 +97,7 @@ export default function Dashboard() {
                 </div>
                 <div className='w-[40%]'>
                   <p className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-50">
-                    Multired Premios
+                    Servired Premios
                   </p>
                   <BarChart
                     title='Servired'
