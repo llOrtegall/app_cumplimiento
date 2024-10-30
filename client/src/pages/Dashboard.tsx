@@ -73,33 +73,48 @@ export default function Dashboard() {
         }
       </section>
 
-      {
-        data2 && (
-          data2.Multired.length > 0 && (
-            <section className='flex'>
-              <BarChart
-                className='h-80 w-[48%]'
-                data={data2.Multired}
-                index='TIPOPREMIO'
-                categories={['CANT']}
-                yAxisWidth={80}
-                layout='vertical'
-              />
-              <BarChart 
-                className='h-80 w-[48%]'
-                data={data2.Servired}
-                index='TIPOPREMIO'
-                categories={['CANT']}
-                yAxisWidth={80}
-                layout='vertical'
-              />
-            </section>
+      <section className='w-full'>
+        <h2 className='text-center font-semibold uppercase'>
+          Cantidad de premios por tipo de premio
+        </h2>
+        {
+          data2 && (
+            data2.Multired.length > 0 && (
+              <section className='flex justify-around'>
+                <div className='w-[40%]'>
+                  <p className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-50">
+                    Multired Premios
+                  </p>
+                  <BarChart
+                    title='Multired'
+                    className='h-80'
+                    data={data2.Multired}
+                    index='TIPOPREMIO'
+                    categories={['CANT']}
+                    yAxisWidth={80}
+                    layout='vertical'
+                  />
+                </div>
+                <div className='w-[40%]'>
+                  <p className="mt-2 text-xl font-semibold text-gray-900 dark:text-gray-50">
+                    Multired Premios
+                  </p>
+                  <BarChart
+                    title='Servired'
+                    className='h-80'
+                    data={data2.Servired}
+                    index='TIPOPREMIO'
+                    categories={['CANT']}
+                    yAxisWidth={80}
+                    layout='vertical'
+                  />
+                </div>
 
-
+              </section>
+            )
           )
-        )
-      }
-
+        }
+      </section>
     </div>
   )
 }
