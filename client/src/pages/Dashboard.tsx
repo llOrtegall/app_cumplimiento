@@ -42,7 +42,7 @@ export default function Dashboard() {
         console.log(err);
       })
 
-    axios.get(`${URL_API_DATA}/getInfo2`)
+    axios.get(`${URL_API_DATA}/getInfo2?fecha=${date?.toISOString()}`)
       .then(res => {
         setData2(res.data);
       })
@@ -56,13 +56,14 @@ export default function Dashboard() {
   return (
     <div className='w-full flex flex-col relative'>
 
-      <h1 className='text-3xl font-bold text-center'>
-        Dashboard
-      </h1>
-
-      <button onClick={() => setVisible(!visible)} className='bg-blue-500 text-white p-2 rounded-md w-40 mx-2'>
-        Seleccione Fecha
-      </button>
+      <div className='flex items-center mx-2 pt-2 gap-2'>
+        <button onClick={() => setVisible(!visible)} className='bg-blue-500 text-white p-2 rounded-md w-40'>
+          Seleccione Fecha
+        </button>
+        <h2>
+          <span className='font-semibold'>Información:</span> {date?.toISOString().slice(0, 10) || 'Día Actual'}
+        </h2>
+      </div>
 
       <div className='absolute left-0 top-20 z-50'>
         {
