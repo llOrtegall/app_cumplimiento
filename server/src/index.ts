@@ -2,6 +2,7 @@ import { clientRoutes } from './routes/clientes.routes';
 import { infoRouter } from './routes/info.routes';
 import { PORT } from './config';
 import express from 'express';
+import log from 'morgan';
 import cors from 'cors';
 const app = express();
 
@@ -12,6 +13,7 @@ app.use(cors(
     credentials: true
   }
 ));
+app.use(log('dev'));
 
 app.use('/', clientRoutes);
 app.use('/', infoRouter);

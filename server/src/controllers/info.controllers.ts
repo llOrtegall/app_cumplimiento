@@ -4,7 +4,7 @@ import { fn, literal, Op } from 'sequelize';
 
 export const getInfo = async (req: Request, res: Response) => {
 
-  const fecha = req.query.fecha;
+  const fecha: string | undefined = req.query.fecha as string | undefined;
 
   const cantMin = 15
   const cantMax = 48
@@ -13,7 +13,7 @@ export const getInfo = async (req: Request, res: Response) => {
   const menor15 = cantMin * UVT
   const mayor48 = cantMax * UVT
 
-   const opc = fecha !== undefined ? fecha as string : fn('CURDATE')
+  const opc = fecha !== undefined && fecha !== 'undefined' ? fecha.slice(0, 10) : fn('CURDATE');
 
   try {
     const consultaMultired = await Premios.findAll({

@@ -33,9 +33,8 @@ export default function Dashboard() {
 
   const [visible, setVisible] = useState(false);
 
-
   useEffect(() => {
-    axios.get(`${URL_API_DATA}/getInfo?fecha=${date}`)
+    axios.get(`${URL_API_DATA}/getInfo?fecha=${date?.toISOString()}`)
       .then(res => {
         setData(res.data);
       })
@@ -45,7 +44,6 @@ export default function Dashboard() {
 
     axios.get(`${URL_API_DATA}/getInfo2`)
       .then(res => {
-        console.log(res.data);
         setData2(res.data);
       })
       .catch(err => {
@@ -66,7 +64,7 @@ export default function Dashboard() {
         Seleccione Fecha
       </button>
 
-      <div className='absolute left-0 top-20'>
+      <div className='absolute left-0 top-20 z-50'>
         {
           visible && (
             <CalendarLocaleExample
