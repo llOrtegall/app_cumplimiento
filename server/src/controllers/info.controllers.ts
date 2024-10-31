@@ -1,75 +1,47 @@
 import { Premios } from '../models/premios.model';
 import { Request, Response } from 'express';
-import { pool } from '../connection/mysql2';
-import { RowDataPacket } from 'mysql2';
-import { fn } from 'sequelize';
-
-interface InfoData extends RowDataPacket {
-  FECHAPAGO: string,
-  EMPRESA: string,
-  Result1: number,
-  Result2: number,
-  Result3: number
-}
+import { fn, literal, Op } from 'sequelize';
 
 export const getInfo = async (req: Request, res: Response) => {
-  let connection;
+
+  const fecha = req.query.fecha;
+
+  const cantMin = 15
+  const cantMax = 48
+  const UVT = 47065
+
+  const menor15 = cantMin * UVT
+  const mayor48 = cantMax * UVT
+
+   const opc = fecha !== undefined ? fecha as string : fn('CURDATE')
+
   try {
-    connection = await pool.getConnection();
-
-    const [result1] = await connection.query<InfoData[]>(`
-      SELECT FECHAPAGO, 
-      case ZONA
-      when '39627' then 'Multired'
-      when '39628' then 'Servired'
-      else 'null' end AS EMPRESA, 
-      COUNT(CASE WHEN PREMIO < 15*47065 THEN 1 END) AS Result1,
-      COUNT(CASE WHEN PREMIO between 15*47065 and 48*47065 THEN 1 END) AS Result2,
-      COUNT(CASE WHEN PREMIO > 48*47065 THEN 1 END) AS Result3
-      FROM DETALLEPREMIOSCMP
-      WHERE FECHAPAGO=CURDATE()
-      GROUP BY FECHAPAGO,ZONA`
-    );
-
-    const data = [
-      {
-        id: 1,
-        value: result1[0].Result1,
-        label: ` (${result1[0].Result1}) Menor a 15 UVT`
-      },
-      {
-        id: 2,
-        value: result1[0].Result2,
-        label: ` (${result1[0].Result2}) Entre 15 y 48 UVT`
-      },
-      {
-        id: 3,
-        value: result1[0].Result3,
-        label: ` (${result1[0].Result3}) Mayor a 48 UVT`
+    const consultaMultired = await Premios.findAll({
+      attributes: [
+        [fn('SUM', literal(`PREMIO < ${menor15}`)), 'Menor a 15 UVT'],
+        [fn('SUM', literal(`PREMIO BETWEEN ${menor15} AND ${mayor48}`)), 'Rango [15 - 48] UVT'],
+        [fn('SUM', literal(`PREMIO > ${mayor48}`)), 'Mayor a 48 UVT']
+      ],
+      where: {
+        FECHAPAGO: opc,
+        ZONA: 39627
       }
-    ]
+    });
 
-    const data2 = [
-      {
-        id: 1,
-        value: result1[1].Result1,
-        label: `(${result1[1].Result1}) Menor a 15 UVT`
-      },
-      {
-        id: 2,
-        value: result1[1].Result2,
-        label: `(${result1[1].Result2}) Entre 15 y 48 UVT`
-      },
-      {
-        id: 3,
-        value: result1[1].Result3,
-        label: `(${result1[1].Result3}) Mayor a 48 UVT`
+    const consultaServired = await Premios.findAll({
+      attributes: [
+        [fn('SUM', literal(`PREMIO < ${menor15}`)), 'Menor a 15 UVT'],
+        [fn('SUM', literal(`PREMIO BETWEEN ${menor15} AND ${mayor48}`)), 'Rango [15 - 48] UVT'],
+        [fn('SUM', literal(`PREMIO > ${mayor48}`)), 'Mayor a 48 UVT']
+      ],
+      where: {
+        FECHAPAGO: opc,
+        ZONA: 39628
       }
-    ]
+    });
 
 
-    res.status(200).json([{ empresa: 'Multired', data }, { empresa: 'Servired', data: data2 }]);
-    // res.status(200).json(result1);
+    res.status(200).json([{ empresa: 'Multired', data: consultaMultired }, { empresa: 'Servired', data: consultaServired }]);
   } catch (error) {
     console.log(error);
     res.status(500).json('Internal server error');
