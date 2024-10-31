@@ -61,16 +61,20 @@ export const getInfo = async (req: Request, res: Response) => {
 }
 
 export const getInfo2 = async (req: Request, res: Response) => {
+  const fecha: string | undefined = req.query.fecha as string | undefined;
+
+  const opc = fecha !== undefined && fecha !== 'undefined' ? fecha.slice(0, 10) : fn('CURDATE');
+
   try {
     const PremiosServired = await Premios.findAll({
       attributes: ['TIPOPREMIO', [fn('COUNT', 'TIPOPREMIO'), 'CANT']],
-      where: { FECHAPAGO: fn('CURDATE'), ZONA: '39627' },
+      where: { FECHAPAGO: opc, ZONA: '39627' },
       group: ['TIPOPREMIO']
     })
 
     const PremiosMultired = await Premios.findAll({
       attributes: ['TIPOPREMIO', [fn('COUNT', 'TIPOPREMIO'), 'CANT']],
-      where: { FECHAPAGO: fn('CURDATE'), ZONA: '39628' },
+      where: { FECHAPAGO: opc, ZONA: '39628' },
       group: ['TIPOPREMIO']
     });
 
