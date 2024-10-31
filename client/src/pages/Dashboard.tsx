@@ -1,8 +1,9 @@
+import { CalendarLocaleExample } from '../components/ui/SelectDate';
 import { PieChart } from '@mui/x-charts/PieChart';
+import { BarChart } from '../components/BarChart';
 import { URL_API_DATA } from '../utils/contanst';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
-import { BarChart } from '../components/BarChart';
 
 interface DataCompany {
   id: number,
@@ -28,9 +29,11 @@ interface Data2 {
 export default function Dashboard() {
   const [data, setData] = useState<Data[]>([]);
   const [data2, setData2] = useState<Data2>();
+  const [date, setDate] = useState<Date | undefined>(undefined)
+
 
   useEffect(() => {
-    axios.get(`${URL_API_DATA}/getInfo`)
+    axios.get(`${URL_API_DATA}/getInfo?fecha=${date}`)
       .then(res => {
         setData(res.data);
       })
@@ -46,11 +49,12 @@ export default function Dashboard() {
       .catch(err => {
         console.log(err);
       })
-  }, [])
+  }, [date])
 
 
   return (
     <div className='w-full flex flex-col'>
+      <CalendarLocaleExample date={date} setdate={setDate} />
       <section className='flex'>
         {
           data.map((item, index) => (
