@@ -2,21 +2,27 @@ import { Premios } from '../models/premios.model';
 import { Request, Response } from 'express';
 import { fn, literal, Op } from 'sequelize';
 
+const cantMin = 15
+const cantMax = 48
+const UVT = 47065
+
+const menor15 = cantMin * UVT
+const mayor48 = cantMax * UVT
+
+interface ConsultaResultAttrib {
+  Menor: string
+  Rango: string
+  Mayor: string
+}
+
 export const getInfo = async (req: Request, res: Response) => {
 
   const fecha: string | undefined = req.query.fecha as string | undefined;
 
-  const cantMin = 15
-  const cantMax = 48
-  const UVT = 47065
-
-  const menor15 = cantMin * UVT
-  const mayor48 = cantMax * UVT
-
   const opc = fecha !== undefined && fecha !== 'undefined' ? fecha.slice(0, 10) : fn('CURDATE');
 
   try {
-    const consultaMultired = await Premios.findAll({
+    const consultaMultired: ConsultaResultAttrib[] = await Premios.findAll({
       attributes: [
         [fn('SUM', literal(`PREMIO < ${menor15}`)), 'Menor'],
         [fn('SUM', literal(`PREMIO BETWEEN ${menor15} AND ${mayor48}`)), 'Rango'],
@@ -25,10 +31,11 @@ export const getInfo = async (req: Request, res: Response) => {
       where: {
         FECHAPAGO: opc,
         ZONA: 39627
-      }
-    });
+      },
+      raw: true
+    }) as unknown as ConsultaResultAttrib[];
 
-    const consultaServired = await Premios.findAll({
+    const consultaServired: ConsultaResultAttrib[] = await Premios.findAll({
       attributes: [
         [fn('SUM', literal(`PREMIO < ${menor15}`)), 'Menor'],
         [fn('SUM', literal(`PREMIO BETWEEN ${menor15} AND ${mayor48}`)), 'Rango'],
@@ -37,21 +44,24 @@ export const getInfo = async (req: Request, res: Response) => {
       where: {
         FECHAPAGO: opc,
         ZONA: 39628
-      }
-    });
+      },
+      raw: true
+    }) as unknown as ConsultaResultAttrib[];
+    
+    const Multired = consultaMultired[0];
+    const Servired = consultaServired[0];
 
     const dataMultired = [
-      { id: 1, label: `${consultaMultired[0].get('Menor') as unknown as string} - Menor a 15 UVT`, value: parseInt(consultaMultired[0].get('Menor') as unknown as string) },
-      { id: 2, label: `${consultaMultired[0].get('Rango') as unknown as string} - Entre 15 y 48 UVT`, value: parseInt(consultaMultired[0].get('Rango') as unknown as string) },
-      { id: 3, label: `${consultaMultired[0].get('Mayor') as unknown as string} - Mayor a 48 UVT`, value: parseInt(consultaMultired[0].get('Mayor') as unknown as string) }
+      { id: 1, label: `${Multired.Menor} - Menor a 15 UVT`, value: parseInt(Multired.Menor) },
+      { id: 2, label: `${Multired.Rango} - Entre 15 y 48 UVT`, value: parseInt(Multired.Rango) },
+      { id: 3, label: `${Multired.Mayor} - Mayor a 48 UVT`, value: parseInt(Multired.Mayor) }
     ]
 
     const dataServired = [
-      { id: 1, label: `${consultaServired[0].get('Menor') as unknown as string} - Menor a 15 UVT`, value: parseInt(consultaServired[0].get('Menor') as unknown as string) },
-      { id: 2, label: `${consultaServired[0].get('Rango') as unknown as string} - Entre 15 y 48 UVT`, value: parseInt(consultaServired[0].get('Rango') as unknown as string) },
-      { id: 3, label: `${consultaServired[0].get('Mayor') as unknown as string} - Mayor a 48 UVT`, value: parseInt(consultaServired[0].get('Mayor') as unknown as string)}
+      { id: 1, label: `${Servired.Menor} - Menor a 15 UVT`, value: parseInt(Servired.Menor) },
+      { id: 2, label: `${Servired.Rango} - Entre 15 y 48 UVT`, value: parseInt(Servired.Rango) },
+      { id: 3, label: `${Servired.Menor} - Mayor a 48 UVT`, value: parseInt(Servired.Mayor) }
     ]
-
 
     res.status(200).json([{ empresa: 'Multired', data: dataMultired }, { empresa: 'Servired', data: dataServired }]);
   } catch (error) {
