@@ -57,15 +57,17 @@ export default function Dashboard() {
     <div className='w-full flex flex-col relative'>
 
       <div className='flex items-center mx-2 pt-2 gap-2'>
-        <button onClick={() => setVisible(!visible)} className='bg-blue-500 text-white p-2 rounded-md w-40'>
-          Seleccione Fecha
+        <button onClick={() => setVisible(!visible)} className={`${ visible ? 'bg-red-500 hover:bg-red-600' : 'bg-blue-500 hover:bg-blue-600' } text-white p-2 rounded-md w-40`}>
+          {
+            visible ? 'Ocultar' : 'Calendario'
+          }
         </button>
         <h2>
           <span className='font-semibold'>Información:</span> {date?.toISOString().slice(0, 10) || 'Día Actual'}
         </h2>
       </div>
 
-      <div className='absolute left-0 top-20 z-50'>
+      <div className='absolute left-2 top-14 z-50'>
         {
           visible && (
             <CalendarLocaleExample
