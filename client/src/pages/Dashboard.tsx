@@ -51,8 +51,6 @@ export default function Dashboard() {
       })
   }, [date])
 
-
-
   return (
     <div className='w-full flex flex-col relative'>
 

@@ -41,15 +41,15 @@ export const getInfo = async (req: Request, res: Response) => {
     });
 
     const dataMultired = [
-      { id: 1, label: 'Menor a 15 UVT', value: parseInt(consultaMultired[0].get('Menor') as unknown as string) },
-      { id: 2, label: 'Entre 15 y 48 UVT', value: parseInt(consultaMultired[0].get('Rango') as unknown as string) },
-      { id: 3, label: 'Mayor a 48 UVT', value: parseInt(consultaMultired[0].get('Mayor') as unknown as string) }
+      { id: 1, label: `${consultaMultired[0].get('Menor') as unknown as string} - Menor a 15 UVT`, value: parseInt(consultaMultired[0].get('Menor') as unknown as string) },
+      { id: 2, label: `${consultaMultired[0].get('Rango') as unknown as string} - Entre 15 y 48 UVT`, value: parseInt(consultaMultired[0].get('Rango') as unknown as string) },
+      { id: 3, label: `${consultaMultired[0].get('Mayor') as unknown as string} - Mayor a 48 UVT`, value: parseInt(consultaMultired[0].get('Mayor') as unknown as string) }
     ]
 
     const dataServired = [
-      { id: 1, label: 'Menor a 15 UVT', value: parseInt(consultaServired[0].get('Menor') as unknown as string) },
-      { id: 2, label: 'Entre 15 y 48 UVT', value: parseInt(consultaServired[0].get('Rango') as unknown as string) },
-      { id: 3, label: 'Mayor a 48 UVT', value: parseInt(consultaServired[0].get('Mayor') as unknown as string)}
+      { id: 1, label: `${consultaServired[0].get('Menor') as unknown as string} - Menor a 15 UVT`, value: parseInt(consultaServired[0].get('Menor') as unknown as string) },
+      { id: 2, label: `${consultaServired[0].get('Rango') as unknown as string} - Entre 15 y 48 UVT`, value: parseInt(consultaServired[0].get('Rango') as unknown as string) },
+      { id: 3, label: `${consultaServired[0].get('Mayor') as unknown as string} - Mayor a 48 UVT`, value: parseInt(consultaServired[0].get('Mayor') as unknown as string)}
     ]
 
 
