@@ -31,6 +31,8 @@ export default function Dashboard() {
   const [data2, setData2] = useState<Data2>();
   const [date, setDate] = useState<Date | undefined>(undefined)
 
+  const [visible, setVisible] = useState(false);
+
 
   useEffect(() => {
     axios.get(`${URL_API_DATA}/getInfo?fecha=${date}`)
@@ -52,9 +54,28 @@ export default function Dashboard() {
   }, [date])
 
 
+
   return (
-    <div className='w-full flex flex-col'>
-      <CalendarLocaleExample date={date} setdate={setDate} />
+    <div className='w-full flex flex-col relative'>
+
+      <h1 className='text-3xl font-bold text-center'>
+        Dashboard
+      </h1>
+
+      <button onClick={() => setVisible(!visible)} className='bg-blue-500 text-white p-2 rounded-md w-40 mx-2'>
+        Seleccione Fecha
+      </button>
+
+      <div className='absolute left-0 top-20'>
+        {
+          visible && (
+            <CalendarLocaleExample
+              value={date}
+              onChange={setDate}
+            />
+          )
+        }
+      </div>
       <section className='flex'>
         {
           data.map((item, index) => (
