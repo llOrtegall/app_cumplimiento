@@ -1,7 +1,7 @@
 import { Premios } from '../models/premios.model';
 import { CantidadPremios } from '../services';
 import { Request, Response } from 'express';
-import { fn } from 'sequelize';
+import { fn, Op } from 'sequelize';
 import { generateData } from '../utils';
 
 export const getInfo = async (req: Request, res: Response) => {
@@ -61,10 +61,10 @@ export const getReportBaloto = async (req: Request, res: Response) => {
 
   try {
     const report = await Premios.findAll({
-      attributes: ['SERIE_CONSECUTIVO', 'TIPOPREMIO', 'PREMIO', 'RETEFUENTE', 'CAJERO', 'FECHAPAGO', 'TERCERO', 'ESTADO', 'EMPRESA'],
+      attributes: ['SERIE_CONSECUTIVO', 'TIPOPREMIO', 'PREMIO', 'RETEFUENTE', 'CAJERO', 'FECHAPAGO', 'TERCERO', 'ZONA'],
       where: {
-        FECHAPAGO: { $between: [fecha1, fecha2] },
-        TIPOJUEGO: { $in: [110, 116, 119] },
+        FECHAPAGO: { [Op.between]: [fecha1, fecha2] },
+        TIPOJUEGO: { [Op.in]: [110, 116, 119] },
         ZONA: zona
       }
     });

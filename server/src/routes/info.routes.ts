@@ -7,4 +7,4 @@ infoRouter.get('/getInfo', getInfo);
 
 infoRouter.get('/getInfo2', getInfo2);
 
-infoRouter.get('/reportBaloto', getReportBaloto);
+infoRouter.post('/reportBaloto', getReportBaloto);
