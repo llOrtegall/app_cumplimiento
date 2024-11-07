@@ -71,7 +71,7 @@ export const BottonExporBaloto = ({ datos }: { datos: ReportDataBaloto[] }): JSX
 
   return (
     <button onClick={handleDownload} className='bg-yellow-300 hover:bg-yellow-400  p-2 rounded-md text-black'>
-      Exportar Cartera
+      Exportar a Excel
     </button>
   )
 }

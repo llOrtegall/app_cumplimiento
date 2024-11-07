@@ -79,7 +79,9 @@ export default function ReportesPage() {
         </div>
 
         <div>
-          <BottonExporBaloto datos={data} />
+          {
+            data.length > 0 ? <BottonExporBaloto datos={data} /> : null
+          }
         </div>
       </div>
 
