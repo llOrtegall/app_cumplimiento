@@ -1,19 +1,10 @@
+import { Table, TableHead, TableBody, TableCell, TableHeaderCell, TableRow } from '../components/Table';
 import { CalendarLocaleExample } from '../components/ui/SelectDate';
+import { ReportDataBaloto } from '../types/Interfaces';
 import { URL_API_DATA } from '../utils/contanst';
 import { FormEvent, useState } from 'react';
 import axios from 'axios';
-import { Table, TableHead, TableBody, TableCell, TableHeaderCell, TableRow } from '../components/Table';
 
-interface ReportData {
-  CAJERO: string
-  FECHAPAGO: string
-  PREMIO: number
-  RETEFUENTE: number
-  SERIE_CONSECUTIVO: string
-  TERCERO: string
-  TIPOPREMIO: string
-  ZONA: string
-}
 
 export default function ReportesPage() {
   const [date1, setDate1] = useState<Date | undefined>(undefined)
@@ -23,7 +14,7 @@ export default function ReportesPage() {
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
 
-  const [data, setData] = useState<ReportData[]>([]);
+  const [data, setData] = useState<ReportDataBaloto[]>([]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();

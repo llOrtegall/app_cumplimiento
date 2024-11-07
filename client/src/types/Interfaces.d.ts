@@ -31,3 +31,14 @@ export interface User {
   process: string,
   sub_process: string,
 }
+
+export interface ReportDataBaloto {
+  CAJERO: string
+  FECHAPAGO: string
+  PREMIO: number
+  RETEFUENTE: number
+  SERIE_CONSECUTIVO: string
+  TERCERO: string
+  TIPOPREMIO: string
+  ZONA: string
+}
