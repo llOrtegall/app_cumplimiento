@@ -11,7 +11,7 @@ export const getInfo = async (req: Request, res: Response) => {
   try {
     const Multired = await CantidadPremios(fecha, 39627);
     const Servired = await CantidadPremios(fecha, 39628);
-    
+
     const dataMultired = generateData(Multired);
     const dataServired = generateData(Servired);
 
@@ -45,4 +45,37 @@ export const getInfo2 = async (req: Request, res: Response) => {
     console.log(error);
     res.status(500).json('Internal server error');
   }
+}
+
+export const reportBaloto = async (req: Request, res: Response) => {
+  const fecha1: string | undefined = req.query.fecha as string | undefined;
+  const fecha2: string | undefined = req.query.fecha as string | undefined;
+
+  const zona: string = req.query.zona as string;
+
+  if (fecha1 === undefined || fecha2 === undefined) {
+    return res.status(400).json('Fecha no válida');
+  }
+
+  if (zona === undefined) {
+    return res.status(400).json('Zona no válida');
+  }
+
+  try {
+    const reportBaloto = await Premios.findAll({
+      attributes: ['SERIE_CONSECUTIVO', 'TIPOPREMIO', 'PREMIO', 'RETEFUENTE', 'CAJERO', 'FECHAPAGO', 'TERCERO', 'ESTADO', 'EMPRESA'],
+      where: {
+        FECHAPAGO: { $between: [fecha1, fecha2] },
+        TIPOJUEGO: { $in: [110, 116, 119] },
+        ZONA: zona
+      }
+    });
+
+
+    res.status(200).json(reportBaloto);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json('Internal server error');
+  }
+
 }
