@@ -5,6 +5,7 @@ import Root from './Root';
 const ClienteNuevosPage = lazy(() => import('../pages/ClientesNuevos'));
 const ClienteTodosPage = lazy(() => import('../pages/ClientesTodos'));
 const EditarClientePage = lazy(() => import('../pages/EditarCliente'));
+const ReportesPage = lazy(() => import('../pages/ReportesPage'));
 const Dashboard = lazy(() => import('../pages/Dashboard'));
 
 
@@ -28,6 +29,10 @@ export const BrowserRouter = createBrowserRouter([
       {
         path: 'dashboard',
         element: <Suspense fallback={<div>Loading...</div>}><Dashboard /></Suspense>
+      },
+      {
+        path: 'reportes',
+        element: <Suspense fallback={<div>Loading...</div>}><ReportesPage /></Suspense>
       }
     ]
   }
