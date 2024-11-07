@@ -3,7 +3,7 @@ import { utils, ColInfo, writeFile } from 'xlsx'
 import { toast } from 'sonner'
 
 const generateExcelData = (datos: ReportDataBaloto[]): unknown[] => {
-  const titulo = [{ A: 'Reporte Cartera ' }]
+  const titulo = [{ A: 'Reporte Premios Pagados Baloto ' }]
   const headers = [
     {
       A: 'SERIE CONSECUTIVO',
@@ -38,18 +38,16 @@ const createExcelFile = (data: unknown[]): void => {
   hoja['!merges'] = [{ s: { r: 0, c: 0 }, e: { r: 0, c: 6 } }]
 
   const colWidths: ColInfo[] = [
-    { width: 10 }, { width: 10 }, { width: 30 }, { width: 10 }, { width: 20 },
-    { width: 10 }, { width: 10 }, { width: 20 }, { width: 10 }, { width: 10 },
-    { width: 10 }, { width: 10 }, { width: 10 }, { width: 10 }, { width: 10 },
-    { width: 10 }, { width: 10 }
+    { width: 30 }, { width: 10 }, { width: 10 }, { width: 10 }, { width: 10 },
+    { width: 10 }, { width: 10 }, { width: 20 }, { width: 10 }
   ]
 
   hoja['!cols'] = colWidths
-  utils.book_append_sheet(libro, hoja, 'Cartera')
+  utils.book_append_sheet(libro, hoja, 'Baloto')
   writeFile(libro, 'ReporteBaloto.xlsx')
 }
 
-export const BottonExporCartera = ({ datos }: { datos: ReportDataBaloto[] }): JSX.Element => {
+export const BottonExporBaloto = ({ datos }: { datos: ReportDataBaloto[] }): JSX.Element => {
   const handleDownload = (): void => {
     const dataFinal = generateExcelData(datos)
 
@@ -72,7 +70,7 @@ export const BottonExporCartera = ({ datos }: { datos: ReportDataBaloto[] }): JS
   }
 
   return (
-    <button onClick={handleDownload} className='bg-blue-500 hover:bg-blue-600 text-white p-2 rounded-md'>
+    <button onClick={handleDownload} className='bg-yellow-300 hover:bg-yellow-400  p-2 rounded-md text-black'>
       Exportar Cartera
     </button>
   )

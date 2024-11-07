@@ -1,5 +1,6 @@
 import { Table, TableHead, TableBody, TableCell, TableHeaderCell, TableRow } from '../components/Table';
 import { CalendarLocaleExample } from '../components/ui/SelectDate';
+import { BottonExporBaloto } from '../components/ExportBaloto';
 import { ReportDataBaloto } from '../types/Interfaces';
 import { URL_API_DATA } from '../utils/contanst';
 import { FormEvent, useState } from 'react';
@@ -75,6 +76,10 @@ export default function ReportesPage() {
             {data.length}
           </span>
 
+        </div>
+
+        <div>
+          <BottonExporBaloto datos={data} />
         </div>
       </div>
 
