@@ -1,4 +1,4 @@
-import { RiHome2Line, RiGroupLine, RiUserAddLine, RiLogoutBoxLine } from '@remixicon/react';
+import { RiHome2Line, RiGroupLine, RiUserAddLine, RiLogoutBoxLine, RiFileChartLine } from '@remixicon/react';
 import { LogoutAndDeleteToken } from '../services/LogOut';
 import { NavLink } from 'react-router-dom';
 import { useAuth } from '../auth/AuthContext';
@@ -28,7 +28,9 @@ function NavBar() {
             <NavLink title='Clientes Nuevos' to='clientes-nuevos' className={({ isActive }) => isActive ? 'bg-blue-800 text-white rounded-full p-2' : 'bg-gray-200 rounded-full p-2'}>
               <RiUserAddLine size={32} />
             </NavLink>
-          
+            <NavLink title='Reportes' to='reportes' className={({ isActive }) => isActive ? 'bg-blue-800 text-white rounded-full p-2' : 'bg-gray-200 rounded-full p-2'}>
+              <RiFileChartLine size={32} />
+            </NavLink>
           </li>
         </ul>
       </div>
