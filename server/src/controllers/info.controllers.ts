@@ -4,7 +4,6 @@ import { Request, Response } from 'express';
 import { fn } from 'sequelize';
 import { generateData } from '../utils';
 
-
 export const getInfo = async (req: Request, res: Response) => {
   const fecha: string | undefined = req.query.fecha as string | undefined;
 
@@ -47,22 +46,21 @@ export const getInfo2 = async (req: Request, res: Response) => {
   }
 }
 
-export const reportBaloto = async (req: Request, res: Response) => {
-  const fecha1: string | undefined = req.query.fecha as string | undefined;
-  const fecha2: string | undefined = req.query.fecha as string | undefined;
+export const getReportBaloto = async (req: Request, res: Response) => {
+  const data = req.body;
 
-  const zona: string = req.query.zona as string;
+  const { fecha1, fecha2, zona } = data;
 
   if (fecha1 === undefined || fecha2 === undefined) {
-    return res.status(400).json('Fecha no válida');
+    res.status(400).json('Fecha no válida');
   }
 
   if (zona === undefined) {
-    return res.status(400).json('Zona no válida');
+    res.status(400).json('Zona no válida');
   }
 
   try {
-    const reportBaloto = await Premios.findAll({
+    const report = await Premios.findAll({
       attributes: ['SERIE_CONSECUTIVO', 'TIPOPREMIO', 'PREMIO', 'RETEFUENTE', 'CAJERO', 'FECHAPAGO', 'TERCERO', 'ESTADO', 'EMPRESA'],
       where: {
         FECHAPAGO: { $between: [fecha1, fecha2] },
@@ -71,11 +69,9 @@ export const reportBaloto = async (req: Request, res: Response) => {
       }
     });
 
-
-    res.status(200).json(reportBaloto);
+    res.status(200).json(report);
   } catch (error) {
     console.log(error);
     res.status(500).json('Internal server error');
   }
-
 }
