@@ -2,19 +2,22 @@ import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } fro
 import { BottonExporClientGanador } from '../components/ExportClientGanador';
 import { CalendarLocaleExample } from '../components/ui/SelectDate';
 import { URL_API_DATA } from '../utils/contanst';
-import { FormEvent, useState } from 'react';
-import axios from 'axios';
 import { DataCliente } from '../types/Interfaces';
+import { FormEvent, useEffect, useState } from 'react';
+import axios from 'axios';
 
 export default function ReportClienteGanadores() {
   const [date1, setDate1] = useState<Date | undefined>(undefined)
   const [date2, setDate2] = useState<Date | undefined>(undefined)
   const [zona, setZona] = useState<string | undefined>(undefined)
+  const [filter, setFilter] = useState<string>('')
 
   const [visible, setVisible] = useState(false);
   const [visible2, setVisible2] = useState(false);
 
   const [data, setData] = useState<DataCliente[]>([]);
+
+  const [clientsFiltered, setClientsFiltered] = useState<DataCliente[]>([]);
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -33,6 +36,14 @@ export default function ReportClienteGanadores() {
       })
   }
 
+  useEffect(() => {
+    const delayDebounceFn = setTimeout(() => {
+      setClientsFiltered(data.filter(item => item.Client.DOCUMENTO.includes(filter)));
+    }, 500);
+
+    return () => clearTimeout(delayDebounceFn);
+  }, [filter, data]);
+
   return (
     <section>
       <div className='w-full flex gap-4 px-2 pt-1 items-center border-b pb-2'>
@@ -42,8 +53,8 @@ export default function ReportClienteGanadores() {
         </button>
 
 
-        <article className='w-56'>
-          <span className='font-semibold'>Fecha Inicial:</span> {date1?.toISOString().slice(0, 10) || ' '}
+        <article className='w-52'>
+          <span className='font-semibold text-xs'>Fecha Inicial:</span> {date1?.toISOString().slice(0, 10) || ' '}
         </article>
 
         <button onClick={() => setVisible2(!visible2)}
@@ -51,8 +62,8 @@ export default function ReportClienteGanadores() {
           {visible2 ? 'Ocultar' : 'Fecha Final'}
         </button>
 
-        <article className='w-56'>
-          <span className='font-semibold'>Fecha Final:</span> {date2?.toISOString().slice(0, 10) || ' '}
+        <article className='w-52'>
+          <span className='font-semibold text-xs'>Fecha Final:</span> {date2?.toISOString().slice(0, 10) || ' '}
         </article>
 
         <form onSubmit={handleSubmit} className='gap-2 flex'>
@@ -76,10 +87,19 @@ export default function ReportClienteGanadores() {
         </div>
 
         <div>
+          <input type='text'
+            placeholder='Filtrar por documento' className='px-2 py-1 rounded-md border border-gray-200'
+            value={filter}
+            onChange={(e) => setFilter(e.target.value)}
+          />
+        </div>
+
+        <div>
           {
             data.length > 0 ? <BottonExporClientGanador datos={data} /> : null
           }
         </div>
+
       </div>
 
       <div className='absolute z-20 top-12 left-2'>
@@ -106,7 +126,7 @@ export default function ReportClienteGanadores() {
               </TableHead>
               <TableBody>
                 {
-                  data.map((item, index) => (
+                  clientsFiltered.map((item, index) => (
                     <TableRow key={index}>
                       <TableCell>{item.Client.DOCUMENTO}</TableCell>
                       <TableCell>{item.Client.NOMBRES}</TableCell>
