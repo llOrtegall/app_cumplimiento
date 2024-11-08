@@ -1,7 +1,7 @@
 import { Premios } from '../models/premios.model';
 import { CantidadPremios } from '../services';
 import { Request, Response } from 'express';
-import { fn, Op } from 'sequelize';
+import { col, fn, literal, Op } from 'sequelize';
 import { generateData } from '../utils';
 import { Client } from '../models/clientes.model';
 
@@ -91,16 +91,26 @@ export const getClientesGanadores = async (req: Request, res: Response) => {
   }
 
   try {
-    const report = await Premios.findAll({
+    const ReportData = await Premios.findAll({
+      attributes: [
+        [fn('SUM', col('PREMIO')), 'TOTALPREMIOS'],
+        [fn('COUNT', fn('DISTINCT', col('SERIE_KARDEX'))), 'CANT']
+      ],
       where: {
         FECHAPAGO: { [Op.between]: [fecha1, fecha2] },
-        TIPOJUEGO: { [Op.in]: [110, 116, 119] },
+        TIPOPREMIO: 'LOCAL',
         ZONA: zona
       },
-      include: [{ model: Client }]
+      include: [{ 
+        attributes: ['DOCUMENTO', 'NOMBRES', 'DIRECCION', 'TELEFONO1'],
+        model: Client,
+        required: true
+       }],
+       group: ['DOCUMENTO', 'NOMBRES', 'DIRECCION', 'TELEFONO1'],
+       order: literal('TOTALPREMIOS DESC'),
     });
 
-    res.status(200).json(report);
+    res.status(200).json(ReportData);
   } catch (error) {
     console.log(error);
     res.status(500).json('Internal server error');
