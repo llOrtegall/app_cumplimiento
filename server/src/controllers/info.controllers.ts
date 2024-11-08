@@ -3,6 +3,7 @@ import { CantidadPremios } from '../services';
 import { Request, Response } from 'express';
 import { fn, Op } from 'sequelize';
 import { generateData } from '../utils';
+import { Client } from '../models/clientes.model';
 
 export const getInfo = async (req: Request, res: Response) => {
   const fecha: string | undefined = req.query.fecha as string | undefined;
@@ -67,6 +68,36 @@ export const getReportBaloto = async (req: Request, res: Response) => {
         TIPOJUEGO: { [Op.in]: [110, 116, 119] },
         ZONA: zona
       }
+    });
+
+    res.status(200).json(report);
+  } catch (error) {
+    console.log(error);
+    res.status(500).json('Internal server error');
+  }
+}
+
+export const getClientesGanadores = async (req: Request, res: Response) => {
+  const data = req.body;
+
+  const { fecha1, fecha2, zona } = data;
+
+  if (fecha1 === undefined || fecha2 === undefined) {
+    res.status(400).json('Fecha no válida');
+  }
+
+  if (zona === undefined) {
+    res.status(400).json('Zona no válida');
+  }
+
+  try {
+    const report = await Premios.findAll({
+      where: {
+        FECHAPAGO: { [Op.between]: [fecha1, fecha2] },
+        TIPOJUEGO: { [Op.in]: [110, 116, 119] },
+        ZONA: zona
+      },
+      include: [{ model: Client }]
     });
 
     res.status(200).json(report);
