@@ -42,3 +42,16 @@ export interface ReportDataBaloto {
   TIPOPREMIO: string
   ZONA: string
 }
+
+export interface DataCliente {
+  TOTALPREMIOS: string;
+  CANT:         number;
+  Client:       Client;
+}
+
+export interface Client {
+  DOCUMENTO: string;
+  NOMBRES:   string;
+  DIRECCION: string;
+  TELEFONO1: string;
+}
