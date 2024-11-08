@@ -1,6 +1,7 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Root from './Root';
+import SeleccionReportes from '../pages/SeleccionReportes';
 
 const ClienteNuevosPage = lazy(() => import('../pages/ClientesNuevos'));
 const ClienteTodosPage = lazy(() => import('../pages/ClientesTodos'));
@@ -32,6 +33,10 @@ export const BrowserRouter = createBrowserRouter([
       },
       {
         path: 'reportes',
+        element: <Suspense fallback={<div>Loading...</div>}><SeleccionReportes /></Suspense>
+      },
+      {
+        path: 'reportBaloto',
         element: <Suspense fallback={<div>Loading...</div>}><ReportesPage /></Suspense>
       }
     ]
