@@ -1,5 +1,6 @@
 import { Model, InferAttributes, InferCreationAttributes, DataTypes } from 'sequelize';
 import PowerBi from '../connection'
+import { Client } from './clientes.model';
 
 class Premios extends Model<InferAttributes<Premios>, InferCreationAttributes<Premios>> {
   declare FECHAPAGO: Date;
@@ -36,5 +37,8 @@ Premios.init({
   tableName: 'DETALLEPREMIOSCMP',
   timestamps: false
 })
+
+// TODO: Add the association between Premios and Client
+Premios.belongsTo(Client, { foreignKey: 'TERCERO', targetKey: 'DOCUMENTO' })
 
 export { Premios }
