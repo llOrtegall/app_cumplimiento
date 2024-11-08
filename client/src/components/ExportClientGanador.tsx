@@ -3,17 +3,15 @@ import { utils, ColInfo, writeFile } from 'xlsx'
 import { toast } from 'sonner'
 
 const generateExcelData = (datos: DataCliente[]): unknown[] => {
-  const titulo = [{ A: 'Reporte Premios Pagados Baloto ' }]
+  const titulo = [{ A: 'Reporte Clientes Mas Ganadores ' }]
   const headers = [
     {
-      A: 'SERIE CONSECUTIVO',
-      B: 'TIPO PREMIO',
-      C: 'VALOR PREMIO',
-      D: 'RETEFUENTE',
-      E: 'CAJERO',
-      F: 'FECHA PAGO',
-      G: 'TERCER',
-      H: 'EMPRESA',
+      A: 'Documento',
+      B: 'Nombres',
+      C: 'Direccion',
+      D: 'Telefono',
+      E: 'Total Premios',
+      F: 'Cantidad'
     }
   ]
 
@@ -41,8 +39,8 @@ const createExcelFile = (data: unknown[]): void => {
   ]
 
   hoja['!cols'] = colWidths
-  utils.book_append_sheet(libro, hoja, 'Baloto')
-  writeFile(libro, 'ReporteBaloto.xlsx')
+  utils.book_append_sheet(libro, hoja, 'Clientes')
+  writeFile(libro, 'ReportClienteMasGanador.xlsx')
 }
 
 export const BottonExporClientGanador = ({ datos }: { datos: DataCliente[] }): JSX.Element => {
