@@ -1,21 +1,10 @@
+import { Table, TableBody, TableCell, TableHead, TableHeaderCell, TableRow } from '../components/Table';
+import { BottonExporClientGanador } from '../components/ExportClientGanador';
 import { CalendarLocaleExample } from '../components/ui/SelectDate';
 import { URL_API_DATA } from '../utils/contanst';
 import { FormEvent, useState } from 'react';
 import axios from 'axios';
-
-export interface DataCliente {
-  TOTALPREMIOS: string;
-  CANT:         number;
-  Client:       Client;
-}
-
-export interface Client {
-  DOCUMENTO: string;
-  NOMBRES:   string;
-  DIRECCION: string;
-  TELEFONO1: string;
-}
-
+import { DataCliente } from '../types/Interfaces';
 
 export default function ReportClienteGanadores() {
   const [date1, setDate1] = useState<Date | undefined>(undefined)
@@ -87,9 +76,9 @@ export default function ReportClienteGanadores() {
         </div>
 
         <div>
-          {/* {
-            data.length > 0 ? <BottonExporBaloto datos={data} /> : null
-          } */}
+          {
+            data.length > 0 ? <BottonExporClientGanador datos={data} /> : null
+          }
         </div>
       </div>
 
@@ -101,8 +90,37 @@ export default function ReportClienteGanadores() {
         {visible2 && (<CalendarLocaleExample key={'fechaFinal'} value={date2} onChange={setDate2} />)}
       </div>
 
-      <div className='h-[92vh]'>
-        test
+      <div className='h-[92vh] overflow-y-auto'>
+        {
+          data.length > 0 && (
+            <Table>
+              <TableHead>
+                <TableRow>
+                  <TableHeaderCell>Documento</TableHeaderCell>
+                  <TableHeaderCell>Nombre</TableHeaderCell>
+                  <TableHeaderCell>Dirección</TableHeaderCell>
+                  <TableHeaderCell>Teléfono</TableHeaderCell>
+                  <TableHeaderCell>Premios</TableHeaderCell>
+                  <TableHeaderCell>Cantidad</TableHeaderCell>
+                </TableRow>
+              </TableHead>
+              <TableBody>
+                {
+                  data.map((item, index) => (
+                    <TableRow key={index}>
+                      <TableCell>{item.Client.DOCUMENTO}</TableCell>
+                      <TableCell>{item.Client.NOMBRES}</TableCell>
+                      <TableCell>{item.Client.DIRECCION}</TableCell>
+                      <TableCell>{item.Client.TELEFONO1}</TableCell>
+                      <TableCell>{item.TOTALPREMIOS}</TableCell>
+                      <TableCell>{item.CANT}</TableCell>
+                    </TableRow>
+                  ))
+                }
+              </TableBody>
+            </Table>
+          )
+        }
       </div>
     </section>
   )
