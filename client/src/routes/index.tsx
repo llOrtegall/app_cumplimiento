@@ -1,15 +1,14 @@
 import { createBrowserRouter } from 'react-router-dom';
 import { lazy, Suspense } from 'react';
 import Root from './Root';
-import SeleccionReportes from '../pages/SeleccionReportes';
-import ReportClienteGanadores from '../pages/ReporteClientGan';
 
 const ClienteNuevosPage = lazy(() => import('../pages/ClientesNuevos'));
+const SeleccionReportes = lazy(() => import('../pages/SeleccionReportes'));
+const ReportClienteGanadores = lazy(() => import('../pages/ReporteClientGan'));
 const ClienteTodosPage = lazy(() => import('../pages/ClientesTodos'));
 const EditarClientePage = lazy(() => import('../pages/EditarCliente'));
 const ReportesPage = lazy(() => import('../pages/ReportesPage'));
 const Dashboard = lazy(() => import('../pages/Dashboard'));
-
 
 export const BrowserRouter = createBrowserRouter([
   {

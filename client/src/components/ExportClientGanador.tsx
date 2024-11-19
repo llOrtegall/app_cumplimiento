@@ -61,7 +61,8 @@ export const BottonExporClientGanador = ({ datos }: { datos: DataCliente[] }): J
         createExcelFile(dataFinal)
         return 'Archivo Generado Correctamente'
       },
-      error: 'Error al Generar Archivo'
+      error: 'Error al Generar Archivo',
+      closeButton: true
     })
   }
 
